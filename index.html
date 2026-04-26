@@ -121,7 +121,6 @@
             margin-left: 20px;
             padding-left: 20px;
             border-left: 1px solid rgba(255, 255, 255, 0.2);
-            cursor: pointer;
         }
 
         .user-avatar {
@@ -133,39 +132,6 @@
             align-items: center;
             justify-content: center;
             font-weight: bold;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: rgba(30, 30, 30, 0.95);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 40px;
-            border-radius: 20px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        .modal-content h2 {
-            margin-bottom: 25px;
-            text-align: center;
         }
 
         .main-content {
@@ -212,6 +178,12 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
             gap: 30px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
         }
 
         .form-group { margin-bottom: 20px; }
@@ -329,8 +301,6 @@
 
         .badge-ida { background: #3498db; color: white; }
         .badge-volta { background: #9b59b6; color: white; }
-        .badge-admin { background: #e74c3c; color: white; }
-        .badge-user { background: #3498db; color: white; }
 
         .rota {
             display: flex;
@@ -422,48 +392,69 @@
             to { transform: translateX(100%); opacity: 0; }
         }
 
-        .mensagem-erro {
-            color: #e74c3c;
+        .log-container {
+            max-height: 400px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .log-entry {
+            padding: 8px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             font-size: 0.85rem;
-            margin-top: 5px;
-            display: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .mensagem-erro.visivel {
-            display: block;
+        .log-entry:last-child {
+            border-bottom: none;
         }
 
-        .info-login {
-            text-align: center;
-            margin-top: 15px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            font-size: 0.8rem;
-            opacity: 0.7;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .info-login:hover {
-            background: rgba(255, 255, 255, 0.1);
-            opacity: 1;
-        }
-
-        .info-detalhes {
-            display: none;
-            margin-top: 10px;
-            text-align: left;
+        .log-time {
+            opacity: 0.6;
             font-size: 0.75rem;
-            opacity: 0.8;
         }
 
-        .info-detalhes.visivel {
-            display: block;
+        .log-action {
+            color: var(--info);
+            font-weight: bold;
+        }
+
+        .log-user {
+            color: var(--success);
+        }
+
+        .conexao-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 10px;
+        }
+
+        .status-online {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--success);
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .status-offline {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--danger);
+            display: inline-block;
+            margin-right: 8px;
         }
 
         @media (max-width: 768px) {
-            .grid-2 {
+            .grid-2, .grid-3 {
                 grid-template-columns: 1fr;
             }
             
@@ -495,30 +486,6 @@
     <div class="animated-bg"></div>
     <div class="ns-watermark">NS</div>
 
-    <!-- Modal de Login -->
-    <div id="modalLogin" class="modal active">
-        <div class="modal-content">
-            <h2>🔐 Login NS</h2>
-            <div class="form-group">
-                <label>👤 Nome de Usuário</label>
-                <input type="text" id="loginUsuario" placeholder="Seu nome de usuário" autocomplete="off">
-                <div class="mensagem-erro" id="erroLogin"></div>
-            </div>
-            <div class="form-group">
-                <label>🔑 Senha</label>
-                <input type="password" id="loginSenha" placeholder="Sua senha" autocomplete="off">
-            </div>
-            <button class="btn-primary" onclick="fazerLogin()" style="width: 100%;">Entrar</button>
-            <div class="info-login" onclick="toggleInfoLogin()">
-                📝 Clique aqui para ver usuários de teste
-                <div class="info-detalhes" id="infoLoginDetalhes">
-                    <p>👑 <strong>Admin:</strong> admin / admin123</p>
-                    <p>👤 <strong>Usuário:</strong> user / user123</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Header com Menu -->
     <header class="header">
         <nav class="nav">
@@ -526,17 +493,17 @@
             
             <div class="menu" id="menuPrincipal">
                 <button class="menu-btn active" onclick="mudarPagina('viagens')">✈️ Viagens</button>
-                <button class="menu-btn admin-only" onclick="mudarPagina('cadastro')">➕ Nova Viagem</button>
-                <button class="menu-btn admin-only" onclick="mudarPagina('veiculos')">🚗 Veículos</button>
-                <button class="menu-btn admin-only" onclick="mudarPagina('motoristas')">👤 Motoristas</button>
-                <button class="menu-btn admin-only" onclick="mudarPagina('admins')">👥 Admins</button>
+                <button class="menu-btn" onclick="mudarPagina('cadastro')">➕ Nova Viagem</button>
+                <button class="menu-btn" onclick="mudarPagina('veiculos')">🚗 Veículos</button>
+                <button class="menu-btn" onclick="mudarPagina('motoristas')">👤 Motoristas</button>
+                <button class="menu-btn" onclick="mudarPagina('monitor')">📡 Monitor</button>
             </div>
 
-            <div class="user-info" id="userInfo" onclick="mostrarModalLogin()">
-                <div class="user-avatar" id="userAvatar">?</div>
+            <div class="user-info" id="userInfo">
+                <div class="user-avatar" id="userAvatar">👤</div>
                 <div>
-                    <div style="font-weight: bold; font-size: 0.9rem;" id="userName">Não logado</div>
-                    <div style="font-size: 0.7rem; opacity: 0.7;" id="userNivel"></div>
+                    <div style="font-weight: bold; font-size: 0.9rem;" id="userName">Administrador</div>
+                    <div style="font-size: 0.7rem; opacity: 0.7;" id="userIP"></div>
                 </div>
             </div>
         </nav>
@@ -583,30 +550,74 @@
             <div class="glass-container" id="motoristasContainer"></div>
         </div>
 
-        <!-- Página de Administradores -->
-        <div id="page-admins" class="page">
-            <div class="glass-container" id="adminsContainer"></div>
+        <!-- Página de Monitor -->
+        <div id="page-monitor" class="page">
+            <div class="glass-container">
+                <h2>📡 Monitor do Sistema</h2>
+                
+                <div class="grid-2">
+                    <!-- Conexões Ativas -->
+                    <div>
+                        <h3>🖥️ Conexões Ativas</h3>
+                        <div id="conexoesAtivas">
+                            <p style="text-align: center; opacity: 0.5;">Carregando...</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Log de Atividades -->
+                    <div>
+                        <h3>📝 Log de Atividades</h3>
+                        <div class="log-container" id="logAtividades">
+                            <p style="text-align: center; opacity: 0.5;">Nenhuma atividade registrada</p>
+                        </div>
+                        <button class="btn-outline" onclick="limparLog()" style="margin-top: 10px; width: 100%;">
+                            🗑️ Limpar Log
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // ==================== BANCO DE DADOS CENTRAL ====================
-        // Este objeto contém TODOS os dados do sistema
-        // Cada instância do site tem seu próprio banco (não compartilha com outros)
-        const DB_KEY = 'ns_sistema_viagens_db_v2';
+        // ==================== BANCO DE DADOS ====================
+        const DB_KEY = 'ns_sistema_viagens_db_v3';
+        const LOG_KEY = 'ns_sistema_log_v1';
+        const CONEXOES_KEY = 'ns_sistema_conexoes_v1';
         
         let DB = {
             viagensIda: [],
             viagensVolta: [],
             veiculos: [],
-            motoristas: [],
-            administradores: [],
-            usuarioLogado: null
+            motoristas: []
         };
         
         let viagemEditando = { tipo: null, id: null };
+        let usuarioAtual = {
+            nome: 'Administrador',
+            ip: 'Carregando...'
+        };
 
-        // ==================== FUNÇÕES DE PERSISTÊNCIA ====================
+        // ==================== FUNÇÕES DE REDE ====================
+        async function obterIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                const data = await response.json();
+                usuarioAtual.ip = data.ip;
+                document.getElementById('userIP').textContent = 'IP: ' + data.ip;
+                return data.ip;
+            } catch (e) {
+                usuarioAtual.ip = 'IP não detectado';
+                document.getElementById('userIP').textContent = 'IP: Local';
+                return 'local';
+            }
+        }
+
+        function gerarIdConexao() {
+            return 'conn_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // ==================== PERSISTÊNCIA ====================
         function carregarBancoDados() {
             try {
                 const dadosSalvos = localStorage.getItem(DB_KEY);
@@ -616,244 +627,148 @@
                     DB.viagensVolta = dados.viagensVolta || [];
                     DB.veiculos = dados.veiculos || [];
                     DB.motoristas = dados.motoristas || [];
-                    DB.administradores = dados.administradores || [];
-                    DB.usuarioLogado = dados.usuarioLogado || null;
                 }
             } catch (e) {
                 console.error('Erro ao carregar banco de dados:', e);
-                resetarBancoDados();
             }
         }
 
         function salvarBancoDados() {
             try {
-                const dadosParaSalvar = {
-                    viagensIda: DB.viagensIda,
-                    viagensVolta: DB.viagensVolta,
-                    veiculos: DB.veiculos,
-                    motoristas: DB.motoristas,
-                    administradores: DB.administradores,
-                    usuarioLogado: DB.usuarioLogado
-                };
-                localStorage.setItem(DB_KEY, JSON.stringify(dadosParaSalvar));
+                localStorage.setItem(DB_KEY, JSON.stringify(DB));
             } catch (e) {
                 console.error('Erro ao salvar banco de dados:', e);
-                showToast('Erro ao salvar dados! Verifique o espaço disponível.', 'error');
+                showToast('Erro ao salvar dados!', 'error');
             }
         }
 
-        function resetarBancoDados() {
-            DB.viagensIda = [];
-            DB.viagensVolta = [];
-            DB.veiculos = [];
-            DB.motoristas = [];
-            DB.administradores = [];
-            DB.usuarioLogado = null;
-        }
-
-        function inicializarUsuariosPadrao() {
-            carregarBancoDados();
+        // ==================== SISTEMA DE LOG ====================
+        function registrarLog(acao, detalhes = '') {
+            const logs = JSON.parse(localStorage.getItem(LOG_KEY)) || [];
             
-            if (DB.administradores.length === 0) {
-                DB.administradores = [
-                    { 
-                        id: 1, 
-                        nome: 'Administrador', 
-                        usuario: 'admin', 
-                        telefone: '(11) 99999-9999', 
-                        senha: 'admin123', 
-                        nivel: 'admin' 
-                    },
-                    { 
-                        id: 2, 
-                        nome: 'Usuário Padrão', 
-                        usuario: 'user', 
-                        telefone: '(11) 88888-8888', 
-                        senha: 'user123', 
-                        nivel: 'user' 
-                    }
-                ];
-                salvarBancoDados();
+            const log = {
+                id: Date.now(),
+                timestamp: new Date().toLocaleString('pt-BR'),
+                acao: acao,
+                detalhes: detalhes,
+                ip: usuarioAtual.ip,
+                usuario: usuarioAtual.nome
+            };
+            
+            logs.unshift(log);
+            
+            // Manter apenas os últimos 100 logs
+            if (logs.length > 100) {
+                logs.pop();
             }
+            
+            localStorage.setItem(LOG_KEY, JSON.stringify(logs));
+            atualizarLogAtividades();
         }
 
-        // ==================== FUNÇÕES DE LOGIN CORRIGIDAS ====================
-        function toggleInfoLogin() {
-            const detalhes = document.getElementById('infoLoginDetalhes');
-            detalhes.classList.toggle('visivel');
-        }
-
-        function fazerLogin() {
-            const usuarioInput = document.getElementById('loginUsuario').value.trim();
-            const senhaInput = document.getElementById('loginSenha').value.trim();
-            const erroDiv = document.getElementById('erroLogin');
+        function atualizarLogAtividades() {
+            const container = document.getElementById('logAtividades');
+            if (!container) return;
             
-            // Limpar mensagem de erro
-            erroDiv.classList.remove('visivel');
-            erroDiv.textContent = '';
+            const logs = JSON.parse(localStorage.getItem(LOG_KEY)) || [];
             
-            if (!usuarioInput || !senhaInput) {
-                erroDiv.textContent = 'Preencha usuário e senha!';
-                erroDiv.classList.add('visivel');
+            if (logs.length === 0) {
+                container.innerHTML = '<p style="text-align: center; opacity: 0.5;">Nenhuma atividade registrada</p>';
                 return;
             }
             
-            // Recarregar banco de dados para garantir dados atualizados
-            carregarBancoDados();
-            inicializarUsuariosPadrao();
+            container.innerHTML = logs.map(log => `
+                <div class="log-entry">
+                    <div>
+                        <span class="log-action">${log.acao}</span>
+                        ${log.detalhes ? ` - ${log.detalhes}` : ''}
+                    </div>
+                    <div style="text-align: right;">
+                        <div class="log-user">${log.usuario || 'Sistema'}</div>
+                        <div class="log-time">${log.timestamp} | IP: ${log.ip || 'N/A'}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function limparLog() {
+            if (confirm('Limpar todo o log de atividades?')) {
+                localStorage.setItem(LOG_KEY, JSON.stringify([]));
+                atualizarLogAtividades();
+                showToast('Log limpo! 🗑️');
+            }
+        }
+
+        // ==================== SISTEMA DE CONEXÕES ====================
+        const minhaConexao = {
+            id: gerarIdConexao(),
+            ip: 'Carregando...',
+            inicio: new Date().toLocaleString('pt-BR'),
+            ultimaAtividade: new Date().toLocaleString('pt-BR'),
+            pagina: 'viagens'
+        };
+
+        function atualizarConexoes() {
+            const conexoes = JSON.parse(localStorage.getItem(CONEXOES_KEY)) || [];
             
-            // Buscar usuário - comparação exata (case-sensitive para segurança)
-            const usuarioEncontrado = DB.administradores.find(a => 
-                a.usuario === usuarioInput && a.senha === senhaInput
-            );
+            // Atualizar ou adicionar minha conexão
+            const minhaConnIndex = conexoes.findIndex(c => c.id === minhaConexao.id);
+            minhaConexao.ip = usuarioAtual.ip;
+            minhaConexao.ultimaAtividade = new Date().toLocaleString('pt-BR');
             
-            if (usuarioEncontrado) {
-                // Login bem-sucedido - salvar dados do usuário logado (sem a senha)
-                DB.usuarioLogado = {
-                    id: usuarioEncontrado.id,
-                    nome: usuarioEncontrado.nome,
-                    usuario: usuarioEncontrado.usuario,
-                    nivel: usuarioEncontrado.nivel,
-                    telefone: usuarioEncontrado.telefone
-                };
-                
-                salvarBancoDados();
-                
-                // Fechar modal e limpar campos
-                document.getElementById('modalLogin').classList.remove('active');
-                document.getElementById('loginUsuario').value = '';
-                document.getElementById('loginSenha').value = '';
-                document.getElementById('erroLogin').classList.remove('visivel');
-                
-                // Atualizar interface
-                atualizarInterfaceUsuario();
-                
-                // Mostrar mensagem de boas-vindas
-                showToast(`Bem-vindo, ${usuarioEncontrado.nome}! ✅`);
-                
-                // Carregar página de viagens
-                mudarPagina('viagens');
-                
-                // Forçar atualização das listas
-                setTimeout(() => {
-                    atualizarListaViagensIda();
-                    atualizarListaViagensVolta();
-                }, 200);
+            if (minhaConnIndex >= 0) {
+                conexoes[minhaConnIndex] = minhaConexao;
             } else {
-                // Verificar se o usuário existe (para dar mensagem mais específica)
-                const usuarioExiste = DB.administradores.some(a => a.usuario === usuarioInput);
-                
-                if (usuarioExiste) {
-                    erroDiv.textContent = 'Senha incorreta!';
-                } else {
-                    erroDiv.textContent = 'Usuário não encontrado!';
-                }
-                erroDiv.classList.add('visivel');
+                conexoes.push(minhaConexao);
             }
-        }
-
-        function fazerLogout() {
-            if (confirm('Deseja sair do sistema?')) {
-                DB.usuarioLogado = null;
-                salvarBancoDados();
-                
-                // Mostrar modal de login
-                document.getElementById('modalLogin').classList.add('active');
-                document.getElementById('loginUsuario').value = '';
-                document.getElementById('loginSenha').value = '';
-                document.getElementById('erroLogin').classList.remove('visivel');
-                
-                // Atualizar interface
-                atualizarInterfaceUsuario();
-                
-                // Resetar para página de viagens
-                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-                document.getElementById('page-viagens').classList.add('active');
-                
-                showToast('Logout realizado! 👋');
-            }
-        }
-
-        function mostrarModalLogin() {
-            if (DB.usuarioLogado) {
-                if (confirm('Deseja fazer logout?')) {
-                    fazerLogout();
-                }
-            } else {
-                document.getElementById('modalLogin').classList.add('active');
-                document.getElementById('loginUsuario').value = '';
-                document.getElementById('loginSenha').value = '';
-                document.getElementById('erroLogin').classList.remove('visivel');
-            }
-        }
-
-        function atualizarInterfaceUsuario() {
-            const userAvatar = document.getElementById('userAvatar');
-            const userName = document.getElementById('userName');
-            const userNivel = document.getElementById('userNivel');
-            const adminElements = document.querySelectorAll('.admin-only');
             
-            if (DB.usuarioLogado) {
-                userAvatar.textContent = DB.usuarioLogado.nome.charAt(0).toUpperCase();
-                userName.textContent = DB.usuarioLogado.nome;
-                userNivel.textContent = DB.usuarioLogado.nivel === 'admin' ? 'Administrador' : 'Usuário';
-                
-                // Mostrar/esconder elementos de admin
-                adminElements.forEach(el => {
-                    el.style.display = DB.usuarioLogado.nivel === 'admin' ? '' : 'none';
-                });
-            } else {
-                userAvatar.textContent = '?';
-                userName.textContent = 'Não logado';
-                userNivel.textContent = '';
-                adminElements.forEach(el => el.style.display = 'none');
-                
-                // Limpar listas quando não logado
-                const listaIda = document.getElementById('listaViagensIda');
-                const listaVolta = document.getElementById('listaViagensVolta');
-                if (listaIda) listaIda.innerHTML = '<p style="text-align: center; opacity: 0.5;">Faça login para ver as viagens</p>';
-                if (listaVolta) listaVolta.innerHTML = '<p style="text-align: center; opacity: 0.5;">Faça login para ver as viagens</p>';
-            }
+            // Remover conexões inativas (mais de 5 minutos)
+            const agora = Date.now();
+            const conexoesAtivas = conexoes.filter(c => {
+                const ultimaAtividade = new Date(c.ultimaAtividade).getTime();
+                return (agora - ultimaAtividade) < 300000; // 5 minutos
+            });
+            
+            localStorage.setItem(CONEXOES_KEY, JSON.stringify(conexoesAtivas));
+            exibirConexoesAtivas();
         }
 
-        // ==================== VERIFICAÇÃO DE PERMISSÃO ====================
-        function verificarPermissao() {
-            if (!DB.usuarioLogado) {
-                document.getElementById('modalLogin').classList.add('active');
-                return false;
+        function exibirConexoesAtivas() {
+            const container = document.getElementById('conexoesAtivas');
+            if (!container) return;
+            
+            const conexoes = JSON.parse(localStorage.getItem(CONEXOES_KEY)) || [];
+            
+            if (conexoes.length === 0) {
+                container.innerHTML = '<p style="text-align: center; opacity: 0.5;">Nenhuma conexão ativa</p>';
+                return;
             }
-            return true;
+            
+            container.innerHTML = conexoes.map(c => `
+                <div class="conexao-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <div>
+                            <span class="status-online"></span>
+                            <strong>IP: ${c.ip || 'Desconhecido'}</strong>
+                            ${c.id === minhaConexao.id ? '<span style="color: var(--success); margin-left: 8px;">(Você)</span>' : ''}
+                        </div>
+                        <div style="text-align: right; font-size: 0.8rem; opacity: 0.7;">
+                            <div>Início: ${c.inicio}</div>
+                            <div>Última: ${c.ultimaAtividade}</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px; font-size: 0.8rem; opacity: 0.6;">
+                        Página: ${c.pagina || 'N/A'}
+                    </div>
+                </div>
+            `).join('');
         }
 
-        function verificarPermissaoAdmin() {
-            if (!verificarPermissao()) return false;
-            if (DB.usuarioLogado.nivel !== 'admin') {
-                showToast('Acesso restrito a administradores!', 'error');
-                mudarPagina('viagens');
-                return false;
-            }
-            return true;
-        }
+        // Atualizar conexões a cada 10 segundos
+        setInterval(atualizarConexoes, 10000);
 
         // ==================== NAVEGAÇÃO ====================
         function mudarPagina(pagina) {
-            // Sempre permitir acesso à página de viagens se estiver logado
-            if (!DB.usuarioLogado && pagina !== 'viagens') {
-                document.getElementById('modalLogin').classList.add('active');
-                return;
-            }
-            
-            if (pagina === 'viagens' && !DB.usuarioLogado) {
-                document.getElementById('modalLogin').classList.add('active');
-                return;
-            }
-            
-            if (!verificarPermissao()) return;
-            
-            // Verificar permissão para páginas administrativas
-            const paginasAdmin = ['cadastro', 'veiculos', 'motoristas', 'admins'];
-            if (paginasAdmin.includes(pagina) && !verificarPermissaoAdmin()) return;
-            
             // Esconder todas as páginas
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             
@@ -872,8 +787,15 @@
                 if (btnText.includes('nova viagem') && pagina === 'cadastro') btn.classList.add('active');
                 if (btnText.includes('veículos') && pagina === 'veiculos') btn.classList.add('active');
                 if (btnText.includes('motoristas') && pagina === 'motoristas') btn.classList.add('active');
-                if (btnText.includes('admins') && pagina === 'admins') btn.classList.add('active');
+                if (btnText.includes('monitor') && pagina === 'monitor') btn.classList.add('active');
             });
+            
+            // Atualizar página atual na conexão
+            minhaConexao.pagina = pagina;
+            atualizarConexoes();
+            
+            // Registrar log de navegação
+            registrarLog('Navegação', `Acessou a página: ${pagina}`);
             
             // Carregar conteúdo específico
             if (pagina === 'viagens') {
@@ -883,7 +805,10 @@
             if (pagina === 'cadastro') carregarPaginaCadastro();
             if (pagina === 'veiculos') carregarPaginaVeiculos();
             if (pagina === 'motoristas') carregarPaginaMotoristas();
-            if (pagina === 'admins') carregarPaginaAdmins();
+            if (pagina === 'monitor') {
+                atualizarLogAtividades();
+                exibirConexoesAtivas();
+            }
         }
 
         // ==================== PÁGINA DE CADASTRO ====================
@@ -1004,7 +929,8 @@
                 motorista: document.getElementById('idaMotorista').value || 'Não definido',
                 observacoes: document.getElementById('idaObs').value.trim(),
                 dataCadastro: new Date().toLocaleString('pt-BR'),
-                criadoPor: DB.usuarioLogado ? DB.usuarioLogado.nome : 'Sistema'
+                criadoPor: usuarioAtual.nome,
+                ipCriador: usuarioAtual.ip
             };
 
             const viagemVolta = {
@@ -1018,13 +944,16 @@
                 observacoes: document.getElementById('voltaObs').value.trim(),
                 viagemIdaVinculada: viagemIda.id,
                 dataCadastro: new Date().toLocaleString('pt-BR'),
-                criadoPor: DB.usuarioLogado ? DB.usuarioLogado.nome : 'Sistema'
+                criadoPor: usuarioAtual.nome,
+                ipCriador: usuarioAtual.ip
             };
 
             DB.viagensIda.unshift(viagemIda);
             DB.viagensVolta.unshift(viagemVolta);
             
             salvarBancoDados();
+            
+            registrarLog('Cadastro de Viagem', `Ida: ${idaOrigem} ➔ ${idaDestino}`);
             
             carregarPaginaCadastro();
             showToast('✅ Viagem cadastrada com sucesso!');
@@ -1035,17 +964,10 @@
             const container = document.getElementById('listaViagensIda');
             if (!container) return;
             
-            if (!DB.usuarioLogado) {
-                container.innerHTML = '<p style="text-align: center; opacity: 0.5;">Faça login para ver as viagens</p>';
-                return;
-            }
-            
             if (DB.viagensIda.length === 0) {
                 container.innerHTML = '<p style="text-align: center; opacity: 0.5;">Nenhuma viagem de ida cadastrada</p>';
                 return;
             }
-
-            const isAdmin = DB.usuarioLogado.nivel === 'admin';
 
             container.innerHTML = DB.viagensIda.map(v => {
                 const editando = viagemEditando.tipo === 'ida' && viagemEditando.id === v.id;
@@ -1054,7 +976,7 @@
                     <div class="card ${editando ? 'editando' : ''}">
                         <div class="card-header">
                             <span class="badge badge-ida">IDA</span>
-                            <small>${v.dataCadastro} | Por: ${v.criadoPor || 'Sistema'}</small>
+                            <small>${v.dataCadastro} | Por: ${v.criadoPor || 'Sistema'} | IP: ${v.ipCriador || 'N/A'}</small>
                         </div>
                         
                         ${editando ? `
@@ -1109,12 +1031,10 @@
                             <div class="btn-group" style="margin-top: 10px;">
                                 <button class="btn-success" style="padding: 8px 15px; font-size: 0.8rem;" 
                                         onclick="enviarWhatsApp(${v.id}, 'ida')">📤 WhatsApp</button>
-                                ${isAdmin ? `
-                                    <button class="btn-info" style="padding: 8px 15px; font-size: 0.8rem;" 
-                                            onclick="iniciarEdicao('ida', ${v.id})">✏️ Editar</button>
-                                    <button class="btn-danger" style="padding: 8px 15px; font-size: 0.8rem;" 
-                                            onclick="excluirViagemIda(${v.id})">🗑️</button>
-                                ` : ''}
+                                <button class="btn-info" style="padding: 8px 15px; font-size: 0.8rem;" 
+                                        onclick="iniciarEdicao('ida', ${v.id})">✏️ Editar</button>
+                                <button class="btn-danger" style="padding: 8px 15px; font-size: 0.8rem;" 
+                                        onclick="excluirViagemIda(${v.id})">🗑️</button>
                             </div>
                         `}
                     </div>
@@ -1126,17 +1046,10 @@
             const container = document.getElementById('listaViagensVolta');
             if (!container) return;
             
-            if (!DB.usuarioLogado) {
-                container.innerHTML = '<p style="text-align: center; opacity: 0.5;">Faça login para ver as viagens</p>';
-                return;
-            }
-            
             if (DB.viagensVolta.length === 0) {
                 container.innerHTML = '<p style="text-align: center; opacity: 0.5;">Nenhuma viagem de volta cadastrada</p>';
                 return;
             }
-
-            const isAdmin = DB.usuarioLogado.nivel === 'admin';
 
             container.innerHTML = DB.viagensVolta.map(v => {
                 const editando = viagemEditando.tipo === 'volta' && viagemEditando.id === v.id;
@@ -1202,12 +1115,10 @@
                             <div class="btn-group" style="margin-top: 10px;">
                                 <button class="btn-success" style="padding: 8px 15px; font-size: 0.8rem;" 
                                         onclick="enviarWhatsApp(${v.id}, 'volta')">📤 WhatsApp</button>
-                                ${isAdmin ? `
-                                    <button class="btn-info" style="padding: 8px 15px; font-size: 0.8rem;" 
-                                            onclick="iniciarEdicao('volta', ${v.id})">✏️ Editar</button>
-                                    <button class="btn-danger" style="padding: 8px 15px; font-size: 0.8rem;" 
-                                            onclick="excluirViagemVolta(${v.id})">🗑️</button>
-                                ` : ''}
+                                <button class="btn-info" style="padding: 8px 15px; font-size: 0.8rem;" 
+                                        onclick="iniciarEdicao('volta', ${v.id})">✏️ Editar</button>
+                                <button class="btn-danger" style="padding: 8px 15px; font-size: 0.8rem;" 
+                                        onclick="excluirViagemVolta(${v.id})">🗑️</button>
                             </div>
                         `}
                     </div>
@@ -1220,6 +1131,7 @@
             viagemEditando = { tipo, id };
             atualizarListaViagensIda();
             atualizarListaViagensVolta();
+            registrarLog('Edição de Viagem', `Iniciou edição de viagem ${tipo} #${id}`);
         }
 
         function cancelarEdicao() {
@@ -1261,15 +1173,19 @@
             }
 
             salvarBancoDados();
+            registrarLog('Edição de Viagem', `Salvou edição de viagem ${tipo} #${id}: ${viagem.origem} ➔ ${viagem.destino}`);
             cancelarEdicao();
             showToast('✅ Viagem atualizada com sucesso!');
         }
 
         function excluirViagemIda(id) {
+            const viagem = DB.viagensIda.find(v => v.id === id);
             if (confirm('Excluir esta viagem de ida? A volta vinculada também será excluída.')) {
                 DB.viagensIda = DB.viagensIda.filter(v => v.id !== id);
                 DB.viagensVolta = DB.viagensVolta.filter(v => v.viagemIdaVinculada !== id);
                 salvarBancoDados();
+                
+                registrarLog('Exclusão de Viagem', `Excluiu viagem de ida: ${viagem.origem} ➔ ${viagem.destino}`);
                 
                 atualizarListaViagensIda();
                 atualizarListaViagensVolta();
@@ -1278,9 +1194,12 @@
         }
 
         function excluirViagemVolta(id) {
+            const viagem = DB.viagensVolta.find(v => v.id === id);
             if (confirm('Excluir esta viagem de volta?')) {
                 DB.viagensVolta = DB.viagensVolta.filter(v => v.id !== id);
                 salvarBancoDados();
+                
+                registrarLog('Exclusão de Viagem', `Excluiu viagem de volta: ${viagem.origem} ➔ ${viagem.destino}`);
                 
                 atualizarListaViagensVolta();
                 showToast('Viagem excluída! 🗑️');
@@ -1342,6 +1261,9 @@
 
             DB.veiculos.push({ id: Date.now(), modelo, placa, ano });
             salvarBancoDados();
+            
+            registrarLog('Cadastro de Veículo', `${modelo} - ${placa}`);
+            
             carregarPaginaVeiculos();
             showToast('Veículo cadastrado! 🚗');
         }
@@ -1369,9 +1291,13 @@
         }
 
         function excluirVeiculo(id) {
+            const veiculo = DB.veiculos.find(v => v.id === id);
             if (confirm('Excluir este veículo?')) {
                 DB.veiculos = DB.veiculos.filter(v => v.id !== id);
                 salvarBancoDados();
+                
+                registrarLog('Exclusão de Veículo', `${veiculo.modelo} - ${veiculo.placa}`);
+                
                 carregarPaginaVeiculos();
                 showToast('Veículo excluído! 🗑️');
             }
@@ -1445,6 +1371,9 @@
             });
             
             salvarBancoDados();
+            
+            registrarLog('Cadastro de Motorista', nome);
+            
             carregarPaginaMotoristas();
             showToast('Motorista cadastrado! 👤');
         }
@@ -1472,166 +1401,15 @@
         }
 
         function excluirMotorista(id) {
+            const motorista = DB.motoristas.find(m => m.id === id);
             if (confirm('Excluir este motorista?')) {
                 DB.motoristas = DB.motoristas.filter(m => m.id !== id);
                 salvarBancoDados();
+                
+                registrarLog('Exclusão de Motorista', motorista.nome);
+                
                 carregarPaginaMotoristas();
                 showToast('Motorista excluído! 🗑️');
-            }
-        }
-
-        // ==================== PÁGINA DE ADMINS ====================
-        function carregarPaginaAdmins() {
-            const container = document.getElementById('adminsContainer');
-            if (!container) return;
-            
-            container.innerHTML = `
-                <h2>👥 Gerenciar Usuários</h2>
-                <div class="grid-2">
-                    <div>
-                        <h3>Cadastrar Usuário</h3>
-                        <div class="form-group">
-                            <label>👤 Nome Completo</label>
-                            <input type="text" id="adminNome" placeholder="Nome completo">
-                        </div>
-                        <div class="form-group">
-                            <label>👤 Nome de Usuário (Login)</label>
-                            <input type="text" id="adminUsuario" placeholder="Nome para login">
-                            <div class="mensagem-erro" id="erroCadastroUsuario"></div>
-                        </div>
-                        <div class="form-group">
-                            <label>📱 Telefone</label>
-                            <input type="tel" id="adminTelefone" placeholder="(00) 00000-0000">
-                        </div>
-                        <div class="form-group">
-                            <label>🔑 Senha</label>
-                            <input type="password" id="adminSenha" placeholder="Mínimo 6 caracteres">
-                            <div class="mensagem-erro" id="erroCadastroSenha"></div>
-                        </div>
-                        <div class="form-group">
-                            <label>🔑 Confirmar Senha</label>
-                            <input type="password" id="adminConfirmarSenha" placeholder="Repita a senha">
-                            <div class="mensagem-erro" id="erroConfirmarSenha"></div>
-                        </div>
-                        <div class="form-group">
-                            <label>🎫 Nível de Acesso</label>
-                            <select id="adminNivel">
-                                <option value="user">Usuário (apenas visualiza e envia WhatsApp)</option>
-                                <option value="admin">Administrador (acesso total)</option>
-                            </select>
-                        </div>
-                        <div class="btn-group">
-                            <button class="btn-primary" onclick="cadastrarAdmin()">💾 Cadastrar</button>
-                            <button class="btn-outline" onclick="carregarPaginaAdmins()">🗑️ Limpar</button>
-                        </div>
-                    </div>
-                    <div>
-                        <h3>Usuários Cadastrados</h3>
-                        <div class="table-container">
-                            <table>
-                                <thead>
-                                    <tr><th>Nome</th><th>Usuário</th><th>Nível</th><th>Ações</th></tr>
-                                </thead>
-                                <tbody id="corpoTabelaAdmins"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            `;
-            atualizarTabelaAdmins();
-        }
-
-        function cadastrarAdmin() {
-            const nome = document.getElementById('adminNome').value.trim();
-            const usuario = document.getElementById('adminUsuario').value.trim();
-            const telefone = document.getElementById('adminTelefone').value.trim();
-            const senha = document.getElementById('adminSenha').value;
-            const confirmarSenha = document.getElementById('adminConfirmarSenha').value;
-            const nivel = document.getElementById('adminNivel').value;
-            
-            document.querySelectorAll('.mensagem-erro').forEach(el => el.classList.remove('visivel'));
-            
-            let temErro = false;
-            
-            if (!nome || !usuario || !senha) {
-                showToast('Preencha nome, usuário e senha!', 'error');
-                return;
-            }
-            
-            if (DB.administradores.some(a => a.usuario === usuario)) {
-                document.getElementById('erroCadastroUsuario').textContent = 'Este nome de usuário já existe!';
-                document.getElementById('erroCadastroUsuario').classList.add('visivel');
-                temErro = true;
-            }
-            
-            if (senha.length < 6) {
-                document.getElementById('erroCadastroSenha').textContent = 'A senha deve ter no mínimo 6 caracteres!';
-                document.getElementById('erroCadastroSenha').classList.add('visivel');
-                temErro = true;
-            }
-            
-            if (senha !== confirmarSenha) {
-                document.getElementById('erroConfirmarSenha').textContent = 'As senhas não coincidem!';
-                document.getElementById('erroConfirmarSenha').classList.add('visivel');
-                temErro = true;
-            }
-            
-            if (temErro) return;
-            
-            DB.administradores.push({
-                id: Date.now(),
-                nome,
-                usuario,
-                telefone,
-                senha,
-                nivel
-            });
-            
-            salvarBancoDados();
-            carregarPaginaAdmins();
-            showToast('Usuário cadastrado com sucesso! ✅');
-        }
-
-        function atualizarTabelaAdmins() {
-            const tbody = document.getElementById('corpoTabelaAdmins');
-            if (!tbody) return;
-            
-            if (DB.administradores.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; opacity: 0.5;">Nenhum usuário cadastrado</td></tr>';
-                return;
-            }
-            
-            tbody.innerHTML = DB.administradores.map(a => `
-                <tr>
-                    <td>${a.nome}</td>
-                    <td>${a.usuario}</td>
-                    <td><span class="badge ${a.nivel === 'admin' ? 'badge-admin' : 'badge-user'}">${a.nivel}</span></td>
-                    <td>
-                        ${DB.usuarioLogado && DB.usuarioLogado.id !== a.id ? `
-                            <button class="btn-danger" style="padding: 5px 10px; font-size: 0.8rem;" 
-                                    onclick="excluirAdmin(${a.id})">🗑️</button>
-                        ` : '<span style="opacity: 0.5; font-size: 0.8rem;">Você</span>'}
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function excluirAdmin(id) {
-            if (DB.administradores.length <= 1) {
-                showToast('Não é possível excluir o último usuário!', 'error');
-                return;
-            }
-            
-            if (DB.usuarioLogado && id === DB.usuarioLogado.id) {
-                showToast('Você não pode excluir seu próprio usuário!', 'error');
-                return;
-            }
-            
-            if (confirm('Excluir este usuário?')) {
-                DB.administradores = DB.administradores.filter(a => a.id !== id);
-                salvarBancoDados();
-                carregarPaginaAdmins();
-                showToast('Usuário excluído! 🗑️');
             }
         }
 
@@ -1645,6 +1423,8 @@
                 showToast('Viagem não encontrada!', 'error');
                 return;
             }
+
+            registrarLog('Envio WhatsApp', `Viagem ${tipo}: ${viagem.origem} ➔ ${viagem.destino}`);
 
             const mensagem = `*Relatório de Viagem NS*%0A%0A` +
                              `🔹 *Tipo:* ${tipo.toUpperCase()}%0A` +
@@ -1669,25 +1449,37 @@
         }
 
         // ==================== INICIALIZAÇÃO ====================
-        document.addEventListener('DOMContentLoaded', () => {
+        async function inicializar() {
             carregarBancoDados();
-            inicializarUsuariosPadrao();
+            
+            // Obter IP
+            await obterIP();
+            
+            // Atualizar interface
             atualizarInterfaceUsuario();
             
-            if (DB.usuarioLogado) {
-                document.getElementById('modalLogin').classList.remove('active');
-                mudarPagina('viagens');
-            } else {
-                document.getElementById('modalLogin').classList.add('active');
-            }
-        });
+            // Registrar conexão
+            atualizarConexoes();
+            
+            // Registrar log de acesso
+            registrarLog('Acesso ao Sistema', `IP: ${usuarioAtual.ip}`);
+            
+            // Carregar página inicial
+            mudarPagina('viagens');
+        }
 
-        // Permitir login com Enter
-        document.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter' && document.getElementById('modalLogin').classList.contains('active')) {
-                fazerLogin();
-            }
-        });
+        function atualizarInterfaceUsuario() {
+            document.getElementById('userName').textContent = usuarioAtual.nome;
+            document.getElementById('userIP').textContent = 'IP: ' + usuarioAtual.ip;
+        }
+
+        document.addEventListener('DOMContentLoaded', inicializar);
+
+        // Atualizar atividade periodicamente
+        setInterval(() => {
+            minhaConexao.ultimaAtividade = new Date().toLocaleString('pt-BR');
+            atualizarConexoes();
+        }, 30000);
     </script>
 </body>
 </html>
