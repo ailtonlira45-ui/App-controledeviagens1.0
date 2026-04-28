@@ -61,21 +61,16 @@
             font-family: 'Outfit', sans-serif;
         }
 
-        /* Ícones SVG inline */
         .icon { display:inline-block; width:20px; height:20px; vertical-align:middle; }
         .icon-lg { width:28px; height:28px; }
-        .icon-xl { width:48px; height:48px; }
+        .icon-sm { width:14px; height:14px; }
 
-        @keyframes gradientShift {
-            0% { opacity:0.95; }
-            50% { opacity:1; }
-            100% { opacity:0.95; }
-        }
+        @keyframes gradientShift { 0%{opacity:0.95;}50%{opacity:1;}100%{opacity:0.95;} }
         @keyframes float {
-            0%,100% { transform:translateY(0) translateX(0) scale(1); opacity:0.4; }
-            25% { transform:translateY(-120px) translateX(60px) scale(1.6); opacity:0.08; }
-            50% { transform:translateY(-60px) translateX(-40px) scale(0.7); opacity:0.15; }
-            75% { transform:translateY(-180px) translateX(30px) scale(1.3); opacity:0.04; }
+            0%,100%{transform:translateY(0)translateX(0)scale(1);opacity:0.4;}
+            25%{transform:translateY(-120px)translateX(60px)scale(1.6);opacity:0.08;}
+            50%{transform:translateY(-60px)translateX(-40px)scale(0.7);opacity:0.15;}
+            75%{transform:translateY(-180px)translateX(30px)scale(1.3);opacity:0.04;}
         }
 
         .header {
@@ -150,10 +145,7 @@
         .main-content { max-width:1500px; margin:30px auto; padding:0 30px; }
         .page { display:none; }
         .page.active { display:block; animation: fadeIn 0.4s ease; }
-        @keyframes fadeIn {
-            from { opacity:0; transform:translateY(20px); }
-            to { opacity:1; transform:translateY(0); }
-        }
+        @keyframes fadeIn { from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);} }
 
         .glass-container {
             background: rgba(255,255,255,0.025); backdrop-filter: blur(30px);
@@ -161,10 +153,6 @@
             padding:35px; border-radius:24px;
             box-shadow: 0 10px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.03);
             margin-bottom:30px; transition:0.3s;
-        }
-        .glass-container:hover {
-            border-color: rgba(255,255,255,0.1);
-            box-shadow: 0 15px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
         }
 
         h2 {
@@ -175,7 +163,6 @@
         }
         h3 { margin-bottom:20px; display:flex; align-items:center; gap:10px; font-weight:600; opacity:0.9; font-family: 'Outfit', sans-serif; }
         .grid-2 { display:grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap:30px; }
-        .grid-3 { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:25px; }
         .grid-4 { display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap:22px; }
         .form-group { margin-bottom:18px; }
 
@@ -184,7 +171,6 @@
             font-weight:600; color: rgba(255,255,255,0.75); letter-spacing:0.6px;
             font-family: 'Inter', sans-serif;
         }
-
         input, select, textarea {
             width:100%; padding:13px 18px; border-radius:14px;
             border:1px solid rgba(255,255,255,0.08);
@@ -201,8 +187,13 @@
         select { cursor:pointer; background: rgba(15,15,15,0.5); }
         select option { background:#1a1a1a; color:#e0e0e0; }
         input[readonly], select[disabled], textarea[readonly] { 
-            background: rgba(255,255,255,0.015); cursor:not-allowed; opacity:0.5; 
-            border-color: rgba(255,255,255,0.04);
+            background: rgba(255,255,255,0.015) !important; cursor:not-allowed; opacity:0.45; 
+            border-color: rgba(255,255,255,0.03) !important; color:#777 !important;
+        }
+        .edit-input { background: rgba(0,0,0,0.5) !important; border-color: rgba(243,156,18,0.35) !important; color:#fff !important; }
+        .edit-input[readonly], .edit-input[disabled] { 
+            background: rgba(0,0,0,0.3) !important; opacity:0.45 !important; cursor:not-allowed !important;
+            border-color: rgba(255,255,255,0.03) !important; color:#777 !important;
         }
 
         .btn-group { display:flex; gap:10px; margin-top:22px; flex-wrap:wrap; }
@@ -268,11 +259,7 @@
         .badge-motorista { background: rgba(46,204,113,0.5); color:#fff; border:1px solid rgba(46,204,113,0.3); }
         .badge-status { background: rgba(241,196,15,0.5); color:#1a1a1a; border:1px solid rgba(241,196,15,0.3); animation: pulse-status 2.5s infinite; }
         .badge-concluida { background: rgba(46,204,113,0.5); color:#fff; border:1px solid rgba(46,204,113,0.3); }
-        @keyframes pulse-status {
-            0%,100% { box-shadow: 0 0 10px rgba(241,196,15,0.15); }
-            50% { box-shadow: 0 0 20px rgba(241,196,15,0.3); }
-        }
-
+        @keyframes pulse-status { 0%,100%{box-shadow:0 0 10px rgba(241,196,15,0.15);}50%{box-shadow:0 0 20px rgba(241,196,15,0.3);} }
         .rota { display:flex; align-items:center; gap:14px; margin:10px 0; font-size:1.05rem; }
         .info-text { font-size:0.8rem; opacity:0.65; margin-top:10px; }
         .auto-badge {
@@ -283,11 +270,6 @@
         .linked-badge {
             background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
             padding:6px 12px; border-radius:10px; font-size:0.75rem; margin-top:8px; display:inline-block;
-        }
-        .edit-input { background: rgba(0,0,0,0.5) !important; border-color: rgba(243,156,18,0.35) !important; color:#fff !important; }
-        .edit-input[readonly], .edit-input[disabled] { 
-            background: rgba(0,0,0,0.3) !important; opacity:0.45 !important; cursor:not-allowed !important;
-            border-color: rgba(255,255,255,0.03) !important; color:#888 !important;
         }
 
         .table-container { overflow-x:auto; }
@@ -309,8 +291,8 @@
         .toast-success { background: rgba(46,204,113,0.8); border:1px solid rgba(46,204,113,0.4); }
         .toast-error { background: rgba(231,76,60,0.8); border:1px solid rgba(231,76,60,0.4); }
         .toast-info { background: rgba(52,152,219,0.8); border:1px solid rgba(52,152,219,0.4); }
-        @keyframes slideIn { from { transform:translateX(120%); opacity:0; } to { transform:translateX(0); opacity:1; } }
-        @keyframes slideOut { from { transform:translateX(0); opacity:1; } to { transform:translateX(120%); opacity:0; } }
+        @keyframes slideIn { from{transform:translateX(120%);opacity:0;}to{transform:translateX(0);opacity:1;} }
+        @keyframes slideOut { from{transform:translateX(0);opacity:1;}to{transform:translateX(120%);opacity:0;} }
 
         .mensagem-erro { color:#ff6b6b; font-size:0.75rem; margin-top:5px; display:none; }
         .mensagem-erro.visivel { display:block; }
@@ -337,18 +319,11 @@
         .dash-numero { font-size:2.8rem; font-weight:900; letter-spacing:1px; font-family: 'Outfit', sans-serif; }
         .dash-label { font-size:0.85rem; opacity:0.65; margin-top:8px; text-transform:uppercase; letter-spacing:1.2px; font-family: 'Inter', sans-serif; }
         .dash-detalhe { font-size:0.7rem; opacity:0.45; margin-top:10px; }
-
         .no-results { text-align:center; padding:40px 20px; opacity:0.45; font-style:italic; display:none; }
-
-        .icone-seta {
-            display:inline-block; width:16px; height:16px;
-            border-left:2px solid rgba(255,255,255,0.5);
-            border-bottom:2px solid rgba(255,255,255,0.5);
-            transform:rotate(-45deg); margin:0 4px;
-        }
+        .campo-bloqueado-label { font-size:0.65rem; opacity:0.5; margin-left:4px; font-weight:400; text-transform:none; }
 
         @media (max-width:768px) {
-            .grid-2, .grid-3, .grid-4 { grid-template-columns:1fr; }
+            .grid-2, .grid-4 { grid-template-columns:1fr; }
             .nav { flex-wrap:wrap; height:auto; padding:14px 0; }
             .menu { overflow-x:auto; width:100%; margin-top:10px; padding-bottom:6px; }
             .user-info { margin-top:10px; padding-left:0; border-left:none; width:100%; justify-content:flex-end; }
@@ -360,22 +335,73 @@
     <div class="bg-particles" id="particles"></div>
     <div class="ns-watermark">VIANORTESUL</div>
 
-    <!-- Ícones SVG ocultos para referência -->
+    <!-- Ícones SVG do Iconizer.io -->
     <svg style="display:none;" xmlns="http://www.w3.org/2000/svg">
-        <symbol id="ic-bus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="2" y="4" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><circle cx="7" cy="18" r="1.5"/><circle cx="17" cy="18" r="1.5"/><line x1="7" y1="4" x2="7" y2="10"/><line x1="17" y1="4" x2="17" y2="10"/>
-        </symbol><symbol id="ic-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol><symbol id="ic-car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 17h14v-3H5v3z"/><path d="M17 8l2 6H5l2-6"/><circle cx="8" cy="17" r="1.5"/><circle cx="16" cy="17" r="1.5"/><line x1="3" y1="14" x2="5" y2="14"/><line x1="19" y1="14" x2="21" y2="14"/></symbol><symbol id="ic-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/></symbol><symbol id="ic-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-7 8-7s8 3 8 7"/><circle cx="18" cy="5" r="2.5"/><path d="M20 13c-1.5 0-3 .8-3.5 2"/></symbol><symbol id="ic-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></symbol><symbol id="ic-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol><symbol id="ic-whatsapp" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></symbol><symbol id="ic-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></symbol><symbol id="ic-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></symbol><symbol id="ic-save" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></symbol><symbol id="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol><symbol id="ic-logout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></symbol><symbol id="ic-dashboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol><symbol id="ic-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol><symbol id="ic-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol><symbol id="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></symbol><symbol id="ic-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 12h12"/><path d="M18 12l-6 6m0-12l6 6"/></symbol><symbol id="ic-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></symbol><symbol id="ic-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></symbol><symbol id="ic-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></symbol><symbol id="ic-stop" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></symbol><symbol id="ic-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></symbol>
+        <!-- Dashboard -->
+        <symbol id="ic-dashboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+        <!-- Bus/Ônibus -->
+        <symbol id="ic-bus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/><circle cx="7" cy="18" r="1.5"/><circle cx="17" cy="18" r="1.5"/><line x1="7" y1="4" x2="7" y2="10"/><line x1="17" y1="4" x2="17" y2="10"/></symbol>
+        <!-- Search -->
+        <symbol id="ic-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></symbol>
+        <!-- User -->
+        <symbol id="ic-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+        <!-- Users -->
+        <symbol id="ic-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></symbol>
+        <!-- Plus -->
+        <symbol id="ic-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+        <!-- Car -->
+        <symbol id="ic-car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 17h14v-4H5v4z"/><path d="M16 7l3 6H5l3-6"/><circle cx="8" cy="17" r="1.5"/><circle cx="16" cy="17" r="1.5"/><line x1="3" y1="14" x2="5" y2="14"/><line x1="19" y1="14" x2="21" y2="14"/></symbol>
+        <!-- Lock -->
+        <symbol id="ic-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/><circle cx="12" cy="16" r="1"/></symbol>
+        <!-- Eye Off -->
+        <symbol id="ic-eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></symbol>
+        <!-- Phone -->
+        <symbol id="ic-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></symbol>
+        <!-- Calendar -->
+        <symbol id="ic-calendar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+        <!-- Save -->
+        <symbol id="ic-save" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></symbol>
+        <!-- Trash -->
+        <symbol id="ic-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></symbol>
+        <!-- Edit -->
+        <symbol id="ic-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></symbol>
+        <!-- Check -->
+        <symbol id="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+        <!-- X -->
+        <symbol id="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></symbol>
+        <!-- Arrow Right -->
+        <symbol id="ic-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></symbol>
+        <!-- WhatsApp -->
+        <symbol id="ic-whatsapp" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></symbol>
+        <!-- Play -->
+        <symbol id="ic-play" viewBox="0 0 24 24" fill="currentColor"><polygon points="6 3 20 12 6 21 6 3"/></symbol>
+        <!-- Stop -->
+        <symbol id="ic-stop" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></symbol>
+        <!-- Flag -->
+        <symbol id="ic-flag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></symbol>
+        <!-- Log Out -->
+        <symbol id="ic-logout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></symbol>
+        <!-- Settings -->
+        <symbol id="ic-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></symbol>
     </svg>
 
+    <!-- Modal de Login -->
     <div id="modalLogin" class="modal active">
         <div class="modal-content">
-            <h2>
+            <h2 style="display:flex;align-items:center;justify-content:center;gap:10px;">
                 <svg class="icon icon-lg" style="color:#c9a84c;"><use href="#ic-bus"/></svg>
                 NS VIANORTESUL
             </h2>
             <p style="text-align:center;margin-bottom:22px;opacity:0.6;font-size:0.9rem;">Sistema de Controle de Viagens</p>
-            <div class="form-group"><label><svg class="icon" style="display:inline-block;width:14px;height:14px;"><use href="#ic-user"/></svg> Usuário</label><input type="text" id="loginUsuario" placeholder="Seu nome de usuário" autocomplete="off"><div class="mensagem-erro" id="erroLogin"></div></div>
-            <div class="form-group"><label><svg class="icon" style="display:inline-block;width:14px;height:14px;"><use href="#ic-lock"/></svg> Senha</label><input type="password" id="loginSenha" placeholder="Sua senha" autocomplete="off"></div>
+            <div class="form-group">
+                <label><svg class="icon icon-sm"><use href="#ic-user"/></svg> Usuário</label>
+                <input type="text" id="loginUsuario" placeholder="Seu nome de usuário" autocomplete="off">
+                <div class="mensagem-erro" id="erroLogin"></div>
+            </div>
+            <div class="form-group">
+                <label><svg class="icon icon-sm"><use href="#ic-lock"/></svg> Senha</label>
+                <input type="password" id="loginSenha" placeholder="Sua senha" autocomplete="off">
+            </div>
             <button class="btn-primary" onclick="fazerLogin()" style="width:100%;">
                 <svg class="icon"><use href="#ic-logout"/></svg> Entrar
             </button>
@@ -383,6 +409,7 @@
         </div>
     </div>
 
+    <!-- Modal Trocar Motorista -->
     <div id="modalTrocarMotorista" class="modal">
         <div class="modal-content modal-trocar-motorista">
             <h2><svg class="icon icon-lg"><use href="#ic-user"/></svg> Trocar Motorista</h2>
@@ -395,10 +422,11 @@
         </div>
     </div>
 
+    <!-- Modal Trocar Senha -->
     <div id="modalTrocarSenha" class="modal">
         <div class="modal-content">
             <h2><svg class="icon icon-lg"><use href="#ic-lock"/></svg> Trocar Senha</h2>
-            <div class="form-group"><label><svg class="icon" style="display:inline-block;width:14px;height:14px;"><use href="#ic-user"/></svg> Usuário</label><select id="trocaSenhaUsuario"></select></div>
+            <div class="form-group"><label>Usuário</label><select id="trocaSenhaUsuario"></select></div>
             <div class="form-group"><label>Nova Senha</label><input type="password" id="novaSenha" placeholder="Mínimo 6 caracteres"><div class="mensagem-erro" id="erroNovaSenha"></div></div>
             <div class="form-group"><label>Confirmar Senha</label><input type="password" id="confirmarNovaSenha" placeholder="Repita a senha"><div class="mensagem-erro" id="erroConfirmarNovaSenha"></div></div>
             <div class="btn-group">
@@ -431,16 +459,18 @@
     </header>
 
     <div class="main-content">
+        <!-- Dashboard -->
         <div id="page-dashboard" class="page active">
             <div class="glass-container">
                 <h2><svg class="icon icon-lg"><use href="#ic-dashboard"/></svg> Painel de Controle</h2>
                 <p style="margin-bottom:28px;opacity:0.6;">Resumo geral do sistema NS VIANORTESUL</p>
                 <div class="grid-4" id="dashboardCards"></div>
-                <h3 style="margin-top:40px;"><svg class="icon" style="display:inline-block;width:20px;height:20px;"><use href="#ic-bus"/></svg> Últimas Viagens</h3>
+                <h3 style="margin-top:40px;"><svg class="icon"><use href="#ic-bus"/></svg> Últimas Viagens</h3>
                 <div class="grid-2" id="ultimasViagens"></div>
             </div>
         </div>
 
+        <!-- Viagens -->
         <div id="page-viagens" class="page">
             <div class="glass-container">
                 <h2><svg class="icon icon-lg"><use href="#ic-bus"/></svg> Histórico de Viagens</h2>
@@ -449,8 +479,16 @@
                     <span class="search-icon"><svg class="icon" style="width:22px;height:22px;"><use href="#ic-search"/></svg></span>
                 </div>
                 <div class="grid-2">
-                    <div><h3><svg class="icon" style="color:#3498db;"><use href="#ic-arrow-right"/></svg> Viagens de IDA <span id="contadorIda" style="font-size:0.7rem;opacity:0.5;"></span></h3><div id="listaViagensIda"></div><p class="no-results" id="semResultadosIda">Nenhuma viagem de ida encontrada</p></div>
-                    <div><h3><svg class="icon" style="color:#9b59b6;transform:rotate(180deg);"><use href="#ic-arrow-right"/></svg> Viagens de VOLTA <span id="contadorVolta" style="font-size:0.7rem;opacity:0.5;"></span></h3><div id="listaViagensVolta"></div><p class="no-results" id="semResultadosVolta">Nenhuma viagem de volta encontrada</p></div>
+                    <div>
+                        <h3><svg class="icon" style="color:#3498db;"><use href="#ic-arrow-right"/></svg> Viagens de IDA <span id="contadorIda" style="font-size:0.7rem;opacity:0.5;"></span></h3>
+                        <div id="listaViagensIda"></div>
+                        <p class="no-results" id="semResultadosIda">Nenhuma viagem de ida encontrada</p>
+                    </div>
+                    <div>
+                        <h3><svg class="icon" style="color:#9b59b6;transform:rotate(180deg);"><use href="#ic-arrow-right"/></svg> Viagens de VOLTA <span id="contadorVolta" style="font-size:0.7rem;opacity:0.5;"></span></h3>
+                        <div id="listaViagensVolta"></div>
+                        <p class="no-results" id="semResultadosVolta">Nenhuma viagem de volta encontrada</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -475,7 +513,7 @@
         let db;
         try { firebase.initializeApp(firebaseConfig); db = firebase.firestore(); } catch(e) { console.error('Firebase:', e); }
 
-        const DB_KEY = 'ns_db_v13';
+        const DB_KEY = 'ns_db_v14';
         let DB = { viagensIda:[], viagensVolta:[], veiculos:[], motoristas:[], administradores:[], usuarioLogado:null };
         let viagemEditando = { tipo:null, id:null };
         let trocaMotorista = { tipo:null, id:null, motoristaSelecionado:null };
@@ -559,9 +597,9 @@
                 <div class="dash-card" onclick="mudarPagina('admins')"><div class="dash-icon"><svg width="40" height="40" style="color:#e74c3c;"><use href="#ic-users"/></svg></div><div class="dash-numero">${tus}</div><div class="dash-label">Usuários</div></div>
                 <div class="dash-card"><div class="dash-icon"><svg width="40" height="40" style="color:#f39c12;"><use href="#ic-bus"/></svg></div><div class="dash-numero">${ti+tv}</div><div class="dash-label">Total Viagens</div></div>`;
             let hu='<div><h4 style="margin-bottom:14px;display:flex;align-items:center;gap:8px;"><svg class="icon" style="color:#3498db;"><use href="#ic-arrow-right"/></svg> Últimas IDAS</h4>';
-            if(DB.viagensIda[0]){DB.viagensIda.slice(0,3).forEach(v=>{const st=v.status==='Viagem concluída'?'badge-concluida':'badge-status';hu+=`<div class="card" style="padding:14px;margin-bottom:10px;"><div class="rota" style="font-size:0.9rem;"><strong>${v.origem}</strong><svg class="icon" style="width:14px;height:14px;opacity:0.5;"><use href="#ic-arrow-right"/></svg><strong>${v.destino}</strong></div><div class="info-text"><svg class="icon" style="width:12px;height:12px;display:inline;"><use href="#ic-calendar"/></svg> ${new Date(v.data).toLocaleString('pt-BR')} | <svg class="icon" style="width:12px;height:12px;display:inline;"><use href="#ic-user"/></svg> ${v.motorista||'N/A'} | <span class="badge ${st}" style="font-size:0.6rem;">${v.status||'Iniciando viagem'}</span></div></div>`;});}else{hu+='<p style="opacity:0.4;text-align:center;">Nenhuma viagem</p>';}
+            if(DB.viagensIda[0]){DB.viagensIda.slice(0,3).forEach(v=>{const st=v.status==='Viagem concluída'?'badge-concluida':'badge-status';hu+=`<div class="card" style="padding:14px;margin-bottom:10px;"><div class="rota" style="font-size:0.9rem;"><strong>${v.origem}</strong><svg class="icon icon-sm" style="opacity:0.5;"><use href="#ic-arrow-right"/></svg><strong>${v.destino}</strong></div><div class="info-text"><svg class="icon icon-sm" style="display:inline;"><use href="#ic-calendar"/></svg> ${new Date(v.data).toLocaleString('pt-BR')} | <svg class="icon icon-sm" style="display:inline;"><use href="#ic-user"/></svg> ${v.motorista||'N/A'} | <span class="badge ${st}" style="font-size:0.6rem;">${v.status||'Iniciando viagem'}</span></div></div>`;});}else{hu+='<p style="opacity:0.4;text-align:center;">Nenhuma viagem</p>';}
             hu+='</div><div><h4 style="margin-bottom:14px;display:flex;align-items:center;gap:8px;"><svg class="icon" style="color:#9b59b6;transform:rotate(180deg);"><use href="#ic-arrow-right"/></svg> Últimas VOLTAS</h4>';
-            if(DB.viagensVolta[0]){DB.viagensVolta.slice(0,3).forEach(v=>{const st=v.status==='Viagem concluída'?'badge-concluida':'badge-status';hu+=`<div class="card" style="padding:14px;margin-bottom:10px;"><div class="rota" style="font-size:0.9rem;"><strong>${v.origem}</strong><svg class="icon" style="width:14px;height:14px;opacity:0.5;"><use href="#ic-arrow-right"/></svg><strong>${v.destino}</strong></div><div class="info-text"><svg class="icon" style="width:12px;height:12px;display:inline;"><use href="#ic-calendar"/></svg> ${new Date(v.data).toLocaleString('pt-BR')} | <svg class="icon" style="width:12px;height:12px;display:inline;"><use href="#ic-user"/></svg> ${v.motorista||'N/A'} | <span class="badge ${st}" style="font-size:0.6rem;">${v.status||'Iniciando viagem'}</span></div></div>`;});}else{hu+='<p style="opacity:0.4;text-align:center;">Nenhuma viagem</p>';}
+            if(DB.viagensVolta[0]){DB.viagensVolta.slice(0,3).forEach(v=>{const st=v.status==='Viagem concluída'?'badge-concluida':'badge-status';hu+=`<div class="card" style="padding:14px;margin-bottom:10px;"><div class="rota" style="font-size:0.9rem;"><strong>${v.origem}</strong><svg class="icon icon-sm" style="opacity:0.5;"><use href="#ic-arrow-right"/></svg><strong>${v.destino}</strong></div><div class="info-text"><svg class="icon icon-sm" style="display:inline;"><use href="#ic-calendar"/></svg> ${new Date(v.data).toLocaleString('pt-BR')} | <svg class="icon icon-sm" style="display:inline;"><use href="#ic-user"/></svg> ${v.motorista||'N/A'} | <span class="badge ${st}" style="font-size:0.6rem;">${v.status||'Iniciando viagem'}</span></div></div>`;});}else{hu+='<p style="opacity:0.4;text-align:center;">Nenhuma viagem</p>';}
             hu+='</div>'; ultimas.innerHTML=hu;
         }
 
@@ -588,7 +626,7 @@
             trocaMotorista={tipo,id,motoristaSelecionado:null};
             const c=document.getElementById('listaMotoristasTroca');
             if(!DB.motoristas.length){c.innerHTML='<p style="text-align:center;opacity:0.4;">Nenhum motorista.</p>';}
-            else { c.innerHTML=DB.motoristas.map(m=>`<div class="motorista-option" onclick="selMotoristaTroca(${m.id})" id="mo-${m.id}"><svg width="28" height="28"><use href="#ic-user"/></svg><div style="flex:1;"><div style="font-weight:600;">${m.nome}</div><div style="font-size:0.75rem;opacity:0.5;">${DB.usuarioLogado?.nivel==='admin'?m.telefone||'Sem telefone':'<svg class="icon" style="width:12px;height:12px;display:inline;"><use href="#ic-eye-off"/></svg> Oculto'}</div></div><div id="ck-${m.id}" style="font-size:1.5rem;opacity:0;color:#2ecc71;"><svg width="20" height="20"><use href="#ic-check"/></svg></div></div>`).join(''); }
+            else { c.innerHTML=DB.motoristas.map(m=>`<div class="motorista-option" onclick="selMotoristaTroca(${m.id})" id="mo-${m.id}"><svg width="28" height="28"><use href="#ic-user"/></svg><div style="flex:1;"><div style="font-weight:600;">${m.nome}</div><div style="font-size:0.75rem;opacity:0.5;">${DB.usuarioLogado?.nivel==='admin'?m.telefone||'Sem telefone':'<svg class="icon icon-sm" style="display:inline;"><use href="#ic-eye-off"/></svg> Oculto'}</div></div><div id="ck-${m.id}" style="font-size:1.5rem;opacity:0;color:#2ecc71;"><svg width="20" height="20"><use href="#ic-check"/></svg></div></div>`).join(''); }
             document.getElementById('modalTrocarMotorista').classList.add('active');
         }
 
@@ -614,7 +652,7 @@
 
         function carregarCadastro(){
             const c=document.getElementById('cadastroContainer'); if(!c)return;
-            c.innerHTML=`<h2><svg class="icon icon-lg"><use href="#ic-plus"/></svg> Nova Viagem</h2><p style="margin-bottom:20px;opacity:0.55;">Cadastre a ida - a volta é gerada automaticamente.</p><div class="grid-2"><div><h3><svg class="icon" style="color:#3498db;"><use href="#ic-arrow-right"/></svg> IDA</h3><div class="form-group"><label>Origem</label><input type="text" id="idaOrigem" placeholder="Cidade de saída" oninput="attPrevVolta()"></div><div class="form-group"><label>Destino</label><input type="text" id="idaDestino" placeholder="Cidade de chegada" oninput="attPrevVolta()"></div><div class="form-group"><label><svg class="icon" style="width:14px;height:14px;display:inline;"><use href="#ic-calendar"/></svg> Data</label><input type="datetime-local" id="idaData"></div><div class="form-group"><label><svg class="icon" style="width:14px;height:14px;display:inline;"><use href="#ic-car"/></svg> Veículo</label><select id="idaVeiculo"><option value="">Selecione...</option>${DB.veiculos.map(v=>`<option value="${v.modelo} - ${v.placa}">${v.modelo} - ${v.placa}</option>`).join('')}</select></div><div class="form-group"><label><svg class="icon" style="width:14px;height:14px;display:inline;"><use href="#ic-user"/></svg> Motorista</label><select id="idaMotorista"><option value="">Selecione...</option>${DB.motoristas.map(m=>`<option value="${m.nome}">${m.nome}</option>`).join('')}</select></div><div class="form-group"><label>Obs</label><textarea id="idaObs" rows="2" placeholder="Detalhes..."></textarea></div></div><div><h3><svg class="icon" style="color:#9b59b6;transform:rotate(180deg);"><use href="#ic-arrow-right"/></svg> VOLTA <span class="auto-badge">AUTO</span></h3><div class="card" style="background:rgba(155,89,182,0.04);border-color:rgba(155,89,182,0.12);"><div class="form-group"><label>Origem</label><input type="text" id="voltaOrigem" placeholder="Automático" readonly></div><div class="form-group"><label>Destino</label><input type="text" id="voltaDestino" placeholder="Automático" readonly></div><div class="form-group"><label><svg class="icon" style="width:14px;height:14px;display:inline;"><use href="#ic-calendar"/></svg> Data</label><input type="datetime-local" id="voltaData"></div><div class="form-group"><label><svg class="icon" style="width:14px;height:14px;display:inline;"><use href="#ic-car"/></svg> Veículo</label><select id="voltaVeiculo"><option value="">Mesmo da ida</option>${DB.veiculos.map(v=>`<option value="${v.modelo} - ${v.placa}">${v.modelo} - ${v.placa}</option>`).join('')}</select></div><div class="form-group"><label><svg class="icon" style="width:14px;height:14px;display:inline;"><use href="#ic-user"/></svg> Motorista</label><select id="voltaMotorista"><option value="">Mesmo da ida</option>${DB.motoristas.map(m=>`<option value="${m.nome}">${m.nome}</option>`).join('')}</select></div><div class="form-group"><label>Obs</label><textarea id="voltaObs" rows="2" placeholder="Detalhes..."></textarea></div></div></div></div><div class="btn-group"><button class="btn-success" onclick="cadastrarViagem()"><svg class="icon"><use href="#ic-save"/></svg> Salvar</button><button class="btn-outline" onclick="carregarCadastro()"><svg class="icon"><use href="#ic-x"/></svg> Limpar</button></div>`;
+            c.innerHTML=`<h2><svg class="icon icon-lg"><use href="#ic-plus"/></svg> Nova Viagem</h2><p style="margin-bottom:20px;opacity:0.55;">Cadastre a ida - a volta é gerada automaticamente.</p><div class="grid-2"><div><h3><svg class="icon" style="color:#3498db;"><use href="#ic-arrow-right"/></svg> IDA</h3><div class="form-group"><label>Origem</label><input type="text" id="idaOrigem" placeholder="Cidade de saída" oninput="attPrevVolta()"></div><div class="form-group"><label>Destino</label><input type="text" id="idaDestino" placeholder="Cidade de chegada" oninput="attPrevVolta()"></div><div class="form-group"><label><svg class="icon icon-sm" style="display:inline;"><use href="#ic-calendar"/></svg> Data</label><input type="datetime-local" id="idaData"></div><div class="form-group"><label><svg class="icon icon-sm" style="display:inline;"><use href="#ic-car"/></svg> Veículo</label><select id="idaVeiculo"><option value="">Selecione...</option>${DB.veiculos.map(v=>`<option value="${v.modelo} - ${v.placa}">${v.modelo} - ${v.placa}</option>`).join('')}</select></div><div class="form-group"><label><svg class="icon icon-sm" style="display:inline;"><use href="#ic-user"/></svg> Motorista</label><select id="idaMotorista"><option value="">Selecione...</option>${DB.motoristas.map(m=>`<option value="${m.nome}">${m.nome}</option>`).join('')}</select></div><div class="form-group"><label>Obs</label><textarea id="idaObs" rows="2" placeholder="Detalhes..."></textarea></div></div><div><h3><svg class="icon" style="color:#9b59b6;transform:rotate(180deg);"><use href="#ic-arrow-right"/></svg> VOLTA <span class="auto-badge">AUTO</span></h3><div class="card" style="background:rgba(155,89,182,0.04);border-color:rgba(155,89,182,0.12);"><div class="form-group"><label>Origem</label><input type="text" id="voltaOrigem" placeholder="Automático" readonly></div><div class="form-group"><label>Destino</label><input type="text" id="voltaDestino" placeholder="Automático" readonly></div><div class="form-group"><label><svg class="icon icon-sm" style="display:inline;"><use href="#ic-calendar"/></svg> Data</label><input type="datetime-local" id="voltaData"></div><div class="form-group"><label><svg class="icon icon-sm" style="display:inline;"><use href="#ic-car"/></svg> Veículo</label><select id="voltaVeiculo"><option value="">Mesmo da ida</option>${DB.veiculos.map(v=>`<option value="${v.modelo} - ${v.placa}">${v.modelo} - ${v.placa}</option>`).join('')}</select></div><div class="form-group"><label><svg class="icon icon-sm" style="display:inline;"><use href="#ic-user"/></svg> Motorista</label><select id="voltaMotorista"><option value="">Mesmo da ida</option>${DB.motoristas.map(m=>`<option value="${m.nome}">${m.nome}</option>`).join('')}</select></div><div class="form-group"><label>Obs</label><textarea id="voltaObs" rows="2" placeholder="Detalhes..."></textarea></div></div></div></div><div class="btn-group"><button class="btn-success" onclick="cadastrarViagem()"><svg class="icon"><use href="#ic-save"/></svg> Salvar</button><button class="btn-outline" onclick="carregarCadastro()"><svg class="icon"><use href="#ic-x"/></svg> Limpar</button></div>`;
         }
 
         function attPrevVolta(){const o=document.getElementById('idaOrigem')?.value||'',d=document.getElementById('idaDestino')?.value||'';const vo=document.getElementById('voltaOrigem'),vd=document.getElementById('voltaDestino');if(vo)vo.value=d;if(vd)vd.value=o;}
@@ -648,11 +686,37 @@
             c.innerHTML=vf.map(v=>{
                 const ed=viagemEditando.tipo==='ida'&&viagemEditando.id===v.id;
                 const st=v.status==='Viagem concluída'?'badge-concluida':'badge-status';
-                const svgSeta = '<svg class="icon" style="width:14px;height:14px;opacity:0.5;"><use href="#ic-arrow-right"/></svg>';
-                const svgCal = '<svg class="icon" style="width:12px;height:12px;display:inline;"><use href="#ic-calendar"/></svg>';
-                const svgUser = '<svg class="icon" style="width:12px;height:12px;display:inline;"><use href="#ic-user"/></svg>';
-                const svgCar = '<svg class="icon" style="width:12px;height:12px;display:inline;"><use href="#ic-car"/></svg>';
-                return `<div class="card ${ed?'editando':''}"><div class="card-header"><div style="display:flex;gap:8px;align-items:center;"><span class="badge badge-ida"><svg class="icon" style="width:10px;height:10px;"><use href="#ic-arrow-right"/></svg> IDA</span><span class="badge ${st}">${v.status==='Viagem concluída'?'<svg class="icon" style="width:10px;height:10px;"><use href="#ic-flag"/></svg> '+v.status:'<svg class="icon" style="width:10px;height:10px;"><use href="#ic-play"/></svg> '+v.status}</span></div><small>${v.dataCadastro} | ${v.criadoPor||'Sistema'}</small></div>${ed?`<div class="form-group"><label>Origem (bloqueado)</label><input type="text" id="edit-origem-${v.id}" value="${v.origem}" class="edit-input" readonly></div><div class="form-group"><label>Destino (bloqueado)</label><input type="text" id="edit-destino-${v.id}" value="${v.destino}" class="edit-input" readonly></div><div class="form-group"><label>${svgCal} Data</label><input type="datetime-local" id="edit-data-${v.id}" value="${v.data}" class="edit-input"></div><div class="form-group"><label>${svgCar} Veículo (bloqueado)</label><select id="edit-veiculo-${v.id}" class="edit-input" disabled><option>${v.veiculo}</option></select></div><div class="form-group"><label>${svgUser} Motorista</label><select id="edit-motorista-${v.id}" class="edit-input"><option value="${v.motorista||''}">${v.motorista||'Selecione...'}</option>${DB.motoristas.map(m=>`<option value="${m.nome}">${m.nome}</option>`).join('')}</select></div><div class="form-group"><label>Obs</label><textarea id="edit-obs-${v.id}" rows="2" class="edit-input">${v.observacoes||''}</textarea></div><div class="btn-group" style="flex-wrap:wrap;"><button class="btn-success" style="padding:8px 14px;font-size:0.7rem;" onclick="salvarEdicao('ida',${v.id})"><svg class="icon" style="width:12px;height:12px;"><use href="#ic-save"/></svg> Salvar</button><button class="btn-status" style="padding:8px 14px;font-size:0.7rem;" onclick="alterarStatusViagem('ida',${v.id})"><svg class="icon" style="width:12px;height:12px;"><use href="#ic-play"/></svg> ${v.status==='Viagem concluída'?'Reiniciar':'Iniciar'} Viagem</button>${v.status!=='Viagem concluída'?`<button class="btn-finalizar" style="padding:8px 14px;font-size:0.7rem;" onclick="finalizarViagem('ida',${v.id})"><svg class="icon" style="width:12px;height:12px;"><use href="#ic-stop"/></svg> Finalizar</button>`:''}<button class="btn-outline" style="padding:8px 14px;font-size:0.7rem;" onclick="cancelarEdicao()"><svg class="icon" style="width:12px;height:12px;"><use href="#ic-x"/></svg> Cancelar</button></div>`:`<div class="rota"><strong>${v.origem}</strong>${svgSeta}<strong>${v.destino}</strong></div><div class="info-text">${svgCal} ${new Date(v.data).toLocaleString('pt-BR')} | ${svgCar} ${v.veiculo} | ${svgUser} ${v.motorista||'N/A'}</div>${v.observacoes?`<div class="info-text">📝 ${v.observacoes}</div>`:''}<div class="btn-group"><button class="btn-whatsapp" style="padding:8px 14px;font-size:0.7rem;" onclick="enviarWhatsApp(${v.id},'ida')"><svg class="icon" style="width:14px;height:14px;"><use href="#ic-whatsapp"/></svg> WhatsApp</button><button class="btn-warning" style="padding:8px 14px;font-size:0.7rem;" onclick="abrirModalTrocarMotorista('ida',${v.id})"><svg class="icon" style="width:12px;height:12px;"><use href="#ic-user"/></svg> Motorista</button>${(adm||isM)?`<button class="btn-info" style="padding:8px 14px;font-size:0.7rem;" onclick="iniciarEdicao('ida',${v.id})"><svg class="icon" style="width:12px;height:12px;"><use href="#ic-edit"/></svg> Editar</button>`:''}${adm?`<button class="btn-danger" style="padding:8px 14px;font-size:0.7rem;" onclick="excluirViagemIda(${v.id})"><svg class="icon" style="width:12px;height:12px;"><use href="#ic-trash"/></svg></button>`:''}</div>`}</div>`;
+                const svgSeta='<svg class="icon icon-sm" style="opacity:0.5;"><use href="#ic-arrow-right"/></svg>';
+                const svgCal='<svg class="icon icon-sm" style="display:inline;"><use href="#ic-calendar"/></svg>';
+                const svgUser='<svg class="icon icon-sm" style="display:inline;"><use href="#ic-user"/></svg>';
+                const svgCar='<svg class="icon icon-sm" style="display:inline;"><use href="#ic-car"/></svg>';
+                return `<div class="card ${ed?'editando':''}">
+                    <div class="card-header"><div style="display:flex;gap:8px;align-items:center;"><span class="badge badge-ida"><svg class="icon icon-sm"><use href="#ic-arrow-right"/></svg> IDA</span><span class="badge ${st}">${v.status==='Viagem concluída'?'<svg class="icon icon-sm"><use href="#ic-flag"/></svg> '+v.status:'<svg class="icon icon-sm"><use href="#ic-play"/></svg> '+ (v.status||'Iniciando viagem')}</span></div><small>${v.dataCadastro} | ${v.criadoPor||'Sistema'}</small></div>
+                    ${ed?`
+                        <div class="form-group"><label>Origem <span class="campo-bloqueado-label">(bloqueado para motorista)</span></label><input type="text" id="edit-origem-${v.id}" value="${v.origem}" class="edit-input" readonly></div>
+                        <div class="form-group"><label>Destino <span class="campo-bloqueado-label">(bloqueado para motorista)</span></label><input type="text" id="edit-destino-${v.id}" value="${v.destino}" class="edit-input" readonly></div>
+                        <div class="form-group"><label>${svgCal} Data</label><input type="datetime-local" id="edit-data-${v.id}" value="${v.data}" class="edit-input"></div>
+                        <div class="form-group"><label>${svgCar} Veículo <span class="campo-bloqueado-label">(bloqueado para motorista)</span></label><select id="edit-veiculo-${v.id}" class="edit-input" disabled><option>${v.veiculo}</option></select></div>
+                        <div class="form-group"><label>${svgUser} Motorista</label><select id="edit-motorista-${v.id}" class="edit-input"><option value="${v.motorista||''}">${v.motorista||'Selecione...'}</option>${DB.motoristas.map(m=>`<option value="${m.nome}">${m.nome}</option>`).join('')}</select></div>
+                        <div class="form-group"><label>Obs</label><textarea id="edit-obs-${v.id}" rows="2" class="edit-input">${v.observacoes||''}</textarea></div>
+                        <div class="btn-group" style="flex-wrap:wrap;">
+                            <button class="btn-success" style="padding:8px 14px;font-size:0.7rem;" onclick="salvarEdicao('ida',${v.id})"><svg class="icon icon-sm"><use href="#ic-save"/></svg> Salvar</button>
+                            <button class="btn-status" style="padding:8px 14px;font-size:0.7rem;" onclick="alterarStatusViagem('ida',${v.id})"><svg class="icon icon-sm"><use href="#ic-play"/></svg> ${v.status==='Viagem concluída'?'Reiniciar':'Iniciar'} Viagem</button>
+                            ${v.status!=='Viagem concluída'?`<button class="btn-finalizar" style="padding:8px 14px;font-size:0.7rem;" onclick="finalizarViagem('ida',${v.id})"><svg class="icon icon-sm"><use href="#ic-stop"/></svg> Finalizar</button>`:''}
+                            <button class="btn-outline" style="padding:8px 14px;font-size:0.7rem;" onclick="cancelarEdicao()"><svg class="icon icon-sm"><use href="#ic-x"/></svg> Cancelar</button>
+                        </div>
+                    `:`
+                        <div class="rota"><strong>${v.origem}</strong>${svgSeta}<strong>${v.destino}</strong></div>
+                        <div class="info-text">${svgCal} ${new Date(v.data).toLocaleString('pt-BR')} | ${svgCar} ${v.veiculo} | ${svgUser} ${v.motorista||'N/A'}</div>
+                        ${v.observacoes?`<div class="info-text">📝 ${v.observacoes}</div>`:''}
+                        <div class="btn-group">
+                            <button class="btn-whatsapp" style="padding:8px 14px;font-size:0.7rem;" onclick="enviarWhatsApp(${v.id},'ida')"><svg class="icon" style="width:14px;height:14px;"><use href="#ic-whatsapp"/></svg> WhatsApp</button>
+                            <button class="btn-warning" style="padding:8px 14px;font-size:0.7rem;" onclick="abrirModalTrocarMotorista('ida',${v.id})"><svg class="icon icon-sm"><use href="#ic-user"/></svg> Motorista</button>
+                            ${(adm||isM)?`<button class="btn-info" style="padding:8px 14px;font-size:0.7rem;" onclick="iniciarEdicao('ida',${v.id})"><svg class="icon icon-sm"><use href="#ic-edit"/></svg> Editar</button>`:''}
+                            ${adm?`<button class="btn-danger" style="padding:8px 14px;font-size:0.7rem;" onclick="excluirViagemIda(${v.id})"><svg class="icon icon-sm"><use href="#ic-trash"/></svg></button>`:''}
+                        </div>
+                    `}
+                </div>`;
             }).join('');
         }
 
@@ -670,11 +734,38 @@
                 const ed=viagemEditando.tipo==='volta'&&viagemEditando.id===v.id;
                 const vi=v.viagemIdaVinculada?DB.viagensIda.find(x=>x.id===v.viagemIdaVinculada):null;
                 const st=v.status==='Viagem concluída'?'badge-concluida':'badge-status';
-                const svgSeta = '<svg class="icon" style="width:14px;height:14px;opacity:0.5;"><use href="#ic-arrow-right"/></svg>';
-                const svgCal = '<svg class="icon" style="width:12px;height:12px;display:inline;"><use href="#ic-calendar"/></svg>';
-                const svgUser = '<svg class="icon" style="width:12px;height:12px;display:inline;"><use href="#ic-user"/></svg>';
-                const svgCar = '<svg class="icon" style="width:12px;height:12px;display:inline;"><use href="#ic-car"/></svg>';
-                return `<div class="card ${ed?'editando':''}"><div class="card-header"><div style="display:flex;gap:8px;align-items:center;"><span class="badge badge-volta"><svg class="icon" style="width:10px;height:10px;transform:rotate(180deg);"><use href="#ic-arrow-right"/></svg> VOLTA</span><span class="auto-badge">AUTO</span><span class="badge ${st}">${v.status==='Viagem concluída'?'<svg class="icon" style="width:10px;height:10px;"><use href="#ic-flag"/></svg> '+v.status:'<svg class="icon" style="width:10px;height:10px;"><use href="#ic-play"/></svg> '+v.status}</span></div></div>${ed?`<div class="form-group"><label>Origem (bloqueado)</label><input type="text" id="edit-origem-${v.id}" value="${v.origem}" class="edit-input" readonly></div><div class="form-group"><label>Destino (bloqueado)</label><input type="text" id="edit-destino-${v.id}" value="${v.destino}" class="edit-input" readonly></div><div class="form-group"><label>${svgCal} Data</label><input type="datetime-local" id="edit-data-${v.id}" value="${v.data}" class="edit-input"></div><div class="form-group"><label>${svgCar} Veículo (bloqueado)</label><select id="edit-veiculo-${v.id}" class="edit-input" disabled><option>${v.veiculo}</option></select></div><div class="form-group"><label>${svgUser} Motorista</label><select id="edit-motorista-${v.id}" class="edit-input"><option value="${v.motorista||''}">${v.motorista||'Selecione...'}</option>${DB.motoristas.map(m=>`<option value="${m.nome}">${m.nome}</option>`).join('')}</select></div><div class="form-group"><label>Obs</label><textarea id="edit-obs-${v.id}" rows="2" class="edit-input">${v.observacoes||''}</textarea></div><div class="btn-group" style="flex-wrap:wrap;"><button class="btn-success" style="padding:8px 14px;font-size:0.7rem;" onclick="salvarEdicao('volta',${v.id})"><svg class="icon" style="width:12px;height:12px;"><use href="#ic-save"/></svg> Salvar</button><button class="btn-status" style="padding:8px 14px;font-size:0.7rem;" onclick="alterarStatusViagem('volta',${v.id})"><svg class="icon" style="width:12px;height:12px;"><use href="#ic-play"/></svg> ${v.status==='Viagem concluída'?'Reiniciar':'Iniciar'} Viagem</button>${v.status!=='Viagem concluída'?`<button class="btn-finalizar" style="padding:8px 14px;font-size:0.7rem;" onclick="finalizarViagem('volta',${v.id})"><svg class="icon" style="width:12px;height:12px;"><use href="#ic-stop"/></svg> Finalizar</button>`:''}<button class="btn-outline" style="padding:8px 14px;font-size:0.7rem;" onclick="cancelarEdicao()"><svg class="icon" style="width:12px;height:12px;"><use href="#ic-x"/></svg> Cancelar</button></div>`:`<div class="rota"><strong>${v.origem}</strong>${svgSeta}<strong>${v.destino}</strong></div><div class="info-text">${svgCal} ${new Date(v.data).toLocaleString('pt-BR')} | ${svgCar} ${v.veiculo} | ${svgUser} ${v.motorista||'N/A'}</div>${vi?`<div class="linked-badge">🔗 Ida: ${vi.origem} ➔ ${vi.destino}</div>`:''}${v.observacoes?`<div class="info-text">📝 ${v.observacoes}</div>`:''}<div class="btn-group"><button class="btn-whatsapp" style="padding:8px 14px;font-size:0.7rem;" onclick="enviarWhatsApp(${v.id},'volta')"><svg class="icon" style="width:14px;height:14px;"><use href="#ic-whatsapp"/></svg> WhatsApp</button><button class="btn-warning" style="padding:8px 14px;font-size:0.7rem;" onclick="abrirModalTrocarMotorista('volta',${v.id})"><svg class="icon" style="width:12px;height:12px;"><use href="#ic-user"/></svg> Motorista</button>${(adm||isM)?`<button class="btn-info" style="padding:8px 14px;font-size:0.7rem;" onclick="iniciarEdicao('volta',${v.id})"><svg class="icon" style="width:12px;height:12px;"><use href="#ic-edit"/></svg> Editar</button>`:''}${adm?`<button class="btn-danger" style="padding:8px 14px;font-size:0.7rem;" onclick="excluirViagemVolta(${v.id})"><svg class="icon" style="width:12px;height:12px;"><use href="#ic-trash"/></svg></button>`:''}</div>`}</div>`;
+                const svgSeta='<svg class="icon icon-sm" style="opacity:0.5;"><use href="#ic-arrow-right"/></svg>';
+                const svgCal='<svg class="icon icon-sm" style="display:inline;"><use href="#ic-calendar"/></svg>';
+                const svgUser='<svg class="icon icon-sm" style="display:inline;"><use href="#ic-user"/></svg>';
+                const svgCar='<svg class="icon icon-sm" style="display:inline;"><use href="#ic-car"/></svg>';
+                return `<div class="card ${ed?'editando':''}">
+                    <div class="card-header"><div style="display:flex;gap:8px;align-items:center;"><span class="badge badge-volta"><svg class="icon icon-sm" style="transform:rotate(180deg);"><use href="#ic-arrow-right"/></svg> VOLTA</span><span class="auto-badge">AUTO</span><span class="badge ${st}">${v.status==='Viagem concluída'?'<svg class="icon icon-sm"><use href="#ic-flag"/></svg> '+v.status:'<svg class="icon icon-sm"><use href="#ic-play"/></svg> '+ (v.status||'Iniciando viagem')}</span></div></div>
+                    ${ed?`
+                        <div class="form-group"><label>Origem <span class="campo-bloqueado-label">(bloqueado para motorista)</span></label><input type="text" id="edit-origem-${v.id}" value="${v.origem}" class="edit-input" readonly></div>
+                        <div class="form-group"><label>Destino <span class="campo-bloqueado-label">(bloqueado para motorista)</span></label><input type="text" id="edit-destino-${v.id}" value="${v.destino}" class="edit-input" readonly></div>
+                        <div class="form-group"><label>${svgCal} Data</label><input type="datetime-local" id="edit-data-${v.id}" value="${v.data}" class="edit-input"></div>
+                        <div class="form-group"><label>${svgCar} Veículo <span class="campo-bloqueado-label">(bloqueado para motorista)</span></label><select id="edit-veiculo-${v.id}" class="edit-input" disabled><option>${v.veiculo}</option></select></div>
+                        <div class="form-group"><label>${svgUser} Motorista</label><select id="edit-motorista-${v.id}" class="edit-input"><option value="${v.motorista||''}">${v.motorista||'Selecione...'}</option>${DB.motoristas.map(m=>`<option value="${m.nome}">${m.nome}</option>`).join('')}</select></div>
+                        <div class="form-group"><label>Obs</label><textarea id="edit-obs-${v.id}" rows="2" class="edit-input">${v.observacoes||''}</textarea></div>
+                        <div class="btn-group" style="flex-wrap:wrap;">
+                            <button class="btn-success" style="padding:8px 14px;font-size:0.7rem;" onclick="salvarEdicao('volta',${v.id})"><svg class="icon icon-sm"><use href="#ic-save"/></svg> Salvar</button>
+                            <button class="btn-status" style="padding:8px 14px;font-size:0.7rem;" onclick="alterarStatusViagem('volta',${v.id})"><svg class="icon icon-sm"><use href="#ic-play"/></svg> ${v.status==='Viagem concluída'?'Reiniciar':'Iniciar'} Viagem</button>
+                            ${v.status!=='Viagem concluída'?`<button class="btn-finalizar" style="padding:8px 14px;font-size:0.7rem;" onclick="finalizarViagem('volta',${v.id})"><svg class="icon icon-sm"><use href="#ic-stop"/></svg> Finalizar</button>`:''}
+                            <button class="btn-outline" style="padding:8px 14px;font-size:0.7rem;" onclick="cancelarEdicao()"><svg class="icon icon-sm"><use href="#ic-x"/></svg> Cancelar</button>
+                        </div>
+                    `:`
+                        <div class="rota"><strong>${v.origem}</strong>${svgSeta}<strong>${v.destino}</strong></div>
+                        <div class="info-text">${svgCal} ${new Date(v.data).toLocaleString('pt-BR')} | ${svgCar} ${v.veiculo} | ${svgUser} ${v.motorista||'N/A'}</div>
+                        ${vi?`<div class="linked-badge">🔗 Ida: ${vi.origem} ➔ ${vi.destino}</div>`:''}
+                        ${v.observacoes?`<div class="info-text">📝 ${v.observacoes}</div>`:''}
+                        <div class="btn-group">
+                            <button class="btn-whatsapp" style="padding:8px 14px;font-size:0.7rem;" onclick="enviarWhatsApp(${v.id},'volta')"><svg class="icon" style="width:14px;height:14px;"><use href="#ic-whatsapp"/></svg> WhatsApp</button>
+                            <button class="btn-warning" style="padding:8px 14px;font-size:0.7rem;" onclick="abrirModalTrocarMotorista('volta',${v.id})"><svg class="icon icon-sm"><use href="#ic-user"/></svg> Motorista</button>
+                            ${(adm||isM)?`<button class="btn-info" style="padding:8px 14px;font-size:0.7rem;" onclick="iniciarEdicao('volta',${v.id})"><svg class="icon icon-sm"><use href="#ic-edit"/></svg> Editar</button>`:''}
+                            ${adm?`<button class="btn-danger" style="padding:8px 14px;font-size:0.7rem;" onclick="excluirViagemVolta(${v.id})"><svg class="icon icon-sm"><use href="#ic-trash"/></svg></button>`:''}
+                        </div>
+                    `}
+                </div>`;
             }).join('');
         }
 
@@ -695,28 +786,46 @@
             salvarDB(); cancelarEdicao(); showToast('Viagem finalizada!');
         }
 
+        // FUNÇÃO CORRIGIDA: Motorista pode editar DATA e MOTORISTA
         function salvarEdicao(tipo,id){
             const v=tipo==='ida'?DB.viagensIda.find(x=>x.id===id):DB.viagensVolta.find(x=>x.id===id);
             if(!v){showToast('Viagem não encontrada!','error');return;}
             const isAdmin=DB.usuarioLogado?.nivel==='admin';
             
-            // CORRIGIDO: Motorista pode editar a data
-            const dt=document.getElementById(`edit-data-${id}`)?.value; 
-            if(dt)v.data=dt;
-            
-            const ob=document.getElementById(`edit-obs-${id}`)?.value; 
-            if(ob!==undefined)v.observacoes=ob;
-            
-            // CORRIGIDO: Motorista pode trocar o motorista
-            const mo=document.getElementById(`edit-motorista-${id}`)?.value; 
-            if(mo){v.motorista=mo;const mm=DB.motoristas.find(m=>m.nome===mo);v.motoristaId=mm?mm.id:null;}
-            
-            if(isAdmin){
-                const o=document.getElementById(`edit-origem-${id}`)?.value; if(o)v.origem=o;
-                const d=document.getElementById(`edit-destino-${id}`)?.value; if(d)v.destino=d;
-                const ve=document.getElementById(`edit-veiculo-${id}`)?.value; if(ve)v.veiculo=ve;
-                if(tipo==='ida'&&o&&d){const vv=DB.viagensVolta.find(x=>x.viagemIdaVinculada===id);if(vv){vv.origem=d;vv.destino=o;}}
+            // ✅ CORRIGIDO: Motorista pode editar a DATA
+            const dtElem=document.getElementById(`edit-data-${id}`);
+            if(dtElem&&dtElem.value){
+                v.data=dtElem.value;
             }
+            
+            // ✅ CORRIGIDO: Motorista pode editar OBSERVAÇÕES
+            const obElem=document.getElementById(`edit-obs-${id}`);
+            if(obElem!==null&&obElem!==undefined){
+                v.observacoes=obElem.value;
+            }
+            
+            // ✅ CORRIGIDO: Motorista pode trocar o MOTORISTA
+            const moElem=document.getElementById(`edit-motorista-${id}`);
+            if(moElem&&moElem.value){
+                v.motorista=moElem.value;
+                const mm=DB.motoristas.find(m=>m.nome===moElem.value);
+                v.motoristaId=mm?mm.id:null;
+            }
+            
+            // Apenas admin pode editar origem, destino e veículo
+            if(isAdmin){
+                const oElem=document.getElementById(`edit-origem-${id}`);
+                const dElem=document.getElementById(`edit-destino-${id}`);
+                const veElem=document.getElementById(`edit-veiculo-${id}`);
+                if(oElem&&oElem.value)v.origem=oElem.value;
+                if(dElem&&dElem.value)v.destino=dElem.value;
+                if(veElem&&veElem.value)v.veiculo=veElem.value;
+                if(tipo==='ida'&&oElem&&oElem.value&&dElem&&dElem.value){
+                    const vv=DB.viagensVolta.find(x=>x.viagemIdaVinculada===id);
+                    if(vv){vv.origem=dElem.value;vv.destino=oElem.value;}
+                }
+            }
+            
             salvarDB(); cancelarEdicao(); showToast('Viagem atualizada!');
         }
 
@@ -725,36 +834,28 @@
 
         function carregarVeiculos(){
             const c=document.getElementById('veiculosContainer');if(!c)return;
-            c.innerHTML=`<h2><svg class="icon icon-lg"><use href="#ic-car"/></svg> Veículos</h2><div class="grid-2"><div><h3>Cadastrar</h3><div class="form-group"><label>Modelo</label><input type="text" id="veiculoModelo" placeholder="Ex: Toyota Corolla"></div><div class="form-group"><label>Placa</label><input type="text" id="veiculoPlaca" placeholder="ABC-1234" style="text-transform:uppercase;"></div><div class="form-group"><label>Ano</label><input type="number" id="veiculoAno" placeholder="2024" min="2000" max="2030"></div><div class="btn-group"><button class="btn-primary" onclick="cadastrarVeiculo()"><svg class="icon"><use href="#ic-save"/></svg> Salvar</button><button class="btn-outline" onclick="carregarVeiculos()"><svg class="icon"><use href="#ic-x"/></svg> Limpar</button></div></div><div><h3>Lista</h3><div class="table-container"><table><thead><tr><th>Modelo</th><th>Placa</th><th>Ano</th><th></th></tr></thead><tbody id="corpoTabelaVeiculos"></tbody></table></div></div></div>`;attTabelaVeiculos();
-        }
-
+            c.innerHTML=`<h2><svg class="icon icon-lg"><use href="#ic-car"/></svg> Veículos</h2><div class="grid-2"><div><h3>Cadastrar</h3><div class="form-group"><label>Modelo</label><input type="text" id="veiculoModelo" placeholder="Ex: Toyota Corolla"></div><div class="form-group"><label>Placa</label><input type="text" id="veiculoPlaca" placeholder="ABC-1234" style="text-transform:uppercase;"></div><div class="form-group"><label>Ano</label><input type="number" id="veiculoAno" placeholder="2024" min="2000" max="2030"></div><div class="btn-group"><button class="btn-primary" onclick="cadastrarVeiculo()"><svg class="icon"><use href="#ic-save"/></svg> Salvar</button><button class="btn-outline" onclick="carregarVeiculos()"><svg class="icon"><use href="#ic-x"/></svg> Limpar</button></div></div><div><h3>Lista</h3><div class="table-container"><table><thead><tr><th>Modelo</th><th>Placa</th><th>Ano</th><th></th></tr></thead><tbody id="corpoTabelaVeiculos"></tbody></table></div></div></div>`;attTabelaVeiculos();}
         function cadastrarVeiculo(){const m=document.getElementById('veiculoModelo').value.trim(),p=document.getElementById('veiculoPlaca').value.trim().toUpperCase(),a=document.getElementById('veiculoAno').value;if(!m||!p){showToast('Preencha Modelo e Placa!','error');return;}DB.veiculos.push({id:Date.now(),modelo:m,placa:p,ano:a});salvarDB();carregarVeiculos();showToast('Veículo salvo!');}
-        function attTabelaVeiculos(){const t=document.getElementById('corpoTabelaVeiculos');if(!t)return;if(!DB.veiculos.length){t.innerHTML='<tr><td colspan="4" style="text-align:center;opacity:0.4;">Nenhum veículo</td></tr>';return;}t.innerHTML=DB.veiculos.map(v=>`<tr><td>${v.modelo}</td><td>${v.placa}</td><td>${v.ano||'-'}</td><td><button class="btn-danger" style="padding:5px 10px;font-size:0.7rem;" onclick="excluirVeiculo(${v.id})"><svg class="icon" style="width:12px;height:12px;"><use href="#ic-trash"/></svg></button></td></tr>`).join('');}
+        function attTabelaVeiculos(){const t=document.getElementById('corpoTabelaVeiculos');if(!t)return;if(!DB.veiculos.length){t.innerHTML='<tr><td colspan="4" style="text-align:center;opacity:0.4;">Nenhum veículo</td></tr>';return;}t.innerHTML=DB.veiculos.map(v=>`<tr><td>${v.modelo}</td><td>${v.placa}</td><td>${v.ano||'-'}</td><td><button class="btn-danger" style="padding:5px 10px;font-size:0.7rem;" onclick="excluirVeiculo(${v.id})"><svg class="icon icon-sm"><use href="#ic-trash"/></svg></button></td></tr>`).join('');}
         function excluirVeiculo(id){if(confirm('Excluir?')){DB.veiculos=DB.veiculos.filter(v=>v.id!==id);salvarDB();carregarVeiculos();showToast('Excluído!');}}
 
         function carregarMotoristas(){
             const c=document.getElementById('motoristasContainer');if(!c)return;
             const adm=DB.usuarioLogado?.nivel==='admin';
-            c.innerHTML=`<h2><svg class="icon icon-lg"><use href="#ic-user"/></svg> Motoristas</h2><div class="grid-2"><div><h3>Cadastrar</h3><div class="form-group"><label>Nome Completo</label><input type="text" id="motoristaNome" placeholder="Nome do motorista"></div><div class="form-group"><label>Telefone</label><input type="tel" id="motoristaTelefone" placeholder="(00) 00000-0000"></div><div class="form-group"><label>CNH</label><input type="text" id="motoristaCNH" placeholder="Número da CNH"></div><div class="btn-group"><button class="btn-primary" onclick="cadastrarMotorista()"><svg class="icon"><use href="#ic-save"/></svg> Salvar</button><button class="btn-outline" onclick="carregarMotoristas()"><svg class="icon"><use href="#ic-x"/></svg> Limpar</button></div></div><div><h3>Lista</h3><div class="table-container"><table><thead><tr><th>Nome</th><th>${adm?'<svg class="icon" style="width:10px;height:10px;display:inline;"><use href="#ic-phone"/></svg> Telefone':'<svg class="icon" style="width:10px;height:10px;display:inline;"><use href="#ic-eye-off"/></svg> Contato'}</th><th>CNH</th><th></th></tr></thead><tbody id="corpoTabelaMotoristas"></tbody></table></div></div></div>`;attTabelaMotoristas();
-        }
-
+            c.innerHTML=`<h2><svg class="icon icon-lg"><use href="#ic-user"/></svg> Motoristas</h2><div class="grid-2"><div><h3>Cadastrar</h3><div class="form-group"><label>Nome Completo</label><input type="text" id="motoristaNome" placeholder="Nome do motorista"></div><div class="form-group"><label>Telefone</label><input type="tel" id="motoristaTelefone" placeholder="(00) 00000-0000"></div><div class="form-group"><label>CNH</label><input type="text" id="motoristaCNH" placeholder="Número da CNH"></div><div class="btn-group"><button class="btn-primary" onclick="cadastrarMotorista()"><svg class="icon"><use href="#ic-save"/></svg> Salvar</button><button class="btn-outline" onclick="carregarMotoristas()"><svg class="icon"><use href="#ic-x"/></svg> Limpar</button></div></div><div><h3>Lista</h3><div class="table-container"><table><thead><tr><th>Nome</th><th>${adm?'<svg class="icon icon-sm"><use href="#ic-phone"/></svg> Telefone':'<svg class="icon icon-sm"><use href="#ic-eye-off"/></svg> Contato'}</th><th>CNH</th><th></th></tr></thead><tbody id="corpoTabelaMotoristas"></tbody></table></div></div></div>`;attTabelaMotoristas();}
         function cadastrarMotorista(){const n=document.getElementById('motoristaNome').value.trim();if(!n){showToast('Preencha o nome!','error');return;}DB.motoristas.push({id:Date.now(),nome:n,telefone:document.getElementById('motoristaTelefone').value.trim(),cnh:document.getElementById('motoristaCNH').value.trim()});salvarDB();carregarMotoristas();showToast('Motorista salvo!');}
-        function attTabelaMotoristas(){const t=document.getElementById('corpoTabelaMotoristas');if(!t)return;const adm=DB.usuarioLogado?.nivel==='admin';if(!DB.motoristas.length){t.innerHTML='<tr><td colspan="4" style="text-align:center;opacity:0.4;">Nenhum motorista</td></tr>';return;}t.innerHTML=DB.motoristas.map(m=>`<tr><td>${m.nome}</td><td>${adm?(m.telefone||'-'):'<span style="opacity:0.35;"><svg class="icon" style="width:12px;height:12px;display:inline;"><use href="#ic-eye-off"/></svg> Oculto</span>'}</td><td>${m.cnh||'-'}</td><td><button class="btn-danger" style="padding:5px 10px;font-size:0.7rem;" onclick="excluirMotorista(${m.id})"><svg class="icon" style="width:12px;height:12px;"><use href="#ic-trash"/></svg></button></td></tr>`).join('');}
+        function attTabelaMotoristas(){const t=document.getElementById('corpoTabelaMotoristas');if(!t)return;const adm=DB.usuarioLogado?.nivel==='admin';if(!DB.motoristas.length){t.innerHTML='<tr><td colspan="4" style="text-align:center;opacity:0.4;">Nenhum motorista</td></tr>';return;}t.innerHTML=DB.motoristas.map(m=>`<tr><td>${m.nome}</td><td>${adm?(m.telefone||'-'):'<span style="opacity:0.35;"><svg class="icon icon-sm" style="display:inline;"><use href="#ic-eye-off"/></svg> Oculto</span>'}</td><td>${m.cnh||'-'}</td><td><button class="btn-danger" style="padding:5px 10px;font-size:0.7rem;" onclick="excluirMotorista(${m.id})"><svg class="icon icon-sm"><use href="#ic-trash"/></svg></button></td></tr>`).join('');}
         function excluirMotorista(id){if(confirm('Excluir?')){DB.motoristas=DB.motoristas.filter(m=>m.id!==id);salvarDB();carregarMotoristas();showToast('Excluído!');}}
 
         function carregarAdmins(){
             const c=document.getElementById('adminsContainer');if(!c)return;
-            c.innerHTML=`<h2><svg class="icon icon-lg"><use href="#ic-users"/></svg> Usuários</h2><div class="grid-2"><div><h3>Cadastrar</h3><div class="form-group"><label>Nome</label><input type="text" id="adminNome" placeholder="Nome completo"></div><div class="form-group"><label>Usuário (Login)</label><input type="text" id="adminUsuario" placeholder="Nome para login"><div class="mensagem-erro" id="erroCadastroUsuario"></div></div><div class="form-group"><label>Telefone</label><input type="tel" id="adminTelefone" placeholder="(00) 00000-0000"></div><div class="form-group"><label>Senha</label><input type="password" id="adminSenha" placeholder="Mínimo 6 caracteres"><div class="mensagem-erro" id="erroCadastroSenha"></div></div><div class="form-group"><label>Confirmar Senha</label><input type="password" id="adminConfirmarSenha" placeholder="Repita a senha"><div class="mensagem-erro" id="erroConfirmarSenha"></div></div><div class="form-group"><label>Nível</label><select id="adminNivel"><option value="motorista">Motorista</option><option value="admin">Administrador</option></select></div><div class="btn-group"><button class="btn-primary" onclick="cadastrarAdmin()"><svg class="icon"><use href="#ic-save"/></svg> Salvar</button><button class="btn-outline" onclick="carregarAdmins()"><svg class="icon"><use href="#ic-x"/></svg> Limpar</button></div></div><div><h3>Lista</h3><div class="table-container"><table><thead><tr><th>Nome</th><th>Usuário</th><th>Nível</th><th></th></tr></thead><tbody id="corpoTabelaAdmins"></tbody></table></div></div></div>`;attTabelaAdmins();
-        }
-
+            c.innerHTML=`<h2><svg class="icon icon-lg"><use href="#ic-users"/></svg> Usuários</h2><div class="grid-2"><div><h3>Cadastrar</h3><div class="form-group"><label>Nome</label><input type="text" id="adminNome" placeholder="Nome completo"></div><div class="form-group"><label>Usuário (Login)</label><input type="text" id="adminUsuario" placeholder="Nome para login"><div class="mensagem-erro" id="erroCadastroUsuario"></div></div><div class="form-group"><label>Telefone</label><input type="tel" id="adminTelefone" placeholder="(00) 00000-0000"></div><div class="form-group"><label>Senha</label><input type="password" id="adminSenha" placeholder="Mínimo 6 caracteres"><div class="mensagem-erro" id="erroCadastroSenha"></div></div><div class="form-group"><label>Confirmar Senha</label><input type="password" id="adminConfirmarSenha" placeholder="Repita a senha"><div class="mensagem-erro" id="erroConfirmarSenha"></div></div><div class="form-group"><label>Nível</label><select id="adminNivel"><option value="motorista">Motorista</option><option value="admin">Administrador</option></select></div><div class="btn-group"><button class="btn-primary" onclick="cadastrarAdmin()"><svg class="icon"><use href="#ic-save"/></svg> Salvar</button><button class="btn-outline" onclick="carregarAdmins()"><svg class="icon"><use href="#ic-x"/></svg> Limpar</button></div></div><div><h3>Lista</h3><div class="table-container"><table><thead><tr><th>Nome</th><th>Usuário</th><th>Nível</th><th></th></tr></thead><tbody id="corpoTabelaAdmins"></tbody></table></div></div></div>`;attTabelaAdmins();}
         function cadastrarAdmin(){const n=document.getElementById('adminNome').value.trim(),u=document.getElementById('adminUsuario').value.trim(),t=document.getElementById('adminTelefone').value.trim(),s=document.getElementById('adminSenha').value,cs=document.getElementById('adminConfirmarSenha').value,nv=document.getElementById('adminNivel').value;document.querySelectorAll('.mensagem-erro').forEach(e=>e.classList.remove('visivel'));let er=false;if(!n||!u||!s){showToast('Preencha nome, usuário e senha!','error');return;}if(DB.administradores.some(a=>a.usuario===u)){document.getElementById('erroCadastroUsuario').textContent='Usuário já existe!';document.getElementById('erroCadastroUsuario').classList.add('visivel');er=true;}if(s.length<6){document.getElementById('erroCadastroSenha').textContent='Mínimo 6 caracteres!';document.getElementById('erroCadastroSenha').classList.add('visivel');er=true;}if(s!==cs){document.getElementById('erroConfirmarSenha').textContent='Senhas não coincidem!';document.getElementById('erroConfirmarSenha').classList.add('visivel');er=true;}if(er)return;DB.administradores.push({id:Date.now(),nome:n,usuario:u,telefone:t,senha:s,nivel:nv});salvarDB();carregarAdmins();showToast('Usuário salvo!');}
-        function attTabelaAdmins(){const t=document.getElementById('corpoTabelaAdmins');if(!t)return;if(!DB.administradores.length){t.innerHTML='<tr><td colspan="4" style="text-align:center;opacity:0.4;">Nenhum usuário</td></tr>';return;}t.innerHTML=DB.administradores.map(a=>`<tr><td>${a.nome}</td><td>${a.usuario}</td><td><span class="badge ${a.nivel==='admin'?'badge-admin':'badge-motorista'}">${a.nivel}</span></td><td>${DB.usuarioLogado&&DB.usuarioLogado.id!==a.id?`<button class="btn-danger" style="padding:5px 10px;font-size:0.7rem;" onclick="excluirAdmin(${a.id})"><svg class="icon" style="width:12px;height:12px;"><use href="#ic-trash"/></svg></button>`:'<span style="opacity:0.35;font-size:0.7rem;">Você</span>'}</td></tr>`).join('');}
+        function attTabelaAdmins(){const t=document.getElementById('corpoTabelaAdmins');if(!t)return;if(!DB.administradores.length){t.innerHTML='<tr><td colspan="4" style="text-align:center;opacity:0.4;">Nenhum usuário</td></tr>';return;}t.innerHTML=DB.administradores.map(a=>`<tr><td>${a.nome}</td><td>${a.usuario}</td><td><span class="badge ${a.nivel==='admin'?'badge-admin':'badge-motorista'}">${a.nivel}</span></td><td>${DB.usuarioLogado&&DB.usuarioLogado.id!==a.id?`<button class="btn-danger" style="padding:5px 10px;font-size:0.7rem;" onclick="excluirAdmin(${a.id})"><svg class="icon icon-sm"><use href="#ic-trash"/></svg></button>`:'<span style="opacity:0.35;font-size:0.7rem;">Você</span>'}</td></tr>`).join('');}
         function excluirAdmin(id){if(DB.administradores.length<=1){showToast('Não é possível excluir o último!','error');return;}if(DB.usuarioLogado&&id===DB.usuarioLogado.id){showToast('Não pode se excluir!','error');return;}if(confirm('Excluir?')){DB.administradores=DB.administradores.filter(a=>a.id!==id);salvarDB();carregarAdmins();showToast('Excluído!');}}
 
         function enviarWhatsApp(id,tipo){const v=tipo==='ida'?DB.viagensIda.find(x=>x.id===id):DB.viagensVolta.find(x=>x.id===id);if(!v){showToast('Não encontrada!','error');return;}const msg=`*Relatório NS VIANORTESUL*%0A%0A🔹 ${tipo.toUpperCase()}%0A📍 ${v.origem} ➔ ${v.destino}%0A📅 ${new Date(v.data).toLocaleString('pt-BR')}%0A🚗 ${v.veiculo}%0A👤 ${v.motorista||'N/A'}%0A🚀 ${v.status||'Iniciando viagem'}%0A${v.observacoes?`📝 ${v.observacoes}%0A`:''}`;window.open(`https://wa.me/?text=${msg}`,'_blank');}
-
         function showToast(msg,tipo='success'){const t=document.createElement('div');t.className=`toast toast-${tipo}`;t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2800);}
-
         function criarParticulas(){const c=document.getElementById('particles');for(let i=0;i<30;i++){const p=document.createElement('div');p.className='particle';p.style.cssText=`width:${Math.random()*6+3}px;height:${p.style.width};left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*20}s;animation-duration:${Math.random()*20+12}s;`;c.appendChild(p);}}
 
         document.addEventListener('DOMContentLoaded',async()=>{criarParticulas();await carregarDB();initUsers();atualizarUI();if(DB.usuarioLogado){document.getElementById('modalLogin').classList.remove('active');mudarPagina('dashboard');}else{document.getElementById('modalLogin').classList.add('active');}});
