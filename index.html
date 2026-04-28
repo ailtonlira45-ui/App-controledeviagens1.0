@@ -4,326 +4,345 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NS - VIANORTESUL - Sistema de Controle de Viagens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #666666;
-            --primary-dark: #444444;
-            --primary-light: #888888;
+            --primary: #888888;
+            --primary-dark: #555555;
+            --primary-light: #aaaaaa;
+            --accent: #b8860b;
+            --accent-light: #d4a843;
             --success: #2ecc71;
             --danger: #e74c3c;
             --warning: #f39c12;
             --info: #3498db;
-            --glass-bg: rgba(255, 255, 255, 0.06);
-            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-bg: rgba(255, 255, 255, 0.04);
+            --glass-border: rgba(255, 255, 255, 0.10);
+            --gold: #c9a84c;
+            --gold-light: #e0c878;
         }
 
-        * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif; }
+        * { margin:0; padding:0; box-sizing:border-box; }
 
         body {
             min-height:100vh;
-            background:#0a0a0a;
-            color:#fff;
+            background:#0d0d0d;
+            color:#e0e0e0;
             overflow-x:hidden;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            letter-spacing: 0.2px;
         }
 
         .animated-bg {
             position:fixed; top:0; left:0; width:100%; height:100%;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 25%, #404040 50%, #2d2d2d 75%, #1a1a1a 100%);
-            background-size: 400% 400%;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(180,180,180,0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(200,170,80,0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(120,120,120,0.04) 0%, transparent 50%),
+                linear-gradient(160deg, #0d0d0d 0%, #1a1a1a 30%, #141414 60%, #0f0f0f 100%);
+            background-size: 100% 100%;
             z-index:-2;
-            animation: gradientShift 10s ease infinite;
+            animation: gradientShift 8s ease infinite;
         }
 
         .bg-particles { position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; }
         .particle {
             position:absolute; border-radius:50%;
-            background: rgba(255,255,255,0.03);
+            background: radial-gradient(circle, rgba(200,170,100,0.08), transparent);
             animation: float 20s infinite;
         }
         .ns-watermark {
-            position:fixed; font-size:12vw; font-weight:900;
-            color: rgba(255,255,255,0.015); top:50%; left:50%;
-            transform: translate(-50%,-50%); letter-spacing:15px;
+            position:fixed; font-size:14vw; font-weight:900;
+            color: rgba(255,255,255,0.012); top:50%; left:50%;
+            transform: translate(-50%,-50%); letter-spacing:18px;
             pointer-events:none; z-index:-1;
-            text-shadow: 0 0 80px rgba(150,150,150,0.08);
+            text-shadow: 0 0 100px rgba(180,160,120,0.06);
             white-space: nowrap;
+            font-family: 'Outfit', sans-serif;
         }
 
         @keyframes gradientShift {
-            0% { background-position:0% 50%; }
-            50% { background-position:100% 50%; }
-            100% { background-position:0% 50%; }
+            0% { opacity:0.95; }
+            50% { opacity:1; }
+            100% { opacity:0.95; }
         }
         @keyframes float {
-            0%,100% { transform:translateY(0) translateX(0) scale(1); opacity:0.3; }
-            25% { transform:translateY(-100px) translateX(50px) scale(1.5); opacity:0.1; }
-            50% { transform:translateY(-50px) translateX(-30px) scale(0.8); opacity:0.2; }
-            75% { transform:translateY(-150px) translateX(20px) scale(1.2); opacity:0.05; }
+            0%,100% { transform:translateY(0) translateX(0) scale(1); opacity:0.4; }
+            25% { transform:translateY(-120px) translateX(60px) scale(1.6); opacity:0.08; }
+            50% { transform:translateY(-60px) translateX(-40px) scale(0.7); opacity:0.15; }
+            75% { transform:translateY(-180px) translateX(30px) scale(1.3); opacity:0.04; }
         }
 
         .header {
-            background: rgba(0,0,0,0.7); backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px); padding:0 25px;
+            background: rgba(15,15,15,0.75); backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px); padding:0 30px;
             position:sticky; top:0; z-index:100;
-            border-bottom:1px solid rgba(255,255,255,0.08);
-            box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+            border-bottom:1px solid rgba(255,255,255,0.06);
+            box-shadow: 0 4px 40px rgba(0,0,0,0.6);
         }
         .nav {
             display:flex; justify-content:space-between; align-items:center;
-            max-width:1400px; margin:0 auto; height:65px;
+            max-width:1500px; margin:0 auto; height:68px;
         }
         .logo {
-            font-size:1.6rem; font-weight:900; letter-spacing:3px;
-            background: linear-gradient(135deg,#fff 0%,#aaa 50%,#666 100%);
+            font-size:1.7rem; font-weight:800; letter-spacing:4px;
+            background: linear-gradient(135deg,#e0d5c0 0%,#c9a84c 30%,#e0c878 60%,#b8963c 100%);
             -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-            cursor:pointer; filter: drop-shadow(0 0 15px rgba(180,180,180,0.3));
-            transition:0.3s;
+            cursor:pointer; filter: drop-shadow(0 0 20px rgba(200,170,80,0.3));
+            transition:0.3s; font-family: 'Outfit', sans-serif;
         }
-        .logo:hover { filter: drop-shadow(0 0 25px rgba(200,200,200,0.5)); transform:scale(1.05); }
-        .menu { display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+        .logo:hover { filter: drop-shadow(0 0 35px rgba(220,190,100,0.5)); transform:scale(1.04); }
+        .menu { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
         .menu-btn {
-            background: rgba(255,255,255,0.04); backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px); border:1px solid rgba(255,255,255,0.1);
-            color:#fff; padding:9px 18px; border-radius:10px; cursor:pointer;
-            transition:0.3s; font-weight:500; white-space:nowrap; font-size:0.85rem;
-            letter-spacing:0.5px;
+            background: rgba(255,255,255,0.03); backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px); border:1px solid rgba(255,255,255,0.08);
+            color:#ccc; padding:10px 20px; border-radius:12px; cursor:pointer;
+            transition:0.3s; font-weight:500; white-space:nowrap; font-size:0.82rem;
+            letter-spacing:0.6px; font-family: 'Inter', sans-serif;
         }
         .menu-btn:hover {
-            background: rgba(150,150,150,0.2); border-color: rgba(150,150,150,0.4);
-            transform:translateY(-2px); box-shadow: 0 8px 25px rgba(100,100,100,0.15);
+            background: rgba(200,170,100,0.12); border-color: rgba(200,170,100,0.3);
+            transform:translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            color:#e0d5c0;
         }
         .menu-btn.active {
-            background: rgba(150,150,150,0.3); border-color: var(--primary);
-            box-shadow: 0 0 20px rgba(100,100,100,0.3), inset 0 0 20px rgba(100,100,100,0.1);
+            background: rgba(200,170,100,0.18); border-color: rgba(200,170,100,0.5);
+            box-shadow: 0 0 25px rgba(200,170,100,0.15), inset 0 0 20px rgba(200,170,100,0.05);
+            color:#e0d5c0;
         }
         .user-info {
-            display:flex; align-items:center; gap:10px; margin-left:20px;
-            padding-left:20px; border-left:1px solid rgba(255,255,255,0.2);
+            display:flex; align-items:center; gap:12px; margin-left:25px;
+            padding-left:25px; border-left:1px solid rgba(255,255,255,0.15);
             cursor:pointer; transition:0.3s;
         }
-
         .user-info:hover { opacity:0.8; }
         .user-avatar {
-            width:38px; height:38px; border-radius:50%;
-            background: linear-gradient(135deg,var(--primary),var(--primary-dark));
+            width:40px; height:40px; border-radius:50%;
+            background: linear-gradient(135deg, #c9a84c, #8b6914);
             display:flex; align-items:center; justify-content:center;
-            font-weight:bold; font-size:1.1rem;
-            box-shadow: 0 0 15px rgba(150,150,150,0.3);
+            font-weight:700; font-size:1.1rem;
+            box-shadow: 0 0 20px rgba(200,170,80,0.3);
+            font-family: 'Outfit', sans-serif;
         }
 
         .modal {
             display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px); z-index:1000;
+            background: rgba(0,0,0,0.88); backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px); z-index:1000;
             justify-content:center; align-items:center;
         }
         .modal.active { display:flex; }
         .modal-content {
-            background: rgba(20,20,20,0.9); backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px); border:1px solid rgba(255,255,255,0.15);
-            padding:35px; border-radius:20px; width:90%; max-width:400px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px rgba(150,150,150,0.1);
+            background: rgba(18,18,18,0.92); backdrop-filter: blur(35px);
+            -webkit-backdrop-filter: blur(35px); border:1px solid rgba(255,255,255,0.1);
+            padding:40px; border-radius:24px; width:90%; max-width:420px;
+            box-shadow: 0 25px 70px rgba(0,0,0,0.8), 0 0 50px rgba(200,170,100,0.06);
         }
-        .modal-content h2 { margin-bottom:20px; text-align:center; letter-spacing:1px; }
+        .modal-content h2 { margin-bottom:25px; text-align:center; letter-spacing:1.5px; font-weight:700; font-family: 'Outfit', sans-serif; }
 
-        .main-content { max-width:1400px; margin:25px auto; padding:0 25px; }
+        .main-content { max-width:1500px; margin:30px auto; padding:0 30px; }
         .page { display:none; }
-        .page.active { display:block; animation: fadeIn 0.35s ease; }
+        .page.active { display:block; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn {
-            from { opacity:0; transform:translateY(15px); }
+            from { opacity:0; transform:translateY(20px); }
             to { opacity:1; transform:translateY(0); }
         }
 
         .glass-container {
-            background: rgba(255,255,255,0.03); backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px); border:1px solid rgba(255,255,255,0.08);
-            padding:30px; border-radius:20px;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04);
-            margin-bottom:25px; transition:0.3s;
+            background: rgba(255,255,255,0.025); backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px); border:1px solid rgba(255,255,255,0.06);
+            padding:35px; border-radius:24px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.03);
+            margin-bottom:30px; transition:0.3s;
         }
         .glass-container:hover {
-            border-color: rgba(255,255,255,0.12);
-            box-shadow: 0 12px 50px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.1);
+            box-shadow: 0 15px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
         }
 
         h2 {
-            margin-bottom:22px; text-transform:uppercase; letter-spacing:2px;
-            display:flex; align-items:center; gap:10px;
-            font-size:1.3rem; font-weight:700; opacity:0.95;
+            margin-bottom:25px; text-transform:uppercase; letter-spacing:2.5px;
+            display:flex; align-items:center; gap:12px;
+            font-size:1.4rem; font-weight:700; opacity:0.95;
+            font-family: 'Outfit', sans-serif;
         }
-        h3 { margin-bottom:18px; display:flex; align-items:center; gap:8px; font-weight:600; opacity:0.9; }
-        .grid-2 { display:grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap:25px; }
-        .grid-3 { display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:20px; }
-        .grid-4 { display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:20px; }
-        .form-group { margin-bottom:16px; }
+        h3 { margin-bottom:20px; display:flex; align-items:center; gap:10px; font-weight:600; opacity:0.9; font-family: 'Outfit', sans-serif; }
+        .grid-2 { display:grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap:30px; }
+        .grid-3 { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:25px; }
+        .grid-4 { display:grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap:22px; }
+        .form-group { margin-bottom:18px; }
 
         label {
-            display:block; margin-bottom:6px; font-size:0.8rem;
-            font-weight:600; color: rgba(255,255,255,0.8); letter-spacing:0.5px;
+            display:block; margin-bottom:7px; font-size:0.78rem;
+            font-weight:600; color: rgba(255,255,255,0.75); letter-spacing:0.6px;
+            font-family: 'Inter', sans-serif;
         }
 
         input, select, textarea {
-            width:100%; padding:12px 16px; border-radius:12px;
-            border:1px solid rgba(255,255,255,0.1);
-            background: rgba(255,255,255,0.05); backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px); color:#fff;
+            width:100%; padding:13px 18px; border-radius:14px;
+            border:1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.04); backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px); color:#e0e0e0;
             font-size:0.9rem; transition:0.3s; outline:none;
+            font-family: 'Inter', sans-serif;
         }
         input:focus, select:focus, textarea:focus {
-            border-color: rgba(150,150,150,0.4); background: rgba(255,255,255,0.08);
-            box-shadow: 0 0 20px rgba(150,150,150,0.12), inset 0 0 12px rgba(150,150,150,0.04);
+            border-color: rgba(200,170,100,0.4); background: rgba(255,255,255,0.06);
+            box-shadow: 0 0 25px rgba(200,170,100,0.1), inset 0 0 15px rgba(200,170,100,0.03);
         }
-        input::placeholder { color: rgba(255,255,255,0.3); }
-        select { cursor:pointer; background: rgba(0,0,0,0.35); }
-        select option { background:#1a1a1a; color:#fff; }
-        input[readonly] { background: rgba(255,255,255,0.02); cursor:not-allowed; opacity:0.6; }
+        input::placeholder { color: rgba(255,255,255,0.25); }
+        select { cursor:pointer; background: rgba(15,15,15,0.5); }
+        select option { background:#1a1a1a; color:#e0e0e0; }
+        input[readonly], input[disabled], select[disabled], textarea[readonly] { 
+            background: rgba(255,255,255,0.015); cursor:not-allowed; opacity:0.5; 
+            border-color: rgba(255,255,255,0.04);
+        }
 
-        .btn-group { display:flex; gap:8px; margin-top:20px; flex-wrap:wrap; }
+        .btn-group { display:flex; gap:10px; margin-top:22px; flex-wrap:wrap; }
         button {
-            padding:11px 22px; border:none; border-radius:12px; cursor:pointer;
-            font-weight:600; text-transform:uppercase; transition:0.3s;
-            display:flex; align-items:center; gap:6px; justify-content:center;
-            letter-spacing:0.6px; font-size:0.8rem;
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            padding:12px 24px; border:none; border-radius:14px; cursor:pointer;
+            font-weight:600; transition:0.3s;
+            display:flex; align-items:center; gap:7px; justify-content:center;
+            letter-spacing:0.7px; font-size:0.8rem;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            font-family: 'Inter', sans-serif;
         }
-        .btn-primary { background: linear-gradient(135deg, rgba(130,130,130,0.8), rgba(80,80,80,0.8)); color:#fff; border:1px solid rgba(255,255,255,0.15); }
-        .btn-success { background: linear-gradient(135deg, rgba(46,204,113,0.8), rgba(39,174,96,0.8)); color:#fff; border:1px solid rgba(255,255,255,0.15); }
-        .btn-danger { background: linear-gradient(135deg, rgba(231,76,60,0.8), rgba(192,57,43,0.8)); color:#fff; border:1px solid rgba(255,255,255,0.15); }
-        .btn-warning { background: linear-gradient(135deg, rgba(243,156,18,0.8), rgba(211,130,0,0.8)); color:#fff; border:1px solid rgba(255,255,255,0.15); }
-        .btn-info { background: linear-gradient(135deg, rgba(52,152,219,0.8), rgba(41,128,185,0.8)); color:#fff; border:1px solid rgba(255,255,255,0.15); }
-        .btn-outline { background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.15); color:#fff; }
-        .btn-whatsapp { background: linear-gradient(135deg, rgba(37,211,102,0.8), rgba(37,180,80,0.8)); color:#fff; border:1px solid rgba(37,211,102,0.4); }
-        button:hover { transform:translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.4), 0 0 15px rgba(255,255,255,0.08); }
+        .btn-primary { background: linear-gradient(135deg, rgba(160,140,100,0.8), rgba(100,80,50,0.8)); color:#fff; border:1px solid rgba(255,255,255,0.1); }
+        .btn-success { background: linear-gradient(135deg, rgba(46,204,113,0.8), rgba(39,174,96,0.8)); color:#fff; border:1px solid rgba(255,255,255,0.1); }
+        .btn-danger { background: linear-gradient(135deg, rgba(231,76,60,0.8), rgba(192,57,43,0.8)); color:#fff; border:1px solid rgba(255,255,255,0.1); }
+        .btn-warning { background: linear-gradient(135deg, rgba(243,156,18,0.8), rgba(211,130,0,0.8)); color:#fff; border:1px solid rgba(255,255,255,0.1); }
+        .btn-info { background: linear-gradient(135deg, rgba(52,152,219,0.8), rgba(41,128,185,0.8)); color:#fff; border:1px solid rgba(255,255,255,0.1); }
+        .btn-outline { background: rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.12); color:#ccc; }
+        .btn-whatsapp { background: linear-gradient(135deg, rgba(37,211,102,0.85), rgba(30,180,70,0.85)); color:#fff; border:1px solid rgba(37,211,102,0.3); }
+        .btn-iniciar { background: linear-gradient(135deg, rgba(46,204,113,0.7), rgba(35,160,85,0.7)); color:#fff; border:1px solid rgba(46,204,113,0.3); }
+        .btn-finalizar { background: linear-gradient(135deg, rgba(231,76,60,0.7), rgba(180,50,35,0.7)); color:#fff; border:1px solid rgba(231,76,60,0.3); }
+        .btn-status { 
+            background: linear-gradient(135deg, rgba(241,196,15,0.7), rgba(200,160,10,0.7)); 
+            color:#1a1a1a; border:1px solid rgba(241,196,15,0.3); font-weight:700;
+        }
+        button:hover { transform:translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.5), 0 0 20px rgba(255,255,255,0.05); }
         button:active { transform:translateY(-1px); }
 
-        /* Dashboard Cards */
-        .dash-card {
-            background: rgba(255,255,255,0.03); backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px); border:1px solid rgba(255,255,255,0.08);
-            border-radius:16px; padding:25px; text-align:center; transition:0.3s; cursor:pointer;
-        }
-        .dash-card:hover {
-            background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15);
-            transform:translateY(-4px); box-shadow: 0 12px 35px rgba(0,0,0,0.5);
-        }
-        .dash-icon { font-size:2.8rem; margin-bottom:12px; }
-        .dash-numero { font-size:2.5rem; font-weight:900; letter-spacing:1px; }
-        .dash-label { font-size:0.85rem; opacity:0.7; margin-top:6px; text-transform:uppercase; letter-spacing:1px; }
-        .dash-detalhe { font-size:0.7rem; opacity:0.5; margin-top:8px; }
-
-        .search-container {
-            margin-bottom: 20px;
-            position: relative;
-        }
+        .search-container { margin-bottom: 25px; position: relative; }
         .search-input {
-            width: 100%;
-            padding: 14px 45px 14px 20px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 14px;
-            color: #fff;
-            font-size: 1rem;
-            transition: 0.3s;
+            width: 100%; padding: 16px 50px 16px 22px;
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px; color: #e0e0e0; font-size: 1rem; transition: 0.3s;
         }
         .search-input:focus {
-            border-color: rgba(150,150,150,0.5);
-            background: rgba(255,255,255,0.08);
-            box-shadow: 0 0 25px rgba(150,150,150,0.2);
+            border-color: rgba(200,170,100,0.4); background: rgba(255,255,255,0.05);
+            box-shadow: 0 0 30px rgba(200,170,100,0.12);
         }
-        .search-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.4rem;
-            opacity: 0.5;
-            pointer-events: none;
-        }
+        .search-icon { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); font-size: 1.5rem; opacity: 0.4; pointer-events: none; }
 
         .card {
-            background: rgba(255,255,255,0.03); backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px); border:1px solid rgba(255,255,255,0.08);
-            border-radius:14px; padding:18px; margin-bottom:12px; transition:0.3s;
+            background: rgba(255,255,255,0.025); backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px); border:1px solid rgba(255,255,255,0.06);
+            border-radius:16px; padding:20px; margin-bottom:14px; transition:0.3s;
         }
         .card:hover {
-            background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.15);
-            transform:translateX(4px); box-shadow: 0 6px 25px rgba(0,0,0,0.3);
+            background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12);
+            transform:translateX(5px); box-shadow: 0 8px 30px rgba(0,0,0,0.35);
         }
         .card.editando {
-            border-color: rgba(243,156,18,0.4); background: rgba(243,156,18,0.06);
-            box-shadow: 0 0 25px rgba(243,156,18,0.08);
+            border-color: rgba(243,156,18,0.35); background: rgba(243,156,18,0.05);
+            box-shadow: 0 0 30px rgba(243,156,18,0.06);
         }
-        .card-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px; flex-wrap:wrap; gap:8px; }
+        .card-header { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px; flex-wrap:wrap; gap:10px; }
         .badge {
-            padding:5px 10px; border-radius:16px; font-size:0.65rem;
-            font-weight:700; text-transform:uppercase; letter-spacing:0.8px;
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+            padding:6px 12px; border-radius:20px; font-size:0.65rem;
+            font-weight:700; text-transform:uppercase; letter-spacing:1px;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
         }
-        .badge-ida { background: rgba(52,152,219,0.6); color:#fff; border:1px solid rgba(52,152,219,0.4); }
-        .badge-volta { background: rgba(155,89,182,0.6); color:#fff; border:1px solid rgba(155,89,182,0.4); }
-        .badge-admin { background: rgba(231,76,60,0.6); color:#fff; border:1px solid rgba(231,76,60,0.4); }
-        .badge-motorista { background: rgba(46,204,113,0.6); color:#fff; border:1px solid rgba(46,204,113,0.4); }
-        .badge-status { background: rgba(241,196,15,0.6); color:#fff; border:1px solid rgba(241,196,15,0.4); animation: pulse-status 2s infinite; }
+        .badge-ida { background: rgba(52,152,219,0.5); color:#fff; border:1px solid rgba(52,152,219,0.3); }
+        .badge-volta { background: rgba(155,89,182,0.5); color:#fff; border:1px solid rgba(155,89,182,0.3); }
+        .badge-admin { background: rgba(200,160,60,0.5); color:#1a1a1a; border:1px solid rgba(200,160,60,0.3); }
+        .badge-motorista { background: rgba(46,204,113,0.5); color:#fff; border:1px solid rgba(46,204,113,0.3); }
+        .badge-status { background: rgba(241,196,15,0.5); color:#1a1a1a; border:1px solid rgba(241,196,15,0.3); animation: pulse-status 2.5s infinite; }
+        .badge-concluida { background: rgba(46,204,113,0.5); color:#fff; border:1px solid rgba(46,204,113,0.3); }
         @keyframes pulse-status {
-            0%,100% { box-shadow: 0 0 8px rgba(241,196,15,0.2); }
-            50% { box-shadow: 0 0 16px rgba(241,196,15,0.4); }
+            0%,100% { box-shadow: 0 0 10px rgba(241,196,15,0.15); }
+            50% { box-shadow: 0 0 20px rgba(241,196,15,0.3); }
         }
 
-        .rota { display:flex; align-items:center; gap:12px; margin:8px 0; font-size:1rem; }
-        .info-text { font-size:0.8rem; opacity:0.7; margin-top:8px; }
+        .rota { display:flex; align-items:center; gap:14px; margin:10px 0; font-size:1.05rem; }
+        .info-text { font-size:0.8rem; opacity:0.65; margin-top:10px; }
         .auto-badge {
-            background: rgba(46,204,113,0.15); border:1px solid rgba(46,204,113,0.3);
-            padding:3px 8px; border-radius:12px; font-size:0.6rem; font-weight:700;
-            display:inline-flex; align-items:center; gap:4px; letter-spacing:0.5px;
+            background: rgba(46,204,113,0.12); border:1px solid rgba(46,204,113,0.25);
+            padding:4px 10px; border-radius:14px; font-size:0.6rem; font-weight:700;
+            display:inline-flex; align-items:center; gap:5px; letter-spacing:0.6px;
         }
         .linked-badge {
-            background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
-            padding:5px 10px; border-radius:8px; font-size:0.75rem; margin-top:6px; display:inline-block;
+            background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+            padding:6px 12px; border-radius:10px; font-size:0.75rem; margin-top:8px; display:inline-block;
         }
-        .edit-input { background: rgba(0,0,0,0.45) !important; border-color: rgba(243,156,18,0.4) !important; }
+        .edit-input { background: rgba(0,0,0,0.5) !important; border-color: rgba(243,156,18,0.35) !important; }
+        .edit-input[readonly], .edit-input[disabled] { 
+            background: rgba(0,0,0,0.3) !important; opacity:0.45 !important; cursor:not-allowed !important;
+            border-color: rgba(255,255,255,0.03) !important;
+        }
 
         .table-container { overflow-x:auto; }
         table {
-            width:100%; border-collapse:collapse; margin-top:15px;
-            background: rgba(255,255,255,0.02); border-radius:12px; overflow:hidden;
+            width:100%; border-collapse:collapse; margin-top:18px;
+            background: rgba(255,255,255,0.015); border-radius:14px; overflow:hidden;
         }
-        th, td { padding:12px 15px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.05); }
-        th { background: rgba(255,255,255,0.04); font-weight:700; text-transform:uppercase; font-size:0.7rem; letter-spacing:0.8px; }
-        tr:hover { background: rgba(255,255,255,0.02); }
+        th, td { padding:14px 18px; text-align:left; border-bottom:1px solid rgba(255,255,255,0.04); }
+        th { background: rgba(255,255,255,0.03); font-weight:700; text-transform:uppercase; font-size:0.7rem; letter-spacing:1px; font-family: 'Inter', sans-serif; }
+        tr:hover { background: rgba(255,255,255,0.015); }
 
         .toast {
-            position:fixed; top:15px; right:15px; padding:14px 24px; border-radius:12px;
-            animation: slideIn 0.3s, slideOut 0.3s 2.2s forwards; z-index:1000;
-            font-weight:600; color:#fff; backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px); font-size:0.85rem;
+            position:fixed; top:20px; right:20px; padding:16px 28px; border-radius:16px;
+            animation: slideIn 0.35s, slideOut 0.35s 2.5s forwards; z-index:1000;
+            font-weight:600; color:#fff; backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px); font-size:0.85rem;
+            font-family: 'Inter', sans-serif;
         }
-        .toast-success { background: rgba(46,204,113,0.75); border:1px solid rgba(46,204,113,0.4); }
-        .toast-error { background: rgba(231,76,60,0.75); border:1px solid rgba(231,76,60,0.4); }
-        .toast-info { background: rgba(52,152,219,0.75); border:1px solid rgba(52,152,219,0.4); }
-        @keyframes slideIn { from { transform:translateX(100%); opacity:0; } to { transform:translateX(0); opacity:1; } }
-        @keyframes slideOut { from { transform:translateX(0); opacity:1; } to { transform:translateX(100%); opacity:0; } }
+        .toast-success { background: rgba(46,204,113,0.8); border:1px solid rgba(46,204,113,0.4); }
+        .toast-error { background: rgba(231,76,60,0.8); border:1px solid rgba(231,76,60,0.4); }
+        .toast-info { background: rgba(52,152,219,0.8); border:1px solid rgba(52,152,219,0.4); }
+        @keyframes slideIn { from { transform:translateX(120%); opacity:0; } to { transform:translateX(0); opacity:1; } }
+        @keyframes slideOut { from { transform:translateX(0); opacity:1; } to { transform:translateX(120%); opacity:0; } }
 
-        .mensagem-erro { color:#ff6b6b; font-size:0.75rem; margin-top:4px; display:none; }
+        .mensagem-erro { color:#ff6b6b; font-size:0.75rem; margin-top:5px; display:none; }
         .mensagem-erro.visivel { display:block; }
 
-        .modal-trocar-motorista { max-width:450px; }
-        .modal-trocar-senha { max-width:450px; }
+        .modal-trocar-motorista { max-width:480px; }
         .motorista-option {
-            display:flex; align-items:center; gap:12px; padding:14px; margin-bottom:8px;
-            background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06);
-            border-radius:12px; cursor:pointer; transition:0.3s;
+            display:flex; align-items:center; gap:14px; padding:16px; margin-bottom:10px;
+            background: rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.05);
+            border-radius:14px; cursor:pointer; transition:0.3s;
         }
-        .motorista-option:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.15); }
-        .motorista-option.selecionado { background: rgba(46,204,113,0.08); border-color: rgba(46,204,113,0.4); box-shadow: 0 0 15px rgba(46,204,113,0.08); }
+        .motorista-option:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); }
+        .motorista-option.selecionado { background: rgba(46,204,113,0.08); border-color: rgba(46,204,113,0.4); box-shadow: 0 0 20px rgba(46,204,113,0.06); }
 
-        .icone-onibus { display:inline-block; font-size:1.4rem; animation: onibus-move 2s ease-in-out infinite; }
-        @keyframes onibus-move { 0%,100% { transform:translateX(0); } 50% { transform:translateX(4px); } }
+        .dash-card {
+            background: rgba(255,255,255,0.025); backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px); border:1px solid rgba(255,255,255,0.06);
+            border-radius:18px; padding:28px; text-align:center; transition:0.3s; cursor:pointer;
+        }
+        .dash-card:hover {
+            background: rgba(255,255,255,0.05); border-color: rgba(200,170,100,0.2);
+            transform:translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+        }
+        .dash-icon { font-size:3rem; margin-bottom:14px; }
+        .dash-numero { font-size:2.8rem; font-weight:900; letter-spacing:1px; font-family: 'Outfit', sans-serif; }
+        .dash-label { font-size:0.85rem; opacity:0.65; margin-top:8px; text-transform:uppercase; letter-spacing:1.2px; font-family: 'Inter', sans-serif; }
+        .dash-detalhe { font-size:0.7rem; opacity:0.45; margin-top:10px; }
+
+        .no-results { text-align:center; padding:40px 20px; opacity:0.45; font-style:italic; display:none; }
+
+        .status-badge-grande {
+            display:inline-flex; align-items:center; gap:8px;
+            padding:8px 16px; border-radius:20px; font-weight:700;
+            font-size:0.8rem; letter-spacing:0.8px;
+        }
 
         @media (max-width:768px) {
             .grid-2, .grid-3, .grid-4 { grid-template-columns:1fr; }
-            .nav { flex-wrap:wrap; height:auto; padding:12px 0; }
-            .menu { overflow-x:auto; width:100%; margin-top:8px; padding-bottom:4px; }
-            .user-info { margin-top:8px; padding-left:0; border-left:none; width:100%; justify-content:flex-end; }
+            .nav { flex-wrap:wrap; height:auto; padding:14px 0; }
+            .menu { overflow-x:auto; width:100%; margin-top:10px; padding-bottom:6px; }
+            .user-info { margin-top:10px; padding-left:0; border-left:none; width:100%; justify-content:flex-end; }
         }
     </style>
 </head>
@@ -335,18 +354,18 @@
     <div id="modalLogin" class="modal active">
         <div class="modal-content">
             <h2>🚌 NS VIANORTESUL</h2>
-            <p style="text-align:center;margin-bottom:20px;opacity:0.7;">Acesso para Motoristas</p>
+            <p style="text-align:center;margin-bottom:22px;opacity:0.6;font-size:0.9rem;">Acesso para Motoristas</p>
             <div class="form-group"><label>👤 Usuário</label><input type="text" id="loginUsuario" placeholder="Seu nome de usuário" autocomplete="off"><div class="mensagem-erro" id="erroLogin"></div></div>
             <div class="form-group"><label>🔑 Senha</label><input type="password" id="loginSenha" placeholder="Sua senha" autocomplete="off"></div>
             <button class="btn-primary" onclick="fazerLogin()" style="width:100%;">Entrar</button>
-            <p style="text-align:center;margin-top:15px;opacity:0.6;font-size:0.8rem;">Admin: admin / admin123 | Motorista: motorista1 / 123456</p>
+            <p style="text-align:center;margin-top:18px;opacity:0.5;font-size:0.75rem;">Admin: admin / admin123 | Motorista: motorista1 / 123456</p>
         </div>
     </div>
 
     <div id="modalTrocarMotorista" class="modal">
         <div class="modal-content modal-trocar-motorista">
             <h2>👤 Trocar Motorista</h2>
-            <p style="margin-bottom:15px;opacity:0.7;">Selecione o novo motorista:</p>
+            <p style="margin-bottom:18px;opacity:0.6;">Selecione o novo motorista:</p>
             <div id="listaMotoristasTroca"></div>
             <div class="btn-group">
                 <button class="btn-success" onclick="confirmarTrocaMotorista()" style="width:100%;">✅ Confirmar</button>
@@ -356,7 +375,7 @@
     </div>
 
     <div id="modalTrocarSenha" class="modal">
-        <div class="modal-content modal-trocar-senha">
+        <div class="modal-content">
             <h2>🔑 Trocar Senha</h2>
             <div class="form-group"><label>👤 Usuário</label><select id="trocaSenhaUsuario"></select></div>
             <div class="form-group"><label>🔑 Nova Senha</label><input type="password" id="novaSenha" placeholder="Mínimo 6 caracteres"><div class="mensagem-erro" id="erroNovaSenha"></div></div>
@@ -373,7 +392,7 @@
             <div class="logo" onclick="mudarPagina('dashboard')">NS VIANORTESUL</div>
             <div class="menu" id="menuPrincipal">
                 <button class="menu-btn active" onclick="mudarPagina('dashboard')">📊 Dashboard</button>
-                <button class="menu-btn" onclick="mudarPagina('viagens')"><span class="icone-onibus">🚌</span> Viagens</button>
+                <button class="menu-btn" onclick="mudarPagina('viagens')">🚌 Viagens</button>
                 <button class="menu-btn admin-only" onclick="mudarPagina('cadastro')">➕ Nova</button>
                 <button class="menu-btn admin-only" onclick="mudarPagina('veiculos')">🚗 Veículos</button>
                 <button class="menu-btn admin-only" onclick="mudarPagina('motoristas')">👤 Motoristas</button>
@@ -382,44 +401,32 @@
             </div>
             <div class="user-info" id="userInfo" onclick="mostrarModalLogin()">
                 <div class="user-avatar" id="userAvatar">?</div>
-                <div><div style="font-weight:bold;font-size:0.85rem;" id="userName">Não logado</div><div style="font-size:0.65rem;opacity:0.7;" id="userNivel"></div></div>
+                <div><div style="font-weight:600;font-size:0.85rem;" id="userName">Não logado</div><div style="font-size:0.65rem;opacity:0.6;" id="userNivel"></div></div>
             </div>
         </nav>
     </header>
 
     <div class="main-content">
-        <!-- DASHBOARD / RESUMO -->
         <div id="page-dashboard" class="page active">
             <div class="glass-container">
                 <h2>📊 Painel de Controle</h2>
-                <p style="margin-bottom:25px;opacity:0.7;">Resumo geral do sistema NS VIANORTESUL</p>
-                
+                <p style="margin-bottom:28px;opacity:0.6;">Resumo geral do sistema NS VIANORTESUL</p>
                 <div class="grid-4" id="dashboardCards"></div>
-                
-                <h3 style="margin-top:35px;">🚌 Últimas Viagens Cadastradas</h3>
+                <h3 style="margin-top:40px;">🚌 Últimas Viagens</h3>
                 <div class="grid-2" id="ultimasViagens"></div>
             </div>
         </div>
 
-        <!-- VIAGENS COM BUSCA -->
         <div id="page-viagens" class="page">
             <div class="glass-container">
-                <h2><span class="icone-onibus">🚌</span> Histórico de Viagens</h2>
+                <h2>🚌 Histórico de Viagens</h2>
                 <div class="search-container">
                     <input type="text" class="search-input" id="buscaViagens" placeholder="🔍 Buscar por origem, destino, motorista, veículo, placa, data..." oninput="filtrarViagens()">
                     <span class="search-icon">🔍</span>
                 </div>
                 <div class="grid-2">
-                    <div>
-                        <h3>🔵 Viagens de IDA <span id="contadorIda" style="font-size:0.7rem;opacity:0.6;"></span></h3>
-                        <div id="listaViagensIda"><p style="text-align:center;opacity:0.5;">Carregando...</p></div>
-                        <p class="no-results" id="semResultadosIda" style="text-align:center;padding:20px;opacity:0.5;display:none;">Nenhuma viagem de ida encontrada</p>
-                    </div>
-                    <div>
-                        <h3>🟣 Viagens de VOLTA <span id="contadorVolta" style="font-size:0.7rem;opacity:0.6;"></span></h3>
-                        <div id="listaViagensVolta"><p style="text-align:center;opacity:0.5;">Carregando...</p></div>
-                        <p class="no-results" id="semResultadosVolta" style="text-align:center;padding:20px;opacity:0.5;display:none;">Nenhuma viagem de volta encontrada</p>
-                    </div>
+                    <div><h3>🔵 Viagens de IDA <span id="contadorIda" style="font-size:0.7rem;opacity:0.5;"></span></h3><div id="listaViagensIda"></div><p class="no-results" id="semResultadosIda">Nenhuma viagem de ida encontrada</p></div>
+                    <div><h3>🟣 Viagens de VOLTA <span id="contadorVolta" style="font-size:0.7rem;opacity:0.5;"></span></h3><div id="listaViagensVolta"></div><p class="no-results" id="semResultadosVolta">Nenhuma viagem de volta encontrada</p></div>
                 </div>
             </div>
         </div>
@@ -433,7 +440,6 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <script>
-        // ==================== CONFIGURAÇÃO DO FIREBASE ====================
         const firebaseConfig = {
             apiKey: "AIzaSyDYNltGhYmZ_5v0iL6amxmhySltQ1bNAsA",
             authDomain: "controledeviagem-6f29d.firebaseapp.com",
@@ -442,18 +448,10 @@
             messagingSenderId: "630942841173",
             appId: "1:630942841173:web:7b7fb728104bb1a96e57dc"
         };
-
         let db;
-        try {
-            firebase.initializeApp(firebaseConfig);
-            db = firebase.firestore();
-            console.log('✅ Firebase conectado com sucesso!');
-        } catch (error) {
-            console.error('❌ Erro ao conectar com Firebase:', error);
-        }
+        try { firebase.initializeApp(firebaseConfig); db = firebase.firestore(); console.log('✅ Firebase conectado!'); } catch(e) { console.error('Firebase:', e); }
 
-        // ==================== VARIÁVEIS GLOBAIS ====================
-        const DB_KEY = 'ns_db_v10';
+        const DB_KEY = 'ns_db_v12';
         let DB = { viagensIda:[], viagensVolta:[], veiculos:[], motoristas:[], administradores:[], usuarioLogado:null };
         let viagemEditando = { tipo:null, id:null };
         let trocaMotorista = { tipo:null, id:null, motoristaSelecionado:null };
@@ -461,708 +459,265 @@
 
         async function carregarDB() {
             try {
-                if (db) {
-                    const doc = await db.collection('dados').doc('principal').get();
-                    if (doc.exists) {
-                        const dados = doc.data();
-                        DB.viagensIda = dados.viagensIda || [];
-                        DB.viagensVolta = dados.viagensVolta || [];
-                        DB.veiculos = dados.veiculos || [];
-                        DB.motoristas = dados.motoristas || [];
-                        DB.administradores = dados.administradores || [];
-                    }
-                }
-                const usuarioSalvo = localStorage.getItem('ns_usuario_logado');
-                DB.usuarioLogado = usuarioSalvo ? JSON.parse(usuarioSalvo) : null;
+                if(db){ const doc = await db.collection('dados').doc('principal').get();
+                    if(doc.exists){ const d=doc.data(); DB.viagensIda=d.viagensIda||[]; DB.viagensVolta=d.viagensVolta||[]; DB.veiculos=d.veiculos||[]; DB.motoristas=d.motoristas||[]; DB.administradores=d.administradores||[]; } }
+                const u = localStorage.getItem('ns_usuario_logado'); DB.usuarioLogado = u ? JSON.parse(u) : null;
             } catch(e) {
-                try {
-                    const d = localStorage.getItem(DB_KEY);
-                    if (d) {
-                        const p = JSON.parse(d);
-                        DB.viagensIda = p.viagensIda || [];
-                        DB.viagensVolta = p.viagensVolta || [];
-                        DB.veiculos = p.veiculos || [];
-                        DB.motoristas = p.motoristas || [];
-                        DB.administradores = p.administradores || [];
-                        DB.usuarioLogado = p.usuarioLogado || null;
-                    }
-                } catch(e2) { console.error('Erro total:', e2); }
+                const d=localStorage.getItem(DB_KEY); if(d){ const p=JSON.parse(d); DB.viagensIda=p.viagensIda||[]; DB.viagensVolta=p.viagensVolta||[]; DB.veiculos=p.veiculos||[]; DB.motoristas=p.motoristas||[]; DB.administradores=p.administradores||[]; DB.usuarioLogado=p.usuarioLogado||null; }
             }
         }
 
         async function salvarDB() {
-            try {
-                const dados = {
-                    viagensIda: DB.viagensIda, viagensVolta: DB.viagensVolta,
-                    veiculos: DB.veiculos, motoristas: DB.motoristas,
-                    administradores: DB.administradores
-                };
-                localStorage.setItem(DB_KEY, JSON.stringify({...dados, usuarioLogado: DB.usuarioLogado}));
-                if (db) {
-                    await db.collection('dados').doc('principal').set({
-                        ...dados, atualizadoEm: new Date().toISOString()
-                    });
-                }
-            } catch(e) { console.error('Erro ao salvar:', e); showToast('Erro ao salvar!', 'error'); }
+            const dados={viagensIda:DB.viagensIda,viagensVolta:DB.viagensVolta,veiculos:DB.veiculos,motoristas:DB.motoristas,administradores:DB.administradores};
+            localStorage.setItem(DB_KEY,JSON.stringify({...dados,usuarioLogado:DB.usuarioLogado}));
+            if(db) await db.collection('dados').doc('principal').set({...dados,atualizadoEm:new Date().toISOString()});
         }
 
         function initUsers() {
-            if (!DB.administradores.length) {
-                DB.administradores = [
-                    { id:1, nome:'Administrador', usuario:'admin', telefone:'(11) 99999-9999', senha:'admin123', nivel:'admin' },
-                    { id:2, nome:'Motorista Silva', usuario:'motorista1', telefone:'(11) 97777-7777', senha:'123456', nivel:'motorista' },
-                    { id:3, nome:'Motorista Santos', usuario:'motorista2', telefone:'(11) 96666-6666', senha:'123456', nivel:'motorista' }
-                ];
-                salvarDB();
-            }
+            if(!DB.administradores.length){ DB.administradores=[{id:1,nome:'Administrador',usuario:'admin',telefone:'(11) 99999-9999',senha:'admin123',nivel:'admin'},{id:2,nome:'Motorista Silva',usuario:'motorista1',telefone:'(11) 97777-7777',senha:'123456',nivel:'motorista'},{id:3,nome:'Motorista Santos',usuario:'motorista2',telefone:'(11) 96666-6666',senha:'123456',nivel:'motorista'}]; salvarDB(); }
         }
 
-        // ==================== AUTENTICAÇÃO ====================
         async function fazerLogin() {
-            const u = document.getElementById('loginUsuario').value.trim();
-            const s = document.getElementById('loginSenha').value.trim();
-            const e = document.getElementById('erroLogin');
+            const u=document.getElementById('loginUsuario').value.trim(), s=document.getElementById('loginSenha').value.trim(), e=document.getElementById('erroLogin');
             e.classList.remove('visivel'); e.textContent='';
-            if (!u || !s) { e.textContent='Preencha todos os campos!'; e.classList.add('visivel'); return; }
-            await carregarDB();
-            initUsers();
-            const user = DB.administradores.find(a => a.usuario===u && a.senha===s);
-            if (user) {
-                DB.usuarioLogado = { id:user.id, nome:user.nome, usuario:user.usuario, nivel:user.nivel, telefone:user.telefone };
-                localStorage.setItem('ns_usuario_logado', JSON.stringify(DB.usuarioLogado));
-                document.getElementById('modalLogin').classList.remove('active');
-                document.getElementById('loginUsuario').value=''; document.getElementById('loginSenha').value='';
-                atualizarUI(); 
-                showToast(`Bem-vindo, ${user.nome}! ✅`); 
-                mudarPagina('dashboard');
-            } else {
-                e.textContent = DB.administradores.some(a => a.usuario===u) ? 'Senha incorreta!' : 'Usuário não encontrado!';
-                e.classList.add('visivel');
-            }
+            if(!u||!s){e.textContent='Preencha todos os campos!';e.classList.add('visivel');return;}
+            await carregarDB(); initUsers();
+            const user=DB.administradores.find(a=>a.usuario===u&&a.senha===s);
+            if(user){ DB.usuarioLogado={id:user.id,nome:user.nome,usuario:user.usuario,nivel:user.nivel,telefone:user.telefone}; localStorage.setItem('ns_usuario_logado',JSON.stringify(DB.usuarioLogado)); document.getElementById('modalLogin').classList.remove('active'); document.getElementById('loginUsuario').value=''; document.getElementById('loginSenha').value=''; atualizarUI(); showToast(`Bem-vindo, ${user.nome}! ✅`); mudarPagina('dashboard'); }
+            else { e.textContent=DB.administradores.some(a=>a.usuario===u)?'Senha incorreta!':'Usuário não encontrado!'; e.classList.add('visivel'); }
         }
 
         function fazerLogout() {
-            if (confirm('Sair do sistema?')) {
-                DB.usuarioLogado=null;
-                localStorage.removeItem('ns_usuario_logado');
-                salvarDB();
-                document.getElementById('modalLogin').classList.add('active');
-                document.getElementById('loginUsuario').value=''; document.getElementById('loginSenha').value='';
-                atualizarUI(); document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-                document.getElementById('page-dashboard').classList.add('active'); 
-                showToast('Logout! 👋');
-            }
+            if(confirm('Sair do sistema?')){ DB.usuarioLogado=null; localStorage.removeItem('ns_usuario_logado'); salvarDB(); document.getElementById('modalLogin').classList.add('active'); document.getElementById('loginUsuario').value=''; document.getElementById('loginSenha').value=''; atualizarUI(); document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.getElementById('page-dashboard').classList.add('active'); showToast('Logout! 👋'); }
         }
 
-        function mostrarModalLogin() {
-            if (DB.usuarioLogado) { if (confirm('Fazer logout?')) fazerLogout(); }
-            else { document.getElementById('modalLogin').classList.add('active'); document.getElementById('loginUsuario').value=''; document.getElementById('loginSenha').value=''; document.getElementById('erroLogin').classList.remove('visivel'); }
-        }
+        function mostrarModalLogin() { if(DB.usuarioLogado){if(confirm('Fazer logout?'))fazerLogout();} else { document.getElementById('modalLogin').classList.add('active'); document.getElementById('loginUsuario').value=''; document.getElementById('loginSenha').value=''; document.getElementById('erroLogin').classList.remove('visivel'); } }
 
         function atualizarUI() {
-            const av=document.getElementById('userAvatar'), nm=document.getElementById('userName'), nv=document.getElementById('userNivel');
-            const ae=document.querySelectorAll('.admin-only');
-            if (DB.usuarioLogado) {
-                av.textContent=DB.usuarioLogado.nome.charAt(0).toUpperCase(); nm.textContent=DB.usuarioLogado.nome;
-                nv.textContent=DB.usuarioLogado.nivel==='admin'?'Administrador':'Motorista';
-                ae.forEach(el=>el.style.display=DB.usuarioLogado.nivel==='admin'?'':'none');
-            } else {
-                av.textContent='?'; nm.textContent='Não logado'; nv.textContent='';
-                ae.forEach(el=>el.style.display='none');
-            }
+            const av=document.getElementById('userAvatar'), nm=document.getElementById('userName'), nv=document.getElementById('userNivel'), ae=document.querySelectorAll('.admin-only');
+            if(DB.usuarioLogado){ av.textContent=DB.usuarioLogado.nome.charAt(0).toUpperCase(); nm.textContent=DB.usuarioLogado.nome; nv.textContent=DB.usuarioLogado.nivel==='admin'?'Administrador':'Motorista'; ae.forEach(el=>el.style.display=DB.usuarioLogado.nivel==='admin'?'':'none'); }
+            else { av.textContent='?'; nm.textContent='Não logado'; nv.textContent=''; ae.forEach(el=>el.style.display='none'); }
         }
 
-        function verificarPermissao() { if(!DB.usuarioLogado){document.getElementById('modalLogin').classList.add('active');return false;} return true; }
-        function verificarPermissaoAdmin() { if(!verificarPermissao())return false; if(DB.usuarioLogado.nivel!=='admin'){showToast('Acesso restrito ao administrador!','error');mudarPagina('dashboard');return false;} return true; }
+        function verificarPermissao(){if(!DB.usuarioLogado){document.getElementById('modalLogin').classList.add('active');return false;}return true;}
+        function verificarPermissaoAdmin(){if(!verificarPermissao())return false;if(DB.usuarioLogado.nivel!=='admin'){showToast('Acesso restrito ao administrador!','error');mudarPagina('dashboard');return false;}return true;}
 
         function mudarPagina(pagina) {
-            if (!DB.usuarioLogado) { document.getElementById('modalLogin').classList.add('active'); return; }
-            if (!verificarPermissao()) return;
+            if(!DB.usuarioLogado){document.getElementById('modalLogin').classList.add('active');return;}
+            if(!verificarPermissao())return;
             const pa=['cadastro','veiculos','motoristas','admins'];
-            if (pa.includes(pagina) && !verificarPermissaoAdmin()) return;
-            
+            if(pa.includes(pagina)&&!verificarPermissaoAdmin())return;
             document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-            const pe=document.getElementById(`page-${pagina}`); if(pe) pe.classList.add('active');
-            
+            const pe=document.getElementById(`page-${pagina}`); if(pe)pe.classList.add('active');
             document.querySelectorAll('.menu-btn').forEach(b=>b.classList.remove('active'));
-            document.querySelectorAll('.menu-btn').forEach(b=>{
-                const t=b.textContent.toLowerCase();
-                if(t.includes('dashboard')&&pagina==='dashboard')b.classList.add('active');
-                if(t.includes('viagens')&&pagina==='viagens')b.classList.add('active');
-                if(t.includes('nova')&&pagina==='cadastro')b.classList.add('active');
-                if(t.includes('veículos')&&pagina==='veiculos')b.classList.add('active');
-                if(t.includes('motoristas')&&pagina==='motoristas')b.classList.add('active');
-                if(t.includes('admins')&&pagina==='admins')b.classList.add('active');
-            });
-            
-            if(pagina==='dashboard') carregarDashboard();
-            if(pagina==='viagens') { termoBusca=''; const b=document.getElementById('buscaViagens'); if(b)b.value=''; atualizarListas(); }
-            if(pagina==='cadastro') carregarCadastro();
-            if(pagina==='veiculos') carregarVeiculos();
-            if(pagina==='motoristas') carregarMotoristas();
-            if(pagina==='admins') carregarAdmins();
+            document.querySelectorAll('.menu-btn').forEach(b=>{const t=b.textContent.toLowerCase();if(t.includes('dashboard')&&pagina==='dashboard')b.classList.add('active');if(t.includes('viagens')&&pagina==='viagens')b.classList.add('active');if(t.includes('nova')&&pagina==='cadastro')b.classList.add('active');if(t.includes('veículos')&&pagina==='veiculos')b.classList.add('active');if(t.includes('motoristas')&&pagina==='motoristas')b.classList.add('active');if(t.includes('admins')&&pagina==='admins')b.classList.add('active');});
+            if(pagina==='dashboard')carregarDashboard();
+            if(pagina==='viagens'){termoBusca='';const b=document.getElementById('buscaViagens');if(b)b.value='';atualizarListas();}
+            if(pagina==='cadastro')carregarCadastro();
+            if(pagina==='veiculos')carregarVeiculos();
+            if(pagina==='motoristas')carregarMotoristas();
+            if(pagina==='admins')carregarAdmins();
         }
 
-        // ==================== DASHBOARD ====================
         function carregarDashboard() {
-            const cards = document.getElementById('dashboardCards');
-            const ultimas = document.getElementById('ultimasViagens');
-            
-            if (!cards || !ultimas) return;
-            
-            const totalIdas = DB.viagensIda.length;
-            const totalVoltas = DB.viagensVolta.length;
-            const totalVeiculos = DB.veiculos.length;
-            const totalMotoristasLista = DB.motoristas.length;
-            const totalUsuarios = DB.administradores.length;
-            
-            // Motoristas únicos nas viagens
-            const motoristasIda = [...new Set(DB.viagensIda.map(v=>v.motorista).filter(Boolean))];
-            const motoristasVolta = [...new Set(DB.viagensVolta.map(v=>v.motorista).filter(Boolean))];
-            const totalMotoristasAtivos = [...new Set([...motoristasIda, ...motoristasVolta])].length;
-            
-            // Última viagem
-            const ultimaIda = DB.viagensIda[0];
-            const ultimaVolta = DB.viagensVolta[0];
-            
-            cards.innerHTML = `
-                <div class="dash-card" onclick="mudarPagina('viagens')">
-                    <div class="dash-icon">🔵</div>
-                    <div class="dash-numero">${totalIdas}</div>
-                    <div class="dash-label">Viagens de Ida</div>
-                </div>
-                <div class="dash-card" onclick="mudarPagina('viagens')">
-                    <div class="dash-icon">🟣</div>
-                    <div class="dash-numero">${totalVoltas}</div>
-                    <div class="dash-label">Viagens de Volta</div>
-                </div>
-                <div class="dash-card" onclick="mudarPagina('veiculos')">
-                    <div class="dash-icon">🚗</div>
-                    <div class="dash-numero">${totalVeiculos}</div>
-                    <div class="dash-label">Veículos</div>
-                </div>
-                <div class="dash-card" onclick="mudarPagina('motoristas')">
-                    <div class="dash-icon">👤</div>
-                    <div class="dash-numero">${totalMotoristasLista}</div>
-                    <div class="dash-label">Motoristas</div>
-                    <div class="dash-detalhe">${totalMotoristasAtivos} ativos em viagens</div>
-                </div>
-                <div class="dash-card" onclick="mudarPagina('admins')">
-                    <div class="dash-icon">👥</div>
-                    <div class="dash-numero">${totalUsuarios}</div>
-                    <div class="dash-label">Usuários</div>
-                </div>
-                <div class="dash-card">
-                    <div class="dash-icon">📊</div>
-                    <div class="dash-numero">${totalIdas + totalVoltas}</div>
-                    <div class="dash-label">Total Viagens</div>
-                </div>
-            `;
-            
-            // Últimas viagens
-            let htmlUltimas = '<div><h4 style="margin-bottom:12px;">🔵 Últimas IDAS</h4>';
-            if (ultimaIda) {
-                const ultimasIdas = DB.viagensIda.slice(0, 3);
-                htmlUltimas += ultimasIdas.map(v => `
-                    <div class="card" style="padding:12px;margin-bottom:8px;">
-                        <div class="rota" style="font-size:0.9rem;"><strong>${v.origem}</strong><span>➔</span><strong>${v.destino}</strong></div>
-                        <div class="info-text">📅 ${new Date(v.data).toLocaleString('pt-BR')} | 👤 ${v.motorista||'N/A'}</div>
-                    </div>`).join('');
-            } else {
-                htmlUltimas += '<p style="opacity:0.5;text-align:center;">Nenhuma viagem</p>';
-            }
-            htmlUltimas += '</div>';
-            
-            htmlUltimas += '<div><h4 style="margin-bottom:12px;">🟣 Últimas VOLTAS</h4>';
-            if (ultimaVolta) {
-                const ultimasVoltas = DB.viagensVolta.slice(0, 3);
-                htmlUltimas += ultimasVoltas.map(v => `
-                    <div class="card" style="padding:12px;margin-bottom:8px;">
-                        <div class="rota" style="font-size:0.9rem;"><strong>${v.origem}</strong><span>➔</span><strong>${v.destino}</strong></div>
-                        <div class="info-text">📅 ${new Date(v.data).toLocaleString('pt-BR')} | 👤 ${v.motorista||'N/A'}</div>
-                    </div>`).join('');
-            } else {
-                htmlUltimas += '<p style="opacity:0.5;text-align:center;">Nenhuma viagem</p>';
-            }
-            htmlUltimas += '</div>';
-            
-            ultimas.innerHTML = htmlUltimas;
+            const cards=document.getElementById('dashboardCards'), ultimas=document.getElementById('ultimasViagens');
+            if(!cards||!ultimas)return;
+            const ti=DB.viagensIda.length, tv=DB.viagensVolta.length, tve=DB.veiculos.length, tmo=DB.motoristas.length, tus=DB.administradores.length;
+            const mi=[...new Set(DB.viagensIda.map(v=>v.motorista).filter(Boolean))], mv=[...new Set(DB.viagensVolta.map(v=>v.motorista).filter(Boolean))];
+            const tma=[...new Set([...mi,...mv])].length;
+            const idasAtivas=DB.viagensIda.filter(v=>!v.status||v.status==='Iniciando viagem').length;
+            const voltasAtivas=DB.viagensVolta.filter(v=>!v.status||v.status==='Iniciando viagem').length;
+            cards.innerHTML=`
+                <div class="dash-card" onclick="mudarPagina('viagens')"><div class="dash-icon">🔵</div><div class="dash-numero">${ti}</div><div class="dash-label">Viagens de Ida</div><div class="dash-detalhe">${idasAtivas} em andamento</div></div>
+                <div class="dash-card" onclick="mudarPagina('viagens')"><div class="dash-icon">🟣</div><div class="dash-numero">${tv}</div><div class="dash-label">Viagens de Volta</div><div class="dash-detalhe">${voltasAtivas} em andamento</div></div>
+                <div class="dash-card" onclick="mudarPagina('veiculos')"><div class="dash-icon">🚗</div><div class="dash-numero">${tve}</div><div class="dash-label">Veículos</div></div>
+                <div class="dash-card" onclick="mudarPagina('motoristas')"><div class="dash-icon">👤</div><div class="dash-numero">${tmo}</div><div class="dash-label">Motoristas</div><div class="dash-detalhe">${tma} ativos em viagens</div></div>
+                <div class="dash-card" onclick="mudarPagina('admins')"><div class="dash-icon">👥</div><div class="dash-numero">${tus}</div><div class="dash-label">Usuários</div></div>
+                <div class="dash-card"><div class="dash-icon">📊</div><div class="dash-numero">${ti+tv}</div><div class="dash-label">Total Viagens</div></div>`;
+            let hu='<div><h4 style="margin-bottom:14px;">🔵 Últimas IDAS</h4>';
+            if(DB.viagensIda[0]){DB.viagensIda.slice(0,3).forEach(v=>{const st=v.status==='Viagem concluída'?'badge-concluida':'badge-status';hu+=`<div class="card" style="padding:14px;margin-bottom:10px;"><div class="rota" style="font-size:0.9rem;"><strong>${v.origem}</strong><span>➔</span><strong>${v.destino}</strong></div><div class="info-text">📅 ${new Date(v.data).toLocaleString('pt-BR')} | 👤 ${v.motorista||'N/A'} | <span class="badge ${st}" style="font-size:0.6rem;">${v.status||'Iniciando viagem'}</span></div></div>`;});}else{hu+='<p style="opacity:0.4;text-align:center;">Nenhuma viagem</p>';}
+            hu+='</div><div><h4 style="margin-bottom:14px;">🟣 Últimas VOLTAS</h4>';
+            if(DB.viagensVolta[0]){DB.viagensVolta.slice(0,3).forEach(v=>{const st=v.status==='Viagem concluída'?'badge-concluida':'badge-status';hu+=`<div class="card" style="padding:14px;margin-bottom:10px;"><div class="rota" style="font-size:0.9rem;"><strong>${v.origem}</strong><span>➔</span><strong>${v.destino}</strong></div><div class="info-text">📅 ${new Date(v.data).toLocaleString('pt-BR')} | 👤 ${v.motorista||'N/A'} | <span class="badge ${st}" style="font-size:0.6rem;">${v.status||'Iniciando viagem'}</span></div></div>`;});}else{hu+='<p style="opacity:0.4;text-align:center;">Nenhuma viagem</p>';}
+            hu+='</div>'; ultimas.innerHTML=hu;
         }
 
-        // ==================== MODAL TROCAR SENHA ====================
         function abrirModalTrocarSenha() {
-            const select = document.getElementById('trocaSenhaUsuario');
-            select.innerHTML = DB.administradores.map(a => `<option value="${a.id}">${a.nome} (${a.usuario}) - ${a.nivel}</option>`).join('');
-            document.getElementById('novaSenha').value = '';
-            document.getElementById('confirmarNovaSenha').value = '';
-            document.querySelectorAll('#modalTrocarSenha .mensagem-erro').forEach(e => e.classList.remove('visivel'));
+            document.getElementById('trocaSenhaUsuario').innerHTML=DB.administradores.map(a=>`<option value="${a.id}">${a.nome} (${a.usuario}) - ${a.nivel}</option>`).join('');
+            document.getElementById('novaSenha').value=''; document.getElementById('confirmarNovaSenha').value='';
+            document.querySelectorAll('#modalTrocarSenha .mensagem-erro').forEach(e=>e.classList.remove('visivel'));
             document.getElementById('modalTrocarSenha').classList.add('active');
         }
 
         function confirmarTrocaSenha() {
-            const id = parseInt(document.getElementById('trocaSenhaUsuario').value);
-            const ns = document.getElementById('novaSenha').value;
-            const cs = document.getElementById('confirmarNovaSenha').value;
-            document.querySelectorAll('#modalTrocarSenha .mensagem-erro').forEach(e => e.classList.remove('visivel'));
-            let er = false;
-            if (ns.length < 6) {
-                document.getElementById('erroNovaSenha').textContent = 'Mínimo 6 caracteres!';
-                document.getElementById('erroNovaSenha').classList.add('visivel'); er = true;
-            }
-            if (ns !== cs) {
-                document.getElementById('erroConfirmarNovaSenha').textContent = 'Senhas não coincidem!';
-                document.getElementById('erroConfirmarNovaSenha').classList.add('visivel'); er = true;
-            }
-            if (er) return;
-            const user = DB.administradores.find(a => a.id === id);
-            if (user) {
-                user.senha = ns;
-                salvarDB();
-                document.getElementById('modalTrocarSenha').classList.remove('active');
-                showToast('Senha alterada com sucesso! ✅');
-                if (DB.usuarioLogado && DB.usuarioLogado.id === id) {
-                    showToast('Sua senha foi alterada! Faça login novamente.', 'info');
-                    fazerLogout();
-                }
-            }
+            const id=parseInt(document.getElementById('trocaSenhaUsuario').value), ns=document.getElementById('novaSenha').value, cs=document.getElementById('confirmarNovaSenha').value;
+            document.querySelectorAll('#modalTrocarSenha .mensagem-erro').forEach(e=>e.classList.remove('visivel'));
+            let er=false;
+            if(ns.length<6){document.getElementById('erroNovaSenha').textContent='Mínimo 6 caracteres!';document.getElementById('erroNovaSenha').classList.add('visivel');er=true;}
+            if(ns!==cs){document.getElementById('erroConfirmarNovaSenha').textContent='Senhas não coincidem!';document.getElementById('erroConfirmarNovaSenha').classList.add('visivel');er=true;}
+            if(er)return;
+            const user=DB.administradores.find(a=>a.id===id);
+            if(user){user.senha=ns;salvarDB();document.getElementById('modalTrocarSenha').classList.remove('active');showToast('Senha alterada! ✅');if(DB.usuarioLogado&&DB.usuarioLogado.id===id){showToast('Faça login novamente.','info');fazerLogout();}}
         }
+        function fecharModalTrocarSenha(){document.getElementById('modalTrocarSenha').classList.remove('active');}
 
-        function fecharModalTrocarSenha() {
-            document.getElementById('modalTrocarSenha').classList.remove('active');
-        }
-
-        // ==================== TROCAR MOTORISTA ====================
-        function abrirModalTrocarMotorista(tipo,id) {
+        function abrirModalTrocarMotorista(tipo,id){
             trocaMotorista={tipo,id,motoristaSelecionado:null};
             const c=document.getElementById('listaMotoristasTroca');
-            if(!DB.motoristas.length) { c.innerHTML='<p style="text-align:center;opacity:0.5;">Nenhum motorista.</p>'; }
-            else {
-                c.innerHTML=DB.motoristas.map(m=>`
-                    <div class="motorista-option" onclick="selMotoristaTroca(${m.id})" id="mo-${m.id}">
-                        <div style="font-size:1.8rem;">👤</div>
-                        <div style="flex:1;"><div style="font-weight:bold;">${m.nome}</div><div style="font-size:0.75rem;opacity:0.6;">${m.telefone||'Sem telefone'}</div></div>
-                        <div id="ck-${m.id}" style="font-size:1.3rem;opacity:0;">✅</div>
-                    </div>`).join('');
-            }
+            if(!DB.motoristas.length){c.innerHTML='<p style="text-align:center;opacity:0.4;">Nenhum motorista.</p>';}
+            else { c.innerHTML=DB.motoristas.map(m=>`<div class="motorista-option" onclick="selMotoristaTroca(${m.id})" id="mo-${m.id}"><div style="font-size:2rem;">👤</div><div style="flex:1;"><div style="font-weight:600;">${m.nome}</div><div style="font-size:0.75rem;opacity:0.5;">${DB.usuarioLogado?.nivel==='admin'?m.telefone||'Sem telefone':'🔒 Oculto'}</div></div><div id="ck-${m.id}" style="font-size:1.5rem;opacity:0;">✅</div></div>`).join(''); }
             document.getElementById('modalTrocarMotorista').classList.add('active');
         }
 
-        function selMotoristaTroca(id) {
+        function selMotoristaTroca(id){
             trocaMotorista.motoristaSelecionado=id;
             document.querySelectorAll('#listaMotoristasTroca .motorista-option').forEach(e=>e.classList.remove('selecionado'));
             document.querySelectorAll('#listaMotoristasTroca .motorista-option > div:last-child').forEach(e=>e.style.opacity='0');
-            const o=document.getElementById(`mo-${id}`); if(o) o.classList.add('selecionado');
-            const ck=document.getElementById(`ck-${id}`); if(ck) ck.style.opacity='1';
+            const o=document.getElementById(`mo-${id}`); if(o)o.classList.add('selecionado');
+            const ck=document.getElementById(`ck-${id}`); if(ck)ck.style.opacity='1';
         }
 
-        function confirmarTrocaMotorista() {
+        function confirmarTrocaMotorista(){
             if(!trocaMotorista.motoristaSelecionado){showToast('Selecione um motorista!','error');return;}
             const m=DB.motoristas.find(x=>x.id===trocaMotorista.motoristaSelecionado);
             if(!m){showToast('Motorista não encontrado!','error');return;}
             const v=trocaMotorista.tipo==='ida'?DB.viagensIda.find(x=>x.id===trocaMotorista.id):DB.viagensVolta.find(x=>x.id===trocaMotorista.id);
             if(!v){showToast('Viagem não encontrada!','error');return;}
             v.motorista=m.nome; v.motoristaId=m.id;
-            if(trocaMotorista.tipo==='ida'){const vo=DB.viagensVolta.find(x=>x.viagemIdaVinculada===trocaMotorista.id); if(vo){vo.motorista=m.nome;vo.motoristaId=m.id;}}
+            if(trocaMotorista.tipo==='ida'){const vo=DB.viagensVolta.find(x=>x.viagemIdaVinculada===trocaMotorista.id);if(vo){vo.motorista=m.nome;vo.motoristaId=m.id;}}
             salvarDB(); document.getElementById('modalTrocarMotorista').classList.remove('active'); atualizarListas(); showToast(`Motorista: ${m.nome} ✅`);
         }
+        function fecharModalTrocarMotorista(){document.getElementById('modalTrocarMotorista').classList.remove('active');trocaMotorista={tipo:null,id:null,motoristaSelecionado:null};}
 
-        function fecharModalTrocarMotorista() { document.getElementById('modalTrocarMotorista').classList.remove('active'); trocaMotorista={tipo:null,id:null,motoristaSelecionado:null}; }
-
-        // ==================== CADASTRO DE VIAGENS ====================
-        function carregarCadastro() {
+        function carregarCadastro(){
             const c=document.getElementById('cadastroContainer'); if(!c)return;
-            c.innerHTML=`
-                <h2><span class="icone-onibus">🚌</span> Nova Viagem</h2>
-                <p style="margin-bottom:18px;opacity:0.65;">Cadastre a ida - a volta é gerada automaticamente.</p>
-                <div class="grid-2">
-                    <div>
-                        <h3>🔵 IDA</h3>
-                        <div class="form-group"><label>📍 Origem</label><input type="text" id="idaOrigem" placeholder="Cidade de saída" oninput="attPrevVolta()"></div>
-                        <div class="form-group"><label>🎯 Destino</label><input type="text" id="idaDestino" placeholder="Cidade de chegada" oninput="attPrevVolta()"></div>
-                        <div class="form-group"><label>📅 Data</label><input type="datetime-local" id="idaData"></div>
-                        <div class="form-group"><label>🚗 Veículo</label><select id="idaVeiculo"><option value="">Selecione...</option>${DB.veiculos.map(v=>`<option value="${v.modelo} - ${v.placa}">${v.modelo} - ${v.placa}</option>`).join('')}</select></div>
-                        <div class="form-group"><label>👤 Motorista</label><select id="idaMotorista"><option value="">Selecione...</option>${DB.motoristas.map(m=>`<option value="${m.nome}">${m.nome}</option>`).join('')}</select></div>
-                        <div class="form-group"><label>📝 Obs</label><textarea id="idaObs" rows="2" placeholder="Detalhes..."></textarea></div>
-                    </div>
-                    <div>
-                        <h3>🟣 VOLTA <span class="auto-badge">🤖 AUTO</span></h3>
-                        <div class="card" style="background:rgba(155,89,182,0.06);border-color:rgba(155,89,182,0.15);">
-                            <div class="form-group"><label>🔄 Origem</label><input type="text" id="voltaOrigem" placeholder="Automático" readonly></div>
-                            <div class="form-group"><label>🏠 Destino</label><input type="text" id="voltaDestino" placeholder="Automático" readonly></div>
-                            <div class="form-group"><label>📅 Data</label><input type="datetime-local" id="voltaData"></div>
-                            <div class="form-group"><label>🚗 Veículo</label><select id="voltaVeiculo"><option value="">Mesmo da ida</option>${DB.veiculos.map(v=>`<option value="${v.modelo} - ${v.placa}">${v.modelo} - ${v.placa}</option>`).join('')}</select></div>
-                            <div class="form-group"><label>👤 Motorista</label><select id="voltaMotorista"><option value="">Mesmo da ida</option>${DB.motoristas.map(m=>`<option value="${m.nome}">${m.nome}</option>`).join('')}</select></div>
-                            <div class="form-group"><label>📝 Obs</label><textarea id="voltaObs" rows="2" placeholder="Detalhes..."></textarea></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="btn-group">
-                    <button class="btn-success" onclick="cadastrarViagem()">💾 Salvar</button>
-                    <button class="btn-outline" onclick="carregarCadastro()">🗑️ Limpar</button>
-                </div>`;
+            c.innerHTML=`<h2>🚌 Nova Viagem</h2><p style="margin-bottom:20px;opacity:0.55;">Cadastre a ida - a volta é gerada automaticamente.</p><div class="grid-2"><div><h3>🔵 IDA</h3><div class="form-group"><label>📍 Origem</label><input type="text" id="idaOrigem" placeholder="Cidade de saída" oninput="attPrevVolta()"></div><div class="form-group"><label>🎯 Destino</label><input type="text" id="idaDestino" placeholder="Cidade de chegada" oninput="attPrevVolta()"></div><div class="form-group"><label>📅 Data</label><input type="datetime-local" id="idaData"></div><div class="form-group"><label>🚗 Veículo</label><select id="idaVeiculo"><option value="">Selecione...</option>${DB.veiculos.map(v=>`<option value="${v.modelo} - ${v.placa}">${v.modelo} - ${v.placa}</option>`).join('')}</select></div><div class="form-group"><label>👤 Motorista</label><select id="idaMotorista"><option value="">Selecione...</option>${DB.motoristas.map(m=>`<option value="${m.nome}">${m.nome}</option>`).join('')}</select></div><div class="form-group"><label>📝 Obs</label><textarea id="idaObs" rows="2" placeholder="Detalhes..."></textarea></div></div><div><h3>🟣 VOLTA <span class="auto-badge">🤖 AUTO</span></h3><div class="card" style="background:rgba(155,89,182,0.04);border-color:rgba(155,89,182,0.12);"><div class="form-group"><label>🔄 Origem</label><input type="text" id="voltaOrigem" placeholder="Automático" readonly></div><div class="form-group"><label>🏠 Destino</label><input type="text" id="voltaDestino" placeholder="Automático" readonly></div><div class="form-group"><label>📅 Data</label><input type="datetime-local" id="voltaData"></div><div class="form-group"><label>🚗 Veículo</label><select id="voltaVeiculo"><option value="">Mesmo da ida</option>${DB.veiculos.map(v=>`<option value="${v.modelo} - ${v.placa}">${v.modelo} - ${v.placa}</option>`).join('')}</select></div><div class="form-group"><label>👤 Motorista</label><select id="voltaMotorista"><option value="">Mesmo da ida</option>${DB.motoristas.map(m=>`<option value="${m.nome}">${m.nome}</option>`).join('')}</select></div><div class="form-group"><label>📝 Obs</label><textarea id="voltaObs" rows="2" placeholder="Detalhes..."></textarea></div></div></div></div><div class="btn-group"><button class="btn-success" onclick="cadastrarViagem()">💾 Salvar</button><button class="btn-outline" onclick="carregarCadastro()">🗑️ Limpar</button></div>`;
         }
 
-        function attPrevVolta() {
-            const o=document.getElementById('idaOrigem')?.value||'', d=document.getElementById('idaDestino')?.value||'';
-            const vo=document.getElementById('voltaOrigem'), vd=document.getElementById('voltaDestino');
-            if(vo)vo.value=d; if(vd)vd.value=o;
-        }
+        function attPrevVolta(){const o=document.getElementById('idaOrigem')?.value||'',d=document.getElementById('idaDestino')?.value||'';const vo=document.getElementById('voltaOrigem'),vd=document.getElementById('voltaDestino');if(vo)vo.value=d;if(vd)vd.value=o;}
 
-        function cadastrarViagem() {
-            const o=document.getElementById('idaOrigem').value.trim(), d=document.getElementById('idaDestino').value.trim();
+        function cadastrarViagem(){
+            const o=document.getElementById('idaOrigem').value.trim(),d=document.getElementById('idaDestino').value.trim();
             if(!o||!d){showToast('Preencha Origem e Destino!','error');return;}
-            const mIda=document.getElementById('idaMotorista').value, ms=DB.motoristas.find(m=>m.nome===mIda);
-            const mVola=document.getElementById('voltaMotorista').value, msV=DB.motoristas.find(m=>m.nome===mVola);
-            const vi={
-                id:Date.now(), tipo:'ida', origem:o, destino:d,
-                data:document.getElementById('idaData').value||new Date().toISOString(),
-                veiculo:document.getElementById('idaVeiculo').value||'Não definido',
-                motorista:mIda||'Não definido', motoristaId:ms?ms.id:null,
-                observacoes:document.getElementById('idaObs').value.trim(),
-                status:'Iniciando viagem', dataCadastro:new Date().toLocaleString('pt-BR'),
-                criadoPor:DB.usuarioLogado?DB.usuarioLogado.nome:'Sistema'
-            };
-            const vv={
-                id:Date.now()+1, tipo:'volta', origem:d, destino:o,
-                data:document.getElementById('voltaData').value||new Date().toISOString(),
-                veiculo:document.getElementById('voltaVeiculo').value||vi.veiculo,
-                motorista:mVola||vi.motorista, motoristaId:msV?msV.id:vi.motoristaId,
-                observacoes:document.getElementById('voltaObs').value.trim(),
-                viagemIdaVinculada:vi.id, status:'Iniciando viagem',
-                dataCadastro:new Date().toLocaleString('pt-BR'),
-                criadoPor:DB.usuarioLogado?DB.usuarioLogado.nome:'Sistema'
-            };
+            const mIda=document.getElementById('idaMotorista').value,ms=DB.motoristas.find(m=>m.nome===mIda);
+            const mVola=document.getElementById('voltaMotorista').value,msV=DB.motoristas.find(m=>m.nome===mVola);
+            const vi={id:Date.now(),tipo:'ida',origem:o,destino:d,data:document.getElementById('idaData').value||new Date().toISOString(),veiculo:document.getElementById('idaVeiculo').value||'Não definido',motorista:mIda||'Não definido',motoristaId:ms?ms.id:null,observacoes:document.getElementById('idaObs').value.trim(),status:'Iniciando viagem',dataCadastro:new Date().toLocaleString('pt-BR'),criadoPor:DB.usuarioLogado?DB.usuarioLogado.nome:'Sistema'};
+            const vv={id:Date.now()+1,tipo:'volta',origem:d,destino:o,data:document.getElementById('voltaData').value||new Date().toISOString(),veiculo:document.getElementById('voltaVeiculo').value||vi.veiculo,motorista:mVola||vi.motorista,motoristaId:msV?msV.id:vi.motoristaId,observacoes:document.getElementById('voltaObs').value.trim(),viagemIdaVinculada:vi.id,status:'Iniciando viagem',dataCadastro:new Date().toLocaleString('pt-BR'),criadoPor:DB.usuarioLogado?DB.usuarioLogado.nome:'Sistema'};
             DB.viagensIda.unshift(vi); DB.viagensVolta.unshift(vv); salvarDB(); carregarCadastro(); showToast('Viagem salva! ✅');
         }
 
-        // ==================== LISTAGEM DE VIAGENS COM BUSCA ====================
-        function filtrarViagens() {
-            termoBusca = document.getElementById('buscaViagens')?.value?.toLowerCase().trim() || '';
-            atualizarListas();
-        }
+        function filtrarViagens(){termoBusca=document.getElementById('buscaViagens')?.value?.toLowerCase().trim()||'';atualizarListas();}
 
-        function viagemMatchBusca(v, termo) {
-            if (!termo) return true;
-            const campos = [
-                v.origem, v.destino, v.motorista, v.veiculo, 
-                v.observacoes, v.status, v.dataCadastro, v.criadoPor,
-                new Date(v.data).toLocaleString('pt-BR'),
-                new Date(v.data).toLocaleDateString('pt-BR')
-            ];
-            if (v.veiculo) {
-                const partes = v.veiculo.split(' - ');
-                if (partes.length > 1) campos.push(partes[1]);
-            }
-            return campos.some(c => c && c.toLowerCase().includes(termo));
-        }
+        function viagemMatchBusca(v,t){if(!t)return true;const c=[v.origem,v.destino,v.motorista,v.veiculo,v.observacoes,v.status,v.dataCadastro,v.criadoPor,new Date(v.data).toLocaleString('pt-BR'),new Date(v.data).toLocaleDateString('pt-BR')];if(v.veiculo){const p=v.veiculo.split(' - ');if(p.length>1)c.push(p[1]);}return c.some(x=>x&&x.toLowerCase().includes(t));}
 
-        function atualizarListas() { atualizarListaIda(); atualizarListaVolta(); }
+        function atualizarListas(){atualizarListaIda();atualizarListaVolta();}
 
-        function atualizarListaIda() {
-            const c=document.getElementById('listaViagensIda'); 
-            const semRes = document.getElementById('semResultadosIda');
-            const contador = document.getElementById('contadorIda');
+        function atualizarListaIda(){
+            const c=document.getElementById('listaViagensIda'),sr=document.getElementById('semResultadosIda'),ct=document.getElementById('contadorIda');
             if(!c)return;
-            if(!DB.usuarioLogado){c.innerHTML='<p style="text-align:center;opacity:0.5;">Faça login</p>'; if(semRes)semRes.style.display='none'; if(contador)contador.textContent='';return;}
-            
-            let viagensFiltradas = termoBusca ? DB.viagensIda.filter(v => viagemMatchBusca(v, termoBusca)) : DB.viagensIda;
-            
-            if(contador) contador.textContent = termoBusca ? `(${viagensFiltradas.length} de ${DB.viagensIda.length})` : `(${DB.viagensIda.length})`;
-            
-            if(!DB.viagensIda.length){c.innerHTML='<p style="text-align:center;opacity:0.5;">Nenhuma viagem</p>'; if(semRes)semRes.style.display='none';return;}
-            if(viagensFiltradas.length === 0 && termoBusca) {
-                c.innerHTML = '';
-                if(semRes)semRes.style.display='block';
-                return;
-            }
-            if(semRes)semRes.style.display='none';
-            
-            const adm=DB.usuarioLogado.nivel==='admin';
-            const isMotorista=DB.usuarioLogado.nivel==='motorista';
-            
-            c.innerHTML=viagensFiltradas.map(v=>{
+            if(!DB.usuarioLogado){c.innerHTML='<p style="text-align:center;opacity:0.4;">Faça login</p>';if(sr)sr.style.display='none';if(ct)ct.textContent='';return;}
+            let vf=termoBusca?DB.viagensIda.filter(v=>viagemMatchBusca(v,termoBusca)):DB.viagensIda;
+            if(ct)ct.textContent=termoBusca?`(${vf.length} de ${DB.viagensIda.length})`:`(${DB.viagensIda.length})`;
+            if(!DB.viagensIda.length){c.innerHTML='<p style="text-align:center;opacity:0.4;">Nenhuma viagem</p>';if(sr)sr.style.display='none';return;}
+            if(vf.length===0&&termoBusca){c.innerHTML='';if(sr)sr.style.display='block';return;}
+            if(sr)sr.style.display='none';
+            const adm=DB.usuarioLogado.nivel==='admin',isM=DB.usuarioLogado.nivel==='motorista';
+            c.innerHTML=vf.map(v=>{
                 const ed=viagemEditando.tipo==='ida'&&viagemEditando.id===v.id;
-                return `<div class="card ${ed?'editando':''}">
-                    <div class="card-header"><div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-ida">IDA</span><span class="badge badge-status">🚀 ${v.status||'Iniciando viagem'}</span></div><small>${v.dataCadastro} | ${v.criadoPor||'Sistema'}</small></div>
-                    ${ed?`
-                        <div class="form-group"><label>Origem</label><input type="text" id="edit-origem-${v.id}" value="${v.origem}" class="edit-input" ${adm?'':'readonly'}></div>
-                        <div class="form-group"><label>Destino</label><input type="text" id="edit-destino-${v.id}" value="${v.destino}" class="edit-input" ${adm?'':'readonly'}></div>
-                        <div class="form-group"><label>📅 Data</label><input type="datetime-local" id="edit-data-${v.id}" value="${v.data}" class="edit-input"></div>
-                        <div class="form-group"><label>Veículo</label><select id="edit-veiculo-${v.id}" class="edit-input" ${adm?'':'disabled'}><option value="${v.veiculo}">${v.veiculo}</option>${DB.veiculos.map(ve=>`<option value="${ve.modelo} - ${ve.placa}">${ve.modelo} - ${ve.placa}</option>`).join('')}</select></div>
-                        <div class="form-group"><label>👤 Motorista</label><select id="edit-motorista-${v.id}" class="edit-input"><option value="${v.motorista||''}">${v.motorista||'Selecione...'}</option>${DB.motoristas.map(m=>`<option value="${m.nome}">${m.nome}</option>`).join('')}</select></div>
-                        <div class="form-group"><label>Obs</label><textarea id="edit-obs-${v.id}" rows="2" class="edit-input">${v.observacoes||''}</textarea></div>
-                        <div class="btn-group"><button class="btn-success" style="padding:6px 12px;font-size:0.7rem;" onclick="salvarEdicao('ida',${v.id})">💾 Salvar</button><button class="btn-outline" style="padding:6px 12px;font-size:0.7rem;" onclick="cancelarEdicao()">❌ Cancelar</button></div>
-                    `:`
-                        <div class="rota"><strong>${v.origem}</strong><span>➔</span><strong>${v.destino}</strong></div>
-                        <div class="info-text">📅 ${new Date(v.data).toLocaleString('pt-BR')} | 🚗 ${v.veiculo} | 👤 ${v.motorista||'N/A'}</div>
-                        ${v.observacoes?`<div class="info-text">📝 ${v.observacoes}</div>`:''}
-                        <div class="btn-group">
-                            <button class="btn-whatsapp" style="padding:6px 12px;font-size:0.7rem;" onclick="enviarWhatsApp(${v.id},'ida')">📤 WhatsApp</button>
-                            <button class="btn-warning" style="padding:6px 12px;font-size:0.7rem;" onclick="abrirModalTrocarMotorista('ida',${v.id})">👤 Motorista</button>
-                            ${(adm||isMotorista)?`<button class="btn-info" style="padding:6px 12px;font-size:0.7rem;" onclick="iniciarEdicao('ida',${v.id})">✏️</button>`:''}
-                            ${adm?`<button class="btn-danger" style="padding:6px 12px;font-size:0.7rem;" onclick="excluirViagemIda(${v.id})">🗑️</button>`:''}
-                        </div>
-                    `}
-                </div>`;
+                const st=v.status==='Viagem concluída'?'badge-concluida':'badge-status';
+                return `<div class="card ${ed?'editando':''}"><div class="card-header"><div style="display:flex;gap:8px;align-items:center;"><span class="badge badge-ida">IDA</span><span class="badge ${st}">🚀 ${v.status||'Iniciando viagem'}</span></div><small>${v.dataCadastro} | ${v.criadoPor||'Sistema'}</small></div>${ed?`<div class="form-group"><label>📍 Origem</label><input type="text" id="edit-origem-${v.id}" value="${v.origem}" class="edit-input" readonly></div><div class="form-group"><label>🎯 Destino</label><input type="text" id="edit-destino-${v.id}" value="${v.destino}" class="edit-input" readonly></div><div class="form-group"><label>📅 Data</label><input type="datetime-local" id="edit-data-${v.id}" value="${v.data}" class="edit-input"></div><div class="form-group"><label>🚗 Veículo</label><select id="edit-veiculo-${v.id}" class="edit-input" disabled><option>${v.veiculo}</option></select></div><div class="form-group"><label>👤 Motorista</label><select id="edit-motorista-${v.id}" class="edit-input"><option value="${v.motorista||''}">${v.motorista||'Selecione...'}</option>${DB.motoristas.map(m=>`<option value="${m.nome}">${m.nome}</option>`).join('')}</select></div><div class="form-group"><label>📝 Obs</label><textarea id="edit-obs-${v.id}" rows="2" class="edit-input">${v.observacoes||''}</textarea></div><div class="btn-group" style="flex-wrap:wrap;"><button class="btn-success" style="padding:8px 14px;font-size:0.7rem;" onclick="salvarEdicao('ida',${v.id})">💾 Salvar</button><button class="btn-status" style="padding:8px 14px;font-size:0.7rem;" onclick="alterarStatusViagem('ida',${v.id})">🚀 ${v.status==='Viagem concluída'?'Reiniciar':'Iniciar'} Viagem</button>${v.status!=='Viagem concluída'?`<button class="btn-finalizar" style="padding:8px 14px;font-size:0.7rem;" onclick="finalizarViagem('ida',${v.id})">🏁 Finalizar</button>`:''}<button class="btn-outline" style="padding:8px 14px;font-size:0.7rem;" onclick="cancelarEdicao()">❌ Cancelar</button></div>`:`<div class="rota"><strong>${v.origem}</strong><span>➔</span><strong>${v.destino}</strong></div><div class="info-text">📅 ${new Date(v.data).toLocaleString('pt-BR')} | 🚗 ${v.veiculo} | 👤 ${v.motorista||'N/A'}</div>${v.observacoes?`<div class="info-text">📝 ${v.observacoes}</div>`:''}<div class="btn-group"><button class="btn-whatsapp" style="padding:8px 14px;font-size:0.7rem;" onclick="enviarWhatsApp(${v.id},'ida')">📤 WhatsApp</button><button class="btn-warning" style="padding:8px 14px;font-size:0.7rem;" onclick="abrirModalTrocarMotorista('ida',${v.id})">👤 Motorista</button>${(adm||isM)?`<button class="btn-info" style="padding:8px 14px;font-size:0.7rem;" onclick="iniciarEdicao('ida',${v.id})">✏️ Editar</button>`:''}${adm?`<button class="btn-danger" style="padding:8px 14px;font-size:0.7rem;" onclick="excluirViagemIda(${v.id})">🗑️</button>`:''}</div>`}</div>`;
             }).join('');
         }
 
-        function atualizarListaVolta() {
-            const c=document.getElementById('listaViagensVolta'); 
-            const semRes = document.getElementById('semResultadosVolta');
-            const contador = document.getElementById('contadorVolta');
+        function atualizarListaVolta(){
+            const c=document.getElementById('listaViagensVolta'),sr=document.getElementById('semResultadosVolta'),ct=document.getElementById('contadorVolta');
             if(!c)return;
-            if(!DB.usuarioLogado){c.innerHTML='<p style="text-align:center;opacity:0.5;">Faça login</p>'; if(semRes)semRes.style.display='none'; if(contador)contador.textContent='';return;}
-            
-            let viagensFiltradas = termoBusca ? DB.viagensVolta.filter(v => viagemMatchBusca(v, termoBusca)) : DB.viagensVolta;
-            
-            if(contador) contador.textContent = termoBusca ? `(${viagensFiltradas.length} de ${DB.viagensVolta.length})` : `(${DB.viagensVolta.length})`;
-            
-            if(!DB.viagensVolta.length){c.innerHTML='<p style="text-align:center;opacity:0.5;">Nenhuma viagem</p>'; if(semRes)semRes.style.display='none';return;}
-            if(viagensFiltradas.length === 0 && termoBusca) {
-                c.innerHTML = '';
-                if(semRes)semRes.style.display='block';
-                return;
-            }
-            if(semRes)semRes.style.display='none';
-            
-            const adm=DB.usuarioLogado.nivel==='admin';
-            const isMotorista=DB.usuarioLogado.nivel==='motorista';
-            
-            c.innerHTML=viagensFiltradas.map(v=>{
+            if(!DB.usuarioLogado){c.innerHTML='<p style="text-align:center;opacity:0.4;">Faça login</p>';if(sr)sr.style.display='none';if(ct)ct.textContent='';return;}
+            let vf=termoBusca?DB.viagensVolta.filter(v=>viagemMatchBusca(v,termoBusca)):DB.viagensVolta;
+            if(ct)ct.textContent=termoBusca?`(${vf.length} de ${DB.viagensVolta.length})`:`(${DB.viagensVolta.length})`;
+            if(!DB.viagensVolta.length){c.innerHTML='<p style="text-align:center;opacity:0.4;">Nenhuma viagem</p>';if(sr)sr.style.display='none';return;}
+            if(vf.length===0&&termoBusca){c.innerHTML='';if(sr)sr.style.display='block';return;}
+            if(sr)sr.style.display='none';
+            const adm=DB.usuarioLogado.nivel==='admin',isM=DB.usuarioLogado.nivel==='motorista';
+            c.innerHTML=vf.map(v=>{
                 const ed=viagemEditando.tipo==='volta'&&viagemEditando.id===v.id;
                 const vi=v.viagemIdaVinculada?DB.viagensIda.find(x=>x.id===v.viagemIdaVinculada):null;
-                return `<div class="card ${ed?'editando':''}">
-                    <div class="card-header"><div style="display:flex;gap:6px;align-items:center;"><span class="badge badge-volta">VOLTA</span><span class="auto-badge">🤖 AUTO</span><span class="badge badge-status">🚀 ${v.status||'Iniciando viagem'}</span></div></div>
-                    ${ed?`
-                        <div class="form-group"><label>Origem</label><input type="text" id="edit-origem-${v.id}" value="${v.origem}" class="edit-input" ${adm?'':'readonly'}></div>
-                        <div class="form-group"><label>Destino</label><input type="text" id="edit-destino-${v.id}" value="${v.destino}" class="edit-input" ${adm?'':'readonly'}></div>
-                        <div class="form-group"><label>📅 Data</label><input type="datetime-local" id="edit-data-${v.id}" value="${v.data}" class="edit-input"></div>
-                        <div class="form-group"><label>Veículo</label><select id="edit-veiculo-${v.id}" class="edit-input" ${adm?'':'disabled'}><option value="${v.veiculo}">${v.veiculo}</option>${DB.veiculos.map(ve=>`<option value="${ve.modelo} - ${ve.placa}">${ve.modelo} - ${ve.placa}</option>`).join('')}</select></div>
-                        <div class="form-group"><label>👤 Motorista</label><select id="edit-motorista-${v.id}" class="edit-input"><option value="${v.motorista||''}">${v.motorista||'Selecione...'}</option>${DB.motoristas.map(m=>`<option value="${m.nome}">${m.nome}</option>`).join('')}</select></div>
-                        <div class="form-group"><label>Obs</label><textarea id="edit-obs-${v.id}" rows="2" class="edit-input">${v.observacoes||''}</textarea></div>
-                        <div class="btn-group"><button class="btn-success" style="padding:6px 12px;font-size:0.7rem;" onclick="salvarEdicao('volta',${v.id})">💾 Salvar</button><button class="btn-outline" style="padding:6px 12px;font-size:0.7rem;" onclick="cancelarEdicao()">❌ Cancelar</button></div>
-                    `:`
-                        <div class="rota"><strong>${v.origem}</strong><span>➔</span><strong>${v.destino}</strong></div>
-                        <div class="info-text">📅 ${new Date(v.data).toLocaleString('pt-BR')} | 🚗 ${v.veiculo} | 👤 ${v.motorista||'N/A'}</div>
-                        ${vi?`<div class="linked-badge">🔗 Ida: ${vi.origem} ➔ ${vi.destino}</div>`:''}
-                        ${v.observacoes?`<div class="info-text">📝 ${v.observacoes}</div>`:''}
-                        <div class="btn-group">
-                            <button class="btn-whatsapp" style="padding:6px 12px;font-size:0.7rem;" onclick="enviarWhatsApp(${v.id},'volta')">📤 WhatsApp</button>
-                            <button class="btn-warning" style="padding:6px 12px;font-size:0.7rem;" onclick="abrirModalTrocarMotorista('volta',${v.id})">👤 Motorista</button>
-                            ${(adm||isMotorista)?`<button class="btn-info" style="padding:6px 12px;font-size:0.7rem;" onclick="iniciarEdicao('volta',${v.id})">✏️</button>`:''}
-                            ${adm?`<button class="btn-danger" style="padding:6px 12px;font-size:0.7rem;" onclick="excluirViagemVolta(${v.id})">🗑️</button>`:''}
-                        </div>
-                    `}
-                </div>`;
+                const st=v.status==='Viagem concluída'?'badge-concluida':'badge-status';
+                return `<div class="card ${ed?'editando':''}"><div class="card-header"><div style="display:flex;gap:8px;align-items:center;"><span class="badge badge-volta">VOLTA</span><span class="auto-badge">🤖 AUTO</span><span class="badge ${st}">🚀 ${v.status||'Iniciando viagem'}</span></div></div>${ed?`<div class="form-group"><label>📍 Origem</label><input type="text" id="edit-origem-${v.id}" value="${v.origem}" class="edit-input" readonly></div><div class="form-group"><label>🎯 Destino</label><input type="text" id="edit-destino-${v.id}" value="${v.destino}" class="edit-input" readonly></div><div class="form-group"><label>📅 Data</label><input type="datetime-local" id="edit-data-${v.id}" value="${v.data}" class="edit-input"></div><div class="form-group"><label>🚗 Veículo</label><select id="edit-veiculo-${v.id}" class="edit-input" disabled><option>${v.veiculo}</option></select></div><div class="form-group"><label>👤 Motorista</label><select id="edit-motorista-${v.id}" class="edit-input"><option value="${v.motorista||''}">${v.motorista||'Selecione...'}</option>${DB.motoristas.map(m=>`<option value="${m.nome}">${m.nome}</option>`).join('')}</select></div><div class="form-group"><label>📝 Obs</label><textarea id="edit-obs-${v.id}" rows="2" class="edit-input">${v.observacoes||''}</textarea></div><div class="btn-group" style="flex-wrap:wrap;"><button class="btn-success" style="padding:8px 14px;font-size:0.7rem;" onclick="salvarEdicao('volta',${v.id})">💾 Salvar</button><button class="btn-status" style="padding:8px 14px;font-size:0.7rem;" onclick="alterarStatusViagem('volta',${v.id})">🚀 ${v.status==='Viagem concluída'?'Reiniciar':'Iniciar'} Viagem</button>${v.status!=='Viagem concluída'?`<button class="btn-finalizar" style="padding:8px 14px;font-size:0.7rem;" onclick="finalizarViagem('volta',${v.id})">🏁 Finalizar</button>`:''}<button class="btn-outline" style="padding:8px 14px;font-size:0.7rem;" onclick="cancelarEdicao()">❌ Cancelar</button></div>`:`<div class="rota"><strong>${v.origem}</strong><span>➔</span><strong>${v.destino}</strong></div><div class="info-text">📅 ${new Date(v.data).toLocaleString('pt-BR')} | 🚗 ${v.veiculo} | 👤 ${v.motorista||'N/A'}</div>${vi?`<div class="linked-badge">🔗 Ida: ${vi.origem} ➔ ${vi.destino}</div>`:''}${v.observacoes?`<div class="info-text">📝 ${v.observacoes}</div>`:''}<div class="btn-group"><button class="btn-whatsapp" style="padding:8px 14px;font-size:0.7rem;" onclick="enviarWhatsApp(${v.id},'volta')">📤 WhatsApp</button><button class="btn-warning" style="padding:8px 14px;font-size:0.7rem;" onclick="abrirModalTrocarMotorista('volta',${v.id})">👤 Motorista</button>${(adm||isM)?`<button class="btn-info" style="padding:8px 14px;font-size:0.7rem;" onclick="iniciarEdicao('volta',${v.id})">✏️ Editar</button>`:''}${adm?`<button class="btn-danger" style="padding:8px 14px;font-size:0.7rem;" onclick="excluirViagemVolta(${v.id})">🗑️</button>`:''}</div>`}</div>`;
             }).join('');
         }
 
         function iniciarEdicao(tipo,id){viagemEditando={tipo,id};atualizarListas();}
         function cancelarEdicao(){viagemEditando={tipo:null,id:null};atualizarListas();}
 
+        function alterarStatusViagem(tipo,id){
+            const v=tipo==='ida'?DB.viagensIda.find(x=>x.id===id):DB.viagensVolta.find(x=>x.id===id);
+            if(!v){showToast('Viagem não encontrada!','error');return;}
+            v.status=v.status==='Viagem concluída'?'Iniciando viagem':'Iniciando viagem';
+            salvarDB(); atualizarListas(); showToast('Status atualizado! 🚀');
+        }
+
+        function finalizarViagem(tipo,id){
+            const v=tipo==='ida'?DB.viagensIda.find(x=>x.id===id):DB.viagensVolta.find(x=>x.id===id);
+            if(!v){showToast('Viagem não encontrada!','error');return;}
+            v.status='Viagem concluída';
+            salvarDB(); cancelarEdicao(); showToast('Viagem finalizada! 🏁');
+        }
+
         function salvarEdicao(tipo,id){
             const v=tipo==='ida'?DB.viagensIda.find(x=>x.id===id):DB.viagensVolta.find(x=>x.id===id);
             if(!v){showToast('Viagem não encontrada!','error');return;}
-            
-            const isAdmin = DB.usuarioLogado?.nivel==='admin';
-            
-            // Motorista e Admin podem editar data
-            const dt=document.getElementById(`edit-data-${id}`)?.value;
-            if(dt)v.data=dt;
-            
-            // Motorista e Admin podem editar observações
-            const ob=document.getElementById(`edit-obs-${id}`)?.value;
-            if(ob!==undefined)v.observacoes=ob;
-            
-            // Motorista e Admin podem trocar motorista
-            const mo=document.getElementById(`edit-motorista-${id}`)?.value;
-            if(mo){v.motorista=mo; const mm=DB.motoristas.find(m=>m.nome===mo); v.motoristaId=mm?mm.id:null;}
-            
-            // Apenas admin pode editar origem, destino e veículo
+            const isAdmin=DB.usuarioLogado?.nivel==='admin';
+            const dt=document.getElementById(`edit-data-${id}`)?.value; if(dt)v.data=dt;
+            const ob=document.getElementById(`edit-obs-${id}`)?.value; if(ob!==undefined)v.observacoes=ob;
+            const mo=document.getElementById(`edit-motorista-${id}`)?.value; if(mo){v.motorista=mo;const mm=DB.motoristas.find(m=>m.nome===mo);v.motoristaId=mm?mm.id:null;}
             if(isAdmin){
-                const o=document.getElementById(`edit-origem-${id}`)?.value;
-                const d=document.getElementById(`edit-destino-${id}`)?.value;
-                const ve=document.getElementById(`edit-veiculo-${id}`)?.value;
-                if(o)v.origem=o; if(d)v.destino=d; if(ve)v.veiculo=ve;
-                if(tipo==='ida'&&o&&d){const vv=DB.viagensVolta.find(x=>x.viagemIdaVinculada===id); if(vv){vv.origem=d;vv.destino=o;}}
+                const o=document.getElementById(`edit-origem-${id}`)?.value; if(o)v.origem=o;
+                const d=document.getElementById(`edit-destino-${id}`)?.value; if(d)v.destino=d;
+                const ve=document.getElementById(`edit-veiculo-${id}`)?.value; if(ve)v.veiculo=ve;
+                if(tipo==='ida'&&o&&d){const vv=DB.viagensVolta.find(x=>x.viagemIdaVinculada===id);if(vv){vv.origem=d;vv.destino=o;}}
             }
-            
             salvarDB(); cancelarEdicao(); showToast('Viagem atualizada! ✅');
         }
 
-        function excluirViagemIda(id){
-            if(confirm('Excluir ida? A volta vinculada também será excluída.')){
-                DB.viagensIda=DB.viagensIda.filter(v=>v.id!==id);
-                DB.viagensVolta=DB.viagensVolta.filter(v=>v.viagemIdaVinculada!==id);
-                salvarDB(); atualizarListas(); showToast('Excluída! 🗑️');
-            }
-        }
+        function excluirViagemIda(id){if(confirm('Excluir ida? A volta vinculada também será excluída.')){DB.viagensIda=DB.viagensIda.filter(v=>v.id!==id);DB.viagensVolta=DB.viagensVolta.filter(v=>v.viagemIdaVinculada!==id);salvarDB();atualizarListas();showToast('Excluída! 🗑️');}}
+        function excluirViagemVolta(id){if(confirm('Excluir volta?')){DB.viagensVolta=DB.viagensVolta.filter(v=>v.id!==id);salvarDB();atualizarListas();showToast('Excluída! 🗑️');}}
 
-        function excluirViagemVolta(id){
-            if(confirm('Excluir volta?')){
-                DB.viagensVolta=DB.viagensVolta.filter(v=>v.id!==id);
-                salvarDB(); atualizarListas(); showToast('Excluída! 🗑️');
-            }
-        }
-
-        // ==================== VEÍCULOS ====================
         function carregarVeiculos(){
-            const c=document.getElementById('veiculosContainer'); if(!c)return;
-            c.innerHTML=`
-                <h2>🚗 Veículos</h2>
-                <div class="grid-2">
-                    <div>
-                        <h3>Cadastrar</h3>
-                        <div class="form-group"><label>🚙 Modelo</label><input type="text" id="veiculoModelo" placeholder="Ex: Toyota Corolla"></div>
-                        <div class="form-group"><label>🔢 Placa</label><input type="text" id="veiculoPlaca" placeholder="ABC-1234" style="text-transform:uppercase;"></div>
-                        <div class="form-group"><label>📅 Ano</label><input type="number" id="veiculoAno" placeholder="2024" min="2000" max="2030"></div>
-                        <div class="btn-group"><button class="btn-primary" onclick="cadastrarVeiculo()">💾 Salvar</button><button class="btn-outline" onclick="carregarVeiculos()">🗑️ Limpar</button></div>
-                    </div>
-                    <div><h3>Lista</h3><div class="table-container"><table><thead><tr><th>Modelo</th><th>Placa</th><th>Ano</th><th></th></tr></thead><tbody id="corpoTabelaVeiculos"></tbody></table></div></div>
-                </div>`; attTabelaVeiculos();
+            const c=document.getElementById('veiculosContainer');if(!c)return;
+            c.innerHTML=`<h2>🚗 Veículos</h2><div class="grid-2"><div><h3>Cadastrar</h3><div class="form-group"><label>🚙 Modelo</label><input type="text" id="veiculoModelo" placeholder="Ex: Toyota Corolla"></div><div class="form-group"><label>🔢 Placa</label><input type="text" id="veiculoPlaca" placeholder="ABC-1234" style="text-transform:uppercase;"></div><div class="form-group"><label>📅 Ano</label><input type="number" id="veiculoAno" placeholder="2024" min="2000" max="2030"></div><div class="btn-group"><button class="btn-primary" onclick="cadastrarVeiculo()">💾 Salvar</button><button class="btn-outline" onclick="carregarVeiculos()">🗑️ Limpar</button></div></div><div><h3>Lista</h3><div class="table-container"><table><thead><tr><th>Modelo</th><th>Placa</th><th>Ano</th><th></th></tr></thead><tbody id="corpoTabelaVeiculos"></tbody></table></div></div></div>`;attTabelaVeiculos();
         }
 
-        function cadastrarVeiculo(){
-            const m=document.getElementById('veiculoModelo').value.trim(), p=document.getElementById('veiculoPlaca').value.trim().toUpperCase();
-            const a=document.getElementById('veiculoAno').value;
-            if(!m||!p){showToast('Preencha Modelo e Placa!','error');return;}
-            DB.veiculos.push({id:Date.now(),modelo:m,placa:p,ano:a}); salvarDB(); carregarVeiculos(); showToast('Veículo salvo! 🚗');
-        }
-
-        function attTabelaVeiculos(){
-            const t=document.getElementById('corpoTabelaVeiculos'); if(!t)return;
-            if(!DB.veiculos.length){t.innerHTML='<tr><td colspan="4" style="text-align:center;opacity:0.5;">Nenhum veículo</td></tr>';return;}
-            t.innerHTML=DB.veiculos.map(v=>`<tr><td>${v.modelo}</td><td>${v.placa}</td><td>${v.ano||'-'}</td><td><button class="btn-danger" style="padding:4px 8px;font-size:0.7rem;" onclick="excluirVeiculo(${v.id})">🗑️</button></td></tr>`).join('');
-        }
-
+        function cadastrarVeiculo(){const m=document.getElementById('veiculoModelo').value.trim(),p=document.getElementById('veiculoPlaca').value.trim().toUpperCase(),a=document.getElementById('veiculoAno').value;if(!m||!p){showToast('Preencha Modelo e Placa!','error');return;}DB.veiculos.push({id:Date.now(),modelo:m,placa:p,ano:a});salvarDB();carregarVeiculos();showToast('Veículo salvo! 🚗');}
+        function attTabelaVeiculos(){const t=document.getElementById('corpoTabelaVeiculos');if(!t)return;if(!DB.veiculos.length){t.innerHTML='<tr><td colspan="4" style="text-align:center;opacity:0.4;">Nenhum veículo</td></tr>';return;}t.innerHTML=DB.veiculos.map(v=>`<tr><td>${v.modelo}</td><td>${v.placa}</td><td>${v.ano||'-'}</td><td><button class="btn-danger" style="padding:5px 10px;font-size:0.7rem;" onclick="excluirVeiculo(${v.id})">🗑️</button></td></tr>`).join('');}
         function excluirVeiculo(id){if(confirm('Excluir?')){DB.veiculos=DB.veiculos.filter(v=>v.id!==id);salvarDB();carregarVeiculos();showToast('Excluído! 🗑️');}}
 
-        // ==================== MOTORISTAS ====================
         function carregarMotoristas(){
-            const c=document.getElementById('motoristasContainer'); if(!c)return;
-            c.innerHTML=`
-                <h2>👤 Motoristas</h2>
-                <div class="grid-2">
-                    <div>
-                        <h3>Cadastrar</h3>
-                        <div class="form-group"><label>👤 Nome Completo</label><input type="text" id="motoristaNome" placeholder="Nome do motorista"></div>
-                        <div class="form-group"><label>📱 Telefone</label><input type="tel" id="motoristaTelefone" placeholder="(00) 00000-0000"></div>
-                        <div class="form-group"><label>🚗 CNH</label><input type="text" id="motoristaCNH" placeholder="Número da CNH"></div>
-                        <div class="btn-group"><button class="btn-primary" onclick="cadastrarMotorista()">💾 Salvar</button><button class="btn-outline" onclick="carregarMotoristas()">🗑️ Limpar</button></div>
-                    </div>
-                    <div><h3>Lista</h3><div class="table-container"><table><thead><tr><th>Nome</th><th>Telefone</th><th>CNH</th><th></th></tr></thead><tbody id="corpoTabelaMotoristas"></tbody></table></div></div>
-                </div>`; attTabelaMotoristas();
+            const c=document.getElementById('motoristasContainer');if(!c)return;
+            const adm=DB.usuarioLogado?.nivel==='admin';
+            c.innerHTML=`<h2>👤 Motoristas</h2><div class="grid-2"><div><h3>Cadastrar</h3><div class="form-group"><label>👤 Nome Completo</label><input type="text" id="motoristaNome" placeholder="Nome do motorista"></div><div class="form-group"><label>📱 Telefone</label><input type="tel" id="motoristaTelefone" placeholder="(00) 00000-0000"></div><div class="form-group"><label>🚗 CNH</label><input type="text" id="motoristaCNH" placeholder="Número da CNH"></div><div class="btn-group"><button class="btn-primary" onclick="cadastrarMotorista()">💾 Salvar</button><button class="btn-outline" onclick="carregarMotoristas()">🗑️ Limpar</button></div></div><div><h3>Lista</h3><div class="table-container"><table><thead><tr><th>Nome</th><th>${adm?'📱 Telefone':'📱 Contato'}</th><th>CNH</th><th></th></tr></thead><tbody id="corpoTabelaMotoristas"></tbody></table></div></div></div>`;attTabelaMotoristas();
         }
 
-        function cadastrarMotorista(){
-            const n=document.getElementById('motoristaNome').value.trim();
-            if(!n){showToast('Preencha o nome!','error');return;}
-            DB.motoristas.push({
-                id:Date.now(), nome:n,
-                telefone:document.getElementById('motoristaTelefone').value.trim(),
-                cnh:document.getElementById('motoristaCNH').value.trim()
-            });
-            salvarDB(); carregarMotoristas(); showToast('Motorista salvo! 👤');
-        }
-
-        function attTabelaMotoristas(){
-            const t=document.getElementById('corpoTabelaMotoristas'); if(!t)return;
-            if(!DB.motoristas.length){t.innerHTML='<tr><td colspan="4" style="text-align:center;opacity:0.5;">Nenhum motorista</td></tr>';return;}
-            t.innerHTML=DB.motoristas.map(m=>`<tr><td>${m.nome}</td><td>${m.telefone||'-'}</td><td>${m.cnh||'-'}</td><td><button class="btn-danger" style="padding:4px 8px;font-size:0.7rem;" onclick="excluirMotorista(${m.id})">🗑️</button></td></tr>`).join('');
-        }
-
+        function cadastrarMotorista(){const n=document.getElementById('motoristaNome').value.trim();if(!n){showToast('Preencha o nome!','error');return;}DB.motoristas.push({id:Date.now(),nome:n,telefone:document.getElementById('motoristaTelefone').value.trim(),cnh:document.getElementById('motoristaCNH').value.trim()});salvarDB();carregarMotoristas();showToast('Motorista salvo! 👤');}
+        function attTabelaMotoristas(){const t=document.getElementById('corpoTabelaMotoristas');if(!t)return;const adm=DB.usuarioLogado?.nivel==='admin';if(!DB.motoristas.length){t.innerHTML='<tr><td colspan="4" style="text-align:center;opacity:0.4;">Nenhum motorista</td></tr>';return;}t.innerHTML=DB.motoristas.map(m=>`<tr><td>${m.nome}</td><td>${adm?(m.telefone||'-'):'<span style="opacity:0.35;">🔒 Oculto</span>'}</td><td>${m.cnh||'-'}</td><td><button class="btn-danger" style="padding:5px 10px;font-size:0.7rem;" onclick="excluirMotorista(${m.id})">🗑️</button></td></tr>`).join('');}
         function excluirMotorista(id){if(confirm('Excluir?')){DB.motoristas=DB.motoristas.filter(m=>m.id!==id);salvarDB();carregarMotoristas();showToast('Excluído! 🗑️');}}
 
-        // ==================== ADMINISTRADORES ====================
         function carregarAdmins(){
-            const c=document.getElementById('adminsContainer'); if(!c)return;
-            c.innerHTML=`
-                <h2>👥 Usuários</h2>
-                <div class="grid-2">
-                    <div>
-                        <h3>Cadastrar</h3>
-                        <div class="form-group"><label>👤 Nome</label><input type="text" id="adminNome" placeholder="Nome completo"></div>
-                        <div class="form-group"><label>👤 Usuário (Login)</label><input type="text" id="adminUsuario" placeholder="Nome para login"><div class="mensagem-erro" id="erroCadastroUsuario"></div></div>
-                        <div class="form-group"><label>📱 Telefone</label><input type="tel" id="adminTelefone" placeholder="(00) 00000-0000"></div>
-                        <div class="form-group"><label>🔑 Senha</label><input type="password" id="adminSenha" placeholder="Mínimo 6 caracteres"><div class="mensagem-erro" id="erroCadastroSenha"></div></div>
-                        <div class="form-group"><label>🔑 Confirmar Senha</label><input type="password" id="adminConfirmarSenha" placeholder="Repita a senha"><div class="mensagem-erro" id="erroConfirmarSenha"></div></div>
-                        <div class="form-group"><label>🎫 Nível</label><select id="adminNivel"><option value="motorista">🚛 Motorista</option><option value="admin">👑 Administrador</option></select></div>
-                        <div class="btn-group"><button class="btn-primary" onclick="cadastrarAdmin()">💾 Salvar</button><button class="btn-outline" onclick="carregarAdmins()">🗑️ Limpar</button></div>
-                    </div>
-                    <div><h3>Lista</h3><div class="table-container"><table><thead><tr><th>Nome</th><th>Usuário</th><th>Nível</th><th></th></tr></thead><tbody id="corpoTabelaAdmins"></tbody></table></div></div>
-                </div>`; attTabelaAdmins();
+            const c=document.getElementById('adminsContainer');if(!c)return;
+            c.innerHTML=`<h2>👥 Usuários</h2><div class="grid-2"><div><h3>Cadastrar</h3><div class="form-group"><label>👤 Nome</label><input type="text" id="adminNome" placeholder="Nome completo"></div><div class="form-group"><label>👤 Usuário (Login)</label><input type="text" id="adminUsuario" placeholder="Nome para login"><div class="mensagem-erro" id="erroCadastroUsuario"></div></div><div class="form-group"><label>📱 Telefone</label><input type="tel" id="adminTelefone" placeholder="(00) 00000-0000"></div><div class="form-group"><label>🔑 Senha</label><input type="password" id="adminSenha" placeholder="Mínimo 6 caracteres"><div class="mensagem-erro" id="erroCadastroSenha"></div></div><div class="form-group"><label>🔑 Confirmar Senha</label><input type="password" id="adminConfirmarSenha" placeholder="Repita a senha"><div class="mensagem-erro" id="erroConfirmarSenha"></div></div><div class="form-group"><label>🎫 Nível</label><select id="adminNivel"><option value="motorista">🚛 Motorista</option><option value="admin">👑 Administrador</option></select></div><div class="btn-group"><button class="btn-primary" onclick="cadastrarAdmin()">💾 Salvar</button><button class="btn-outline" onclick="carregarAdmins()">🗑️ Limpar</button></div></div><div><h3>Lista</h3><div class="table-container"><table><thead><tr><th>Nome</th><th>Usuário</th><th>Nível</th><th></th></tr></thead><tbody id="corpoTabelaAdmins"></tbody></table></div></div></div>`;attTabelaAdmins();
         }
 
-        function cadastrarAdmin(){
-            const n=document.getElementById('adminNome').value.trim(), u=document.getElementById('adminUsuario').value.trim();
-            const t=document.getElementById('adminTelefone').value.trim(), s=document.getElementById('adminSenha').value;
-            const cs=document.getElementById('adminConfirmarSenha').value, nv=document.getElementById('adminNivel').value;
-            document.querySelectorAll('.mensagem-erro').forEach(e=>e.classList.remove('visivel'));
-            let er=false;
-            if(!n||!u||!s){showToast('Preencha nome, usuário e senha!','error');return;}
-            if(DB.administradores.some(a=>a.usuario===u)){document.getElementById('erroCadastroUsuario').textContent='Usuário já existe!';document.getElementById('erroCadastroUsuario').classList.add('visivel');er=true;}
-            if(s.length<6){document.getElementById('erroCadastroSenha').textContent='Mínimo 6 caracteres!';document.getElementById('erroCadastroSenha').classList.add('visivel');er=true;}
-            if(s!==cs){document.getElementById('erroConfirmarSenha').textContent='Senhas não coincidem!';document.getElementById('erroConfirmarSenha').classList.add('visivel');er=true;}
-            if(er)return;
-            DB.administradores.push({id:Date.now(),nome:n,usuario:u,telefone:t,senha:s,nivel:nv});
-            salvarDB(); carregarAdmins(); showToast('Usuário salvo! ✅');
-        }
+        function cadastrarAdmin(){const n=document.getElementById('adminNome').value.trim(),u=document.getElementById('adminUsuario').value.trim(),t=document.getElementById('adminTelefone').value.trim(),s=document.getElementById('adminSenha').value,cs=document.getElementById('adminConfirmarSenha').value,nv=document.getElementById('adminNivel').value;document.querySelectorAll('.mensagem-erro').forEach(e=>e.classList.remove('visivel'));let er=false;if(!n||!u||!s){showToast('Preencha nome, usuário e senha!','error');return;}if(DB.administradores.some(a=>a.usuario===u)){document.getElementById('erroCadastroUsuario').textContent='Usuário já existe!';document.getElementById('erroCadastroUsuario').classList.add('visivel');er=true;}if(s.length<6){document.getElementById('erroCadastroSenha').textContent='Mínimo 6 caracteres!';document.getElementById('erroCadastroSenha').classList.add('visivel');er=true;}if(s!==cs){document.getElementById('erroConfirmarSenha').textContent='Senhas não coincidem!';document.getElementById('erroConfirmarSenha').classList.add('visivel');er=true;}if(er)return;DB.administradores.push({id:Date.now(),nome:n,usuario:u,telefone:t,senha:s,nivel:nv});salvarDB();carregarAdmins();showToast('Usuário salvo! ✅');}
+        function attTabelaAdmins(){const t=document.getElementById('corpoTabelaAdmins');if(!t)return;if(!DB.administradores.length){t.innerHTML='<tr><td colspan="4" style="text-align:center;opacity:0.4;">Nenhum usuário</td></tr>';return;}t.innerHTML=DB.administradores.map(a=>`<tr><td>${a.nome}</td><td>${a.usuario}</td><td><span class="badge ${a.nivel==='admin'?'badge-admin':'badge-motorista'}">${a.nivel}</span></td><td>${DB.usuarioLogado&&DB.usuarioLogado.id!==a.id?`<button class="btn-danger" style="padding:5px 10px;font-size:0.7rem;" onclick="excluirAdmin(${a.id})">🗑️</button>`:'<span style="opacity:0.35;font-size:0.7rem;">Você</span>'}</td></tr>`).join('');}
+        function excluirAdmin(id){if(DB.administradores.length<=1){showToast('Não é possível excluir o último!','error');return;}if(DB.usuarioLogado&&id===DB.usuarioLogado.id){showToast('Não pode se excluir!','error');return;}if(confirm('Excluir?')){DB.administradores=DB.administradores.filter(a=>a.id!==id);salvarDB();carregarAdmins();showToast('Excluído! 🗑️');}}
 
-        function attTabelaAdmins(){
-            const t=document.getElementById('corpoTabelaAdmins'); if(!t)return;
-            if(!DB.administradores.length){t.innerHTML='<tr><td colspan="4" style="text-align:center;opacity:0.5;">Nenhum usuário</td></tr>';return;}
-            t.innerHTML=DB.administradores.map(a=>`<tr><td>${a.nome}</td><td>${a.usuario}</td><td><span class="badge ${a.nivel==='admin'?'badge-admin':'badge-motorista'}">${a.nivel}</span></td><td>${DB.usuarioLogado&&DB.usuarioLogado.id!==a.id?`<button class="btn-danger" style="padding:4px 8px;font-size:0.7rem;" onclick="excluirAdmin(${a.id})">🗑️</button>`:'<span style="opacity:0.4;font-size:0.7rem;">Você</span>'}</td></tr>`).join('');
-        }
+        function enviarWhatsApp(id,tipo){const v=tipo==='ida'?DB.viagensIda.find(x=>x.id===id):DB.viagensVolta.find(x=>x.id===id);if(!v){showToast('Não encontrada!','error');return;}const msg=`*Relatório NS VIANORTESUL*%0A%0A🔹 ${tipo.toUpperCase()}%0A📍 ${v.origem} ➔ ${v.destino}%0A📅 ${new Date(v.data).toLocaleString('pt-BR')}%0A🚗 ${v.veiculo}%0A👤 ${v.motorista||'N/A'}%0A🚀 ${v.status||'Iniciando viagem'}%0A${v.observacoes?`📝 ${v.observacoes}%0A`:''}`;window.open(`https://wa.me/?text=${msg}`,'_blank');}
 
-        function excluirAdmin(id){
-            if(DB.administradores.length<=1){showToast('Não é possível excluir o último!','error');return;}
-            if(DB.usuarioLogado&&id===DB.usuarioLogado.id){showToast('Não pode se excluir!','error');return;}
-            if(confirm('Excluir?')){DB.administradores=DB.administradores.filter(a=>a.id!==id);salvarDB();carregarAdmins();showToast('Excluído! 🗑️');}
-        }
+        function showToast(msg,tipo='success'){const t=document.createElement('div');t.className=`toast toast-${tipo}`;t.textContent=msg;document.body.appendChild(t);setTimeout(()=>t.remove(),2800);}
 
-        // ==================== WHATSAPP E TOAST ====================
-        function enviarWhatsApp(id,tipo){
-            const v=tipo==='ida'?DB.viagensIda.find(x=>x.id===id):DB.viagensVolta.find(x=>x.id===id);
-            if(!v){showToast('Não encontrada!','error');return;}
-            const msg=`*Relatório NS VIANORTESUL*%0A%0A🔹 ${tipo.toUpperCase()}%0A📍 ${v.origem} ➔ ${v.destino}%0A📅 ${new Date(v.data).toLocaleString('pt-BR')}%0A🚗 ${v.veiculo}%0A👤 ${v.motorista||'N/A'}%0A🚀 ${v.status||'Iniciando viagem'}%0A${v.observacoes?`📝 ${v.observacoes}%0A`:''}`;
-            window.open(`https://wa.me/?text=${msg}`, '_blank');
-        }
+        function criarParticulas(){const c=document.getElementById('particles');for(let i=0;i<30;i++){const p=document.createElement('div');p.className='particle';p.style.cssText=`width:${Math.random()*6+3}px;height:${p.style.width};left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*20}s;animation-duration:${Math.random()*20+12}s;`;c.appendChild(p);}}
 
-        function showToast(msg,tipo='success'){
-            const t=document.createElement('div'); t.className=`toast toast-${tipo}`; t.textContent=msg;
-            document.body.appendChild(t); setTimeout(()=>t.remove(), 2500);
-        }
-
-        // ==================== INICIALIZAÇÃO ====================
-        function criarParticulas() {
-            const c = document.getElementById('particles');
-            for (let i = 0; i < 25; i++) {
-                const p = document.createElement('div');
-                p.className = 'particle';
-                p.style.cssText = `width:${Math.random()*5+2}px;height:${p.style.width};left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*20}s;animation-duration:${Math.random()*20+10}s;`;
-                c.appendChild(p);
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            criarParticulas();
-            await carregarDB();
-            initUsers();
-            atualizarUI();
-            if (DB.usuarioLogado) {
-                document.getElementById('modalLogin').classList.remove('active');
-                mudarPagina('dashboard');
-            } else {
-                document.getElementById('modalLogin').classList.add('active');
-            }
-        });
-
-        document.addEventListener('keypress', e => {
-            if (e.key === 'Enter' && document.getElementById('modalLogin').classList.contains('active')) {
-                fazerLogin();
-            }
-        });
+        document.addEventListener('DOMContentLoaded',async()=>{criarParticulas();await carregarDB();initUsers();atualizarUI();if(DB.usuarioLogado){document.getElementById('modalLogin').classList.remove('active');mudarPagina('dashboard');}else{document.getElementById('modalLogin').classList.add('active');}});
+        document.addEventListener('keypress',e=>{if(e.key==='Enter'&&document.getElementById('modalLogin').classList.contains('active'))fazerLogin();});
     </script>
 </body>
 </html>
