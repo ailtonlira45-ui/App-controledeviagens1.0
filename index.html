@@ -341,8 +341,8 @@
             <div class="glass-container">
                 <h2><span class="icone-onibus">🚌</span> Histórico de Viagens</h2>
                 <div class="grid-2">
-                    <div><h3>🔵 Viagens de IDA</h3><div id="listaViagensIda"><p style="text-align:center;opacity:0.5;">Nenhuma viagem de ida</p></div></div>
-                    <div><h3>🟣 Viagens de VOLTA</h3><div id="listaViagensVolta"><p style="text-align:center;opacity:0.5;">Nenhuma viagem de volta</p></div></div>
+                    <div><h3>🔵 Viagens de IDA</h3><div id="listaViagensIda"><p style="text-align:center;opacity:0.5;">Carregando...</p></div></div>
+                    <div><h3>🟣 Viagens de VOLTA</h3><div id="listaViagensVolta"><p style="text-align:center;opacity:0.5;">Carregando...</p></div></div>
                 </div>
             </div>
         </div>
@@ -352,33 +352,108 @@
         <div id="page-admins" class="page"><div class="glass-container" id="adminsContainer"></div></div>
     </div>
 
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js"></script>
     <script>
-        function criarParticulas() {
-            const c = document.getElementById('particles');
-            for (let i = 0; i < 25; i++) {
-                const p = document.createElement('div');
-                p.className = 'particle';
-                p.style.cssText = `width:${Math.random()*5+2}px;height:${p.style.width};left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*20}s;animation-duration:${Math.random()*20+10}s;`;
-                c.appendChild(p);
-            }
+        // ==================== CONFIGURAÇÃO DO FIREBASE ====================
+        const firebaseConfig = {
+            apiKey: "AIzaSyDYNltGhYmZ_5v0iL6amxmhySltQ1bNAsA",
+            authDomain: "controledeviagem-6f29d.firebaseapp.com",
+            projectId: "controledeviagem-6f29d",
+            storageBucket: "controledeviagem-6f29d.firebasestorage.app",
+            messagingSenderId: "630942841173",
+            appId: "1:630942841173:web:7b7fb728104bb1a96e57dc"
+        };
+
+        // Inicializa o Firebase
+        let db;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+            console.log('✅ Firebase conectado com sucesso!');
+        } catch (error) {
+            console.error('❌ Erro ao conectar com Firebase:', error);
         }
 
+        // ==================== VARIÁVEIS GLOBAIS ====================
         const DB_KEY = 'ns_db_v9';
         let DB = { viagensIda:[], viagensVolta:[], veiculos:[], motoristas:[], administradores:[], usuarioLogado:null };
         let viagemEditando = { tipo:null, id:null };
         let trocaMotorista = { tipo:null, id:null, motoristaSelecionado:null };
 
-        function carregarDB() {
+        // ==================== FUNÇÕES DO BANCO DE DADOS ====================
+        async function carregarDB() {
             try {
-                const d = localStorage.getItem(DB_KEY);
-                if (d) { const p = JSON.parse(d); DB.viagensIda=p.viagensIda||[]; DB.viagensVolta=p.viagensVolta||[]; DB.veiculos=p.veiculos||[]; DB.motoristas=p.motoristas||[]; DB.administradores=p.administradores||[]; DB.usuarioLogado=p.usuarioLogado||null; }
-            } catch(e) {}
+                // Tenta carregar do Firebase primeiro
+                if (db) {
+                    const doc = await db.collection('dados').doc('principal').get();
+                    if (doc.exists) {
+                        const dados = doc.data();
+                        DB.viagensIda = dados.viagensIda || [];
+                        DB.viagensVolta = dados.viagensVolta || [];
+                        DB.veiculos = dados.veiculos || [];
+                        DB.motoristas = dados.motoristas || [];
+                        DB.administradores = dados.administradores || [];
+                        console.log('✅ Dados carregados do Firebase');
+                    }
+                }
+                
+                // Carrega usuário logado do localStorage
+                const usuarioSalvo = localStorage.getItem('ns_usuario_logado');
+                DB.usuarioLogado = usuarioSalvo ? JSON.parse(usuarioSalvo) : null;
+                
+            } catch(e) {
+                console.error('Erro ao carregar do Firebase, usando localStorage:', e);
+                // Fallback para localStorage
+                try {
+                    const d = localStorage.getItem(DB_KEY);
+                    if (d) {
+                        const p = JSON.parse(d);
+                        DB.viagensIda = p.viagensIda || [];
+                        DB.viagensVolta = p.viagensVolta || [];
+                        DB.veiculos = p.veiculos || [];
+                        DB.motoristas = p.motoristas || [];
+                        DB.administradores = p.administradores || [];
+                        DB.usuarioLogado = p.usuarioLogado || null;
+                    }
+                } catch(e2) {
+                    console.error('Erro total:', e2);
+                }
+            }
         }
-        function salvarDB() {
-            try { localStorage.setItem(DB_KEY, JSON.stringify({ viagensIda:DB.viagensIda, viagensVolta:DB.viagensVolta, veiculos:DB.veiculos, motoristas:DB.motoristas, administradores:DB.administradores, usuarioLogado:DB.usuarioLogado })); } catch(e) { showToast('Erro ao salvar!','error'); }
+
+        async function salvarDB() {
+            try {
+                // Salva no localStorage como backup
+                localStorage.setItem(DB_KEY, JSON.stringify({
+                    viagensIda: DB.viagensIda,
+                    viagensVolta: DB.viagensVolta,
+                    veiculos: DB.veiculos,
+                    motoristas: DB.motoristas,
+                    administradores: DB.administradores,
+                    usuarioLogado: DB.usuarioLogado
+                }));
+
+                // Salva no Firebase
+                if (db) {
+                    await db.collection('dados').doc('principal').set({
+                        viagensIda: DB.viagensIda,
+                        viagensVolta: DB.viagensVolta,
+                        veiculos: DB.veiculos,
+                        motoristas: DB.motoristas,
+                        administradores: DB.administradores,
+                        atualizadoEm: new Date().toISOString()
+                    });
+                    console.log('✅ Dados salvos no Firebase');
+                }
+            } catch(e) {
+                console.error('Erro ao salvar:', e);
+                showToast('Erro ao salvar!', 'error');
+            }
         }
+
         function initUsers() {
-            carregarDB();
             if (!DB.administradores.length) {
                 DB.administradores = [
                     { id:1, nome:'Administrador', usuario:'admin', telefone:'(11) 99999-9999', senha:'admin123', nivel:'admin' },
@@ -388,39 +463,47 @@
             }
         }
 
-        function fazerLogin() {
+        // ==================== FUNÇÕES DE AUTENTICAÇÃO ====================
+        async function fazerLogin() {
             const u = document.getElementById('loginUsuario').value.trim();
             const s = document.getElementById('loginSenha').value.trim();
             const e = document.getElementById('erroLogin');
             e.classList.remove('visivel'); e.textContent='';
             if (!u || !s) { e.textContent='Preencha todos os campos!'; e.classList.add('visivel'); return; }
-            carregarDB(); initUsers();
+            
+            await carregarDB();
+            initUsers();
+            
             const user = DB.administradores.find(a => a.usuario===u && a.senha===s);
             if (user) {
                 DB.usuarioLogado = { id:user.id, nome:user.nome, usuario:user.usuario, nivel:user.nivel, telefone:user.telefone };
-                salvarDB();
+                localStorage.setItem('ns_usuario_logado', JSON.stringify(DB.usuarioLogado));
                 document.getElementById('modalLogin').classList.remove('active');
                 document.getElementById('loginUsuario').value=''; document.getElementById('loginSenha').value='';
                 atualizarUI(); showToast(`Bem-vindo, ${user.nome}! ✅`); mudarPagina('viagens');
-                setTimeout(() => { atualizarListas(); }, 150);
             } else {
                 e.textContent = DB.administradores.some(a => a.usuario===u) ? 'Senha incorreta!' : 'Usuário não encontrado!';
                 e.classList.add('visivel');
             }
         }
+
         function fazerLogout() {
             if (confirm('Sair do sistema?')) {
-                DB.usuarioLogado=null; salvarDB();
+                DB.usuarioLogado=null;
+                localStorage.removeItem('ns_usuario_logado');
+                salvarDB();
                 document.getElementById('modalLogin').classList.add('active');
                 document.getElementById('loginUsuario').value=''; document.getElementById('loginSenha').value='';
                 atualizarUI(); document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
                 document.getElementById('page-viagens').classList.add('active'); showToast('Logout! 👋');
             }
         }
+
         function mostrarModalLogin() {
             if (DB.usuarioLogado) { if (confirm('Fazer logout?')) fazerLogout(); }
             else { document.getElementById('modalLogin').classList.add('active'); document.getElementById('loginUsuario').value=''; document.getElementById('loginSenha').value=''; document.getElementById('erroLogin').classList.remove('visivel'); }
         }
+
         function atualizarUI() {
             const av=document.getElementById('userAvatar'), nm=document.getElementById('userName'), nv=document.getElementById('userNivel');
             const ae=document.querySelectorAll('.admin-only');
@@ -436,6 +519,7 @@
                 if(lv) lv.innerHTML='<p style="text-align:center;opacity:0.5;">Faça login</p>';
             }
         }
+
         function verificarPermissao() { if(!DB.usuarioLogado){document.getElementById('modalLogin').classList.add('active');return false;} return true; }
         function verificarPermissaoAdmin() { if(!verificarPermissao())return false; if(DB.usuarioLogado.nivel!=='admin'){showToast('Acesso restrito!','error');mudarPagina('viagens');return false;} return true; }
 
@@ -472,6 +556,7 @@
             document.querySelectorAll('#modalTrocarSenha .mensagem-erro').forEach(e => e.classList.remove('visivel'));
             document.getElementById('modalTrocarSenha').classList.add('active');
         }
+
         function confirmarTrocaSenha() {
             const id = parseInt(document.getElementById('trocaSenhaUsuario').value);
             const ns = document.getElementById('novaSenha').value;
@@ -493,17 +578,18 @@
                 salvarDB();
                 document.getElementById('modalTrocarSenha').classList.remove('active');
                 showToast('Senha alterada com sucesso! ✅');
-                // Se trocou a própria senha, atualizar
                 if (DB.usuarioLogado && DB.usuarioLogado.id === id) {
                     showToast('Sua senha foi alterada! Faça login novamente.', 'info');
                     fazerLogout();
                 }
             }
         }
+
         function fecharModalTrocarSenha() {
             document.getElementById('modalTrocarSenha').classList.remove('active');
         }
 
+        // ==================== TROCAR MOTORISTA ====================
         function abrirModalTrocarMotorista(tipo,id) {
             trocaMotorista={tipo,id,motoristaSelecionado:null};
             const c=document.getElementById('listaMotoristasTroca');
@@ -518,6 +604,7 @@
             }
             document.getElementById('modalTrocarMotorista').classList.add('active');
         }
+
         function selMotoristaTroca(id) {
             trocaMotorista.motoristaSelecionado=id;
             document.querySelectorAll('#listaMotoristasTroca .motorista-option').forEach(e=>e.classList.remove('selecionado'));
@@ -525,6 +612,7 @@
             const o=document.getElementById(`mo-${id}`); if(o) o.classList.add('selecionado');
             const ck=document.getElementById(`ck-${id}`); if(ck) ck.style.opacity='1';
         }
+
         function confirmarTrocaMotorista() {
             if(!trocaMotorista.motoristaSelecionado){showToast('Selecione um motorista!','error');return;}
             const m=DB.motoristas.find(x=>x.id===trocaMotorista.motoristaSelecionado);
@@ -535,8 +623,10 @@
             if(trocaMotorista.tipo==='ida'){const vo=DB.viagensVolta.find(x=>x.viagemIdaVinculada===trocaMotorista.id); if(vo){vo.motorista=m.nome;vo.motoristaId=m.id;}}
             salvarDB(); document.getElementById('modalTrocarMotorista').classList.remove('active'); atualizarListas(); showToast(`Motorista: ${m.nome} ✅`);
         }
+
         function fecharModalTrocarMotorista() { document.getElementById('modalTrocarMotorista').classList.remove('active'); trocaMotorista={tipo:null,id:null,motoristaSelecionado:null}; }
 
+        // ==================== CADASTRO DE VIAGENS ====================
         function carregarCadastro() {
             const c=document.getElementById('cadastroContainer'); if(!c)return;
             c.innerHTML=`
@@ -569,11 +659,13 @@
                     <button class="btn-outline" onclick="carregarCadastro()">🗑️ Limpar</button>
                 </div>`;
         }
+
         function attPrevVolta() {
             const o=document.getElementById('idaOrigem')?.value||'', d=document.getElementById('idaDestino')?.value||'';
             const vo=document.getElementById('voltaOrigem'), vd=document.getElementById('voltaDestino');
             if(vo)vo.value=d; if(vd)vd.value=o;
         }
+
         function cadastrarViagem() {
             const o=document.getElementById('idaOrigem').value.trim(), d=document.getElementById('idaDestino').value.trim();
             if(!o||!d){showToast('Preencha Origem e Destino!','error');return;}
@@ -601,7 +693,9 @@
             DB.viagensIda.unshift(vi); DB.viagensVolta.unshift(vv); salvarDB(); carregarCadastro(); showToast('Viagem salva! ✅');
         }
 
+        // ==================== LISTAGEM DE VIAGENS ====================
         function atualizarListas() { atualizarListaIda(); atualizarListaVolta(); }
+
         function atualizarListaIda() {
             const c=document.getElementById('listaViagensIda'); if(!c)return;
             if(!DB.usuarioLogado){c.innerHTML='<p style="text-align:center;opacity:0.5;">Faça login</p>';return;}
@@ -632,6 +726,7 @@
                 </div>`;
             }).join('');
         }
+
         function atualizarListaVolta() {
             const c=document.getElementById('listaViagensVolta'); if(!c)return;
             if(!DB.usuarioLogado){c.innerHTML='<p style="text-align:center;opacity:0.5;">Faça login</p>';return;}
@@ -667,6 +762,7 @@
 
         function iniciarEdicao(tipo,id){viagemEditando={tipo,id};atualizarListas();}
         function cancelarEdicao(){viagemEditando={tipo:null,id:null};atualizarListas();}
+
         function salvarEdicao(tipo,id){
             const v=tipo==='ida'?DB.viagensIda.find(x=>x.id===id):DB.viagensVolta.find(x=>x.id===id);
             if(!v){showToast('Viagem não encontrada!','error');return;}
@@ -682,6 +778,7 @@
             if(tipo==='ida'&&o&&d){const vv=DB.viagensVolta.find(x=>x.viagemIdaVinculada===id); if(vv){vv.origem=d;vv.destino=o;}}
             salvarDB(); cancelarEdicao(); showToast('Viagem atualizada! ✅');
         }
+
         function excluirViagemIda(id){
             if(confirm('Excluir ida? A volta vinculada também será excluída.')){
                 DB.viagensIda=DB.viagensIda.filter(v=>v.id!==id);
@@ -689,6 +786,7 @@
                 salvarDB(); atualizarListas(); showToast('Excluída! 🗑️');
             }
         }
+
         function excluirViagemVolta(id){
             if(confirm('Excluir volta?')){
                 DB.viagensVolta=DB.viagensVolta.filter(v=>v.id!==id);
@@ -696,6 +794,7 @@
             }
         }
 
+        // ==================== VEÍCULOS ====================
         function carregarVeiculos(){
             const c=document.getElementById('veiculosContainer'); if(!c)return;
             c.innerHTML=`
@@ -711,19 +810,23 @@
                     <div><h3>Lista</h3><div class="table-container"><table><thead><tr><th>Modelo</th><th>Placa</th><th>Ano</th><th></th></tr></thead><tbody id="corpoTabelaVeiculos"></tbody></table></div></div>
                 </div>`; attTabelaVeiculos();
         }
+
         function cadastrarVeiculo(){
             const m=document.getElementById('veiculoModelo').value.trim(), p=document.getElementById('veiculoPlaca').value.trim().toUpperCase();
             const a=document.getElementById('veiculoAno').value;
             if(!m||!p){showToast('Preencha Modelo e Placa!','error');return;}
             DB.veiculos.push({id:Date.now(),modelo:m,placa:p,ano:a}); salvarDB(); carregarVeiculos(); showToast('Veículo salvo! 🚗');
         }
+
         function attTabelaVeiculos(){
             const t=document.getElementById('corpoTabelaVeiculos'); if(!t)return;
             if(!DB.veiculos.length){t.innerHTML='<tr><td colspan="4" style="text-align:center;opacity:0.5;">Nenhum veículo</td></tr>';return;}
             t.innerHTML=DB.veiculos.map(v=>`<tr><td>${v.modelo}</td><td>${v.placa}</td><td>${v.ano||'-'}</td><td><button class="btn-danger" style="padding:4px 8px;font-size:0.7rem;" onclick="excluirVeiculo(${v.id})">🗑️</button></td></tr>`).join('');
         }
+
         function excluirVeiculo(id){if(confirm('Excluir?')){DB.veiculos=DB.veiculos.filter(v=>v.id!==id);salvarDB();carregarVeiculos();showToast('Excluído! 🗑️');}}
 
+        // ==================== MOTORISTAS ====================
         function carregarMotoristas(){
             const c=document.getElementById('motoristasContainer'); if(!c)return;
             c.innerHTML=`
@@ -739,6 +842,7 @@
                     <div><h3>Lista</h3><div class="table-container"><table><thead><tr><th>Nome</th><th>Telefone</th><th>CNH</th><th></th></tr></thead><tbody id="corpoTabelaMotoristas"></tbody></table></div></div>
                 </div>`; attTabelaMotoristas();
         }
+
         function cadastrarMotorista(){
             const n=document.getElementById('motoristaNome').value.trim();
             if(!n){showToast('Preencha o nome!','error');return;}
@@ -749,13 +853,16 @@
             });
             salvarDB(); carregarMotoristas(); showToast('Motorista salvo! 👤');
         }
+
         function attTabelaMotoristas(){
             const t=document.getElementById('corpoTabelaMotoristas'); if(!t)return;
             if(!DB.motoristas.length){t.innerHTML='<tr><td colspan="4" style="text-align:center;opacity:0.5;">Nenhum motorista</td></tr>';return;}
             t.innerHTML=DB.motoristas.map(m=>`<tr><td>${m.nome}</td><td>${m.telefone||'-'}</td><td>${m.cnh||'-'}</td><td><button class="btn-danger" style="padding:4px 8px;font-size:0.7rem;" onclick="excluirMotorista(${m.id})">🗑️</button></td></tr>`).join('');
         }
+
         function excluirMotorista(id){if(confirm('Excluir?')){DB.motoristas=DB.motoristas.filter(m=>m.id!==id);salvarDB();carregarMotoristas();showToast('Excluído! 🗑️');}}
 
+        // ==================== ADMINISTRADORES ====================
         function carregarAdmins(){
             const c=document.getElementById('adminsContainer'); if(!c)return;
             c.innerHTML=`
@@ -774,6 +881,7 @@
                     <div><h3>Lista</h3><div class="table-container"><table><thead><tr><th>Nome</th><th>Usuário</th><th>Nível</th><th></th></tr></thead><tbody id="corpoTabelaAdmins"></tbody></table></div></div>
                 </div>`; attTabelaAdmins();
         }
+
         function cadastrarAdmin(){
             const n=document.getElementById('adminNome').value.trim(), u=document.getElementById('adminUsuario').value.trim();
             const t=document.getElementById('adminTelefone').value.trim(), s=document.getElementById('adminSenha').value;
@@ -788,17 +896,20 @@
             DB.administradores.push({id:Date.now(),nome:n,usuario:u,telefone:t,senha:s,nivel:nv});
             salvarDB(); carregarAdmins(); showToast('Usuário salvo! ✅');
         }
+
         function attTabelaAdmins(){
             const t=document.getElementById('corpoTabelaAdmins'); if(!t)return;
             if(!DB.administradores.length){t.innerHTML='<tr><td colspan="4" style="text-align:center;opacity:0.5;">Nenhum usuário</td></tr>';return;}
             t.innerHTML=DB.administradores.map(a=>`<tr><td>${a.nome}</td><td>${a.usuario}</td><td><span class="badge ${a.nivel==='admin'?'badge-admin':'badge-user'}">${a.nivel}</span></td><td>${DB.usuarioLogado&&DB.usuarioLogado.id!==a.id?`<button class="btn-danger" style="padding:4px 8px;font-size:0.7rem;" onclick="excluirAdmin(${a.id})">🗑️</button>`:'<span style="opacity:0.4;font-size:0.7rem;">Você</span>'}</td></tr>`).join('');
         }
+
         function excluirAdmin(id){
             if(DB.administradores.length<=1){showToast('Não é possível excluir o último!','error');return;}
             if(DB.usuarioLogado&&id===DB.usuarioLogado.id){showToast('Não pode se excluir!','error');return;}
             if(confirm('Excluir?')){DB.administradores=DB.administradores.filter(a=>a.id!==id);salvarDB();carregarAdmins();showToast('Excluído! 🗑️');}
         }
 
+        // ==================== WHATSAPP E TOAST ====================
         function enviarWhatsApp(id,tipo){
             const v=tipo==='ida'?DB.viagensIda.find(x=>x.id===id):DB.viagensVolta.find(x=>x.id===id);
             if(!v){showToast('Não encontrada!','error');return;}
@@ -811,14 +922,35 @@
             document.body.appendChild(t); setTimeout(()=>t.remove(), 2500);
         }
 
-        document.addEventListener('DOMContentLoaded',()=>{
-            criarParticulas(); carregarDB(); initUsers(); atualizarUI();
-            if(DB.usuarioLogado){document.getElementById('modalLogin').classList.remove('active');mudarPagina('viagens');}
-            else document.getElementById('modalLogin').classList.add('active');
+        // ==================== INICIALIZAÇÃO ====================
+        function criarParticulas() {
+            const c = document.getElementById('particles');
+            for (let i = 0; i < 25; i++) {
+                const p = document.createElement('div');
+                p.className = 'particle';
+                p.style.cssText = `width:${Math.random()*5+2}px;height:${p.style.width};left:${Math.random()*100}%;top:${Math.random()*100}%;animation-delay:${Math.random()*20}s;animation-duration:${Math.random()*20+10}s;`;
+                c.appendChild(p);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            criarParticulas();
+            await carregarDB();
+            initUsers();
+            atualizarUI();
+            if (DB.usuarioLogado) {
+                document.getElementById('modalLogin').classList.remove('active');
+                mudarPagina('viagens');
+            } else {
+                document.getElementById('modalLogin').classList.add('active');
+            }
         });
-        document.addEventListener('keypress',e=>{if(e.key==='Enter'&&document.getElementById('modalLogin').classList.contains('active'))fazerLogin();});
+
+        document.addEventListener('keypress', e => {
+            if (e.key === 'Enter' && document.getElementById('modalLogin').classList.contains('active')) {
+                fazerLogin();
+            }
+        });
     </script>
-    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
 </body>
 </html>
